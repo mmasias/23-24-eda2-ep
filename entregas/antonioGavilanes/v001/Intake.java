@@ -1,4 +1,4 @@
-package vEDA.v001;
+package antonioGavilanes.v001;
 
 import java.util.Scanner;
 
@@ -20,6 +20,48 @@ class Intake {
             }
             current.setNext(newFoodNode);
         }
+    }
+
+    public void editIntake() {
+        Scanner userInput = new Scanner(System.in);
+        System.out.println("Introduce el nombre del alimento que quieres editar (-1 para terminar)");
+        String foodName = userInput.nextLine();
+        FoodNode current = first;
+        while (current != null) {
+            if (current.getFood().getName().equals(foodName)) {
+                System.out.println("Introduce el nuevo nombre del alimento");
+                String newFoodName = userInput.nextLine();
+                current.getFood().setName(newFoodName);
+                return;
+            }
+            current = current.getNext();
+        }
+        System.out.println("No se ha encontrado el alimento");
+    }
+
+    public void deleteIntake() {
+        Scanner userInput = new Scanner(System.in);
+        System.out.println("Introduce el nombre del alimento que quieres eliminar (-1 para terminar)");
+        String foodName = userInput.nextLine();
+        FoodNode current = first;
+        FoodNode previous = null;
+        while (current != null) {
+            if (current.getFood().getName().equals(foodName)) {
+                if (previous == null) {
+                    first = current.getNext();
+                } else {
+                    previous.setNext(current.getNext());
+                }
+                return;
+            }
+            previous = current;
+            current = current.getNext();
+        }
+        System.out.println("No se ha encontrado el alimento");
+    }
+
+    public void deleteAllIntake() {
+        first = null;
     }
 
     public void printFoodListing() {
@@ -56,8 +98,11 @@ class Intake {
 
         Intake breakfast = new Intake();
         breakfast.createIntake();
+        breakfast.printFoodListing();
         breakfast.editIntake();
+        breakfast.printFoodListing();
         breakfast.deleteIntake();
+        breakfast.printFoodListing();
         breakfast.deleteAllIntake();
         breakfast.printFoodListing();
 
