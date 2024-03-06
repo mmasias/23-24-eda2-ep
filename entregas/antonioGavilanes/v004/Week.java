@@ -28,13 +28,13 @@ public class Week {
         boolean creating = true;
         Scanner userInput = new Scanner(System.in);
         while (creating) {
-            System.out.println("Creando días de la semana " + this.name);
+            System.out.println("Creando días de la " + this.name);
             System.out.println("Nombre del día (-1 para terminar)");
             String dayName = userInput.nextLine();
             if (dayName.equals("-1")) {
                 creating = !creating;
             } else {
-                Day day = new Day(dayName + " de la semana " + this.name);
+                Day day = new Day(dayName + " de la " + this.name);
                 day.manage();
                 addDay(day);
             }
@@ -98,7 +98,7 @@ public class Week {
         }
     }
 
-    public void startManagement(){
+    public void startManagement() {
         manage();
     }
 
@@ -107,8 +107,8 @@ public class Week {
         Scanner userInput = new Scanner(System.in);
         char userOption = ' ';
         do {
-            System.out.println("Gestión de la semana " + this.name);
-            System.out.println("[C]reate / [R]ead / Re[N]ame  / [U]pdate / [D]elete / e[X]it");
+            System.out.println("Gestión de la " + this.name);
+            System.out.println("[C]reate / [R]ead / [U]pdate / [D]elete / e[X]it");
             String input = userInput.nextLine();
             if (input.isEmpty()) {
                 System.out.println("No se ha ingresado ninguna opción. Inténtelo de nuevo.");
@@ -154,4 +154,25 @@ public class Week {
         week.startManagement();
     }
 
+    public void showSchedule() {
+        DayNode currentDay = first;
+        while (currentDay != null) {
+            System.out.println("==============================");
+            System.out.println("Dia: " + currentDay.getDay().getName());
+            IntakeNode currentIntake = currentDay.getDay().getFirst();
+            while (currentIntake != null) {
+                System.out.println("Ingesta: " + currentIntake.getIntake().getName());
+                FoodNode currentFood = currentIntake.getIntake().getFirst();
+                System.out.println("--------------");
+                System.out.println("Comida:");
+                System.out.println("--------------");
+                while (currentFood != null) {
+                    System.out.println("]> " + currentFood.getFood().getName());
+                    currentFood = currentFood.getNext();
+                }
+                currentIntake = currentIntake.getNext();
+            }
+            currentDay = currentDay.getNext();
+        }
+    }
 }

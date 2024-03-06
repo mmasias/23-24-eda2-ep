@@ -25,4 +25,5 @@ class FoodNode {
     public void setNext(FoodNode next) {
         this.next = next;
     }
+    
 }

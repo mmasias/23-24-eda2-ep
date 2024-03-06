@@ -120,7 +120,8 @@ class Intake {
                 System.out.println("No se ha ingresado ninguna opción. Inténtelo de nuevo.");
                 continue;
             }
-            switch (userInput.nextLine().toUpperCase().charAt(0)) {
+            char userOption = input.toUpperCase().charAt(0);
+            switch (userOption) {
                 case 'C':
                     createFood();
                     break;
@@ -165,5 +166,9 @@ class Intake {
 
     public String getName() {
         return this.name;
+    }
+
+    public FoodNode getFirst() {
+        return this.first;
     }
 }

@@ -169,4 +169,8 @@ class Day {
     public String getName() {
         return this.name;
     }
+
+    public IntakeNode getFirst() {
+        return this.first;
+    }
 }
