@@ -57,7 +57,6 @@ class Documento {
 
     @Override
     public String toString() {
-        System.out.println("====================================");
         return "Documento: " + titulo;
     }
 }

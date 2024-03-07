@@ -12,8 +12,8 @@ class Usuario {
         this.first = null;
     }
 
-    private void addDoc(Documento food) {
-        DocumentoNode newDocumentoNode = new DocumentoNode(food);
+    private void addDoc(Documento doc) {
+        DocumentoNode newDocumentoNode = new DocumentoNode(doc);
         if (first == null) {
             first = newDocumentoNode;
         } else {
@@ -112,31 +112,40 @@ class Usuario {
     public void manage() {
         boolean managing = true;
         Scanner userInput = new Scanner(System.in);
+        char userOption = ' ';
         do {
-            System.out.println("1. Crear documento");
-            System.out.println("2. Editar documento");
-            System.out.println("3. Eliminar documento");
-            System.out.println("4. Ver documentos");
-            System.out.println("5. Salir");
-            int option = userInput.nextInt();
-            switch (option) {
-                case 1:
+            System.out.println("Gestionando [" + this.name.toUpperCase() + "]");
+            System.out.println("==================================================================");
+            System.out.println("|| [C]reate / [R]ead / Re[N]ame  / [U]pdate / [D]elete / e[X]it ||");
+            System.out.println("==================================================================");
+            String input = userInput.nextLine();
+            if (input.isEmpty()) {
+                System.out.println("No se ha ingresado ninguna opción. Inténtelo de nuevo.");
+                continue;
+            }
+            userOption = input.toUpperCase().charAt(0);
+            switch (userOption) {
+                case 'C':
                     createDoc();
                     break;
-                case 2:
-                    editDoc();
-                    break;
-                case 3:
-                    deleteDoc();
-                    break;
-                case 4:
+                case 'R':
                     System.out.println(this);
                     break;
-                case 5:
+                case 'N':
+                    editDoc();
+                    break;
+                case 'U':
+                    editDoc();
+                    break;
+                case 'D':
+                    deleteDoc();
+                    break;
+                case 'X':
                     managing = !managing;
                     break;
                 default:
-                    System.out.println("Opción no válida");
+                    System.out.println("Opción no válida. Inténtelo de nuevo.");
+                    break;
             }
         } while (managing);
     }
@@ -162,5 +171,7 @@ class Usuario {
         Usuario user = new Usuario("Antonio");
         user.startManagement();
     }
+
+    
 
 }
