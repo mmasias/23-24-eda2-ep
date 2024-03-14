@@ -6,14 +6,19 @@ class Usuario {
 
     private String name;
     private DocumentoNode first;
+    private TipoDocumento tiposDoc;
+    private PalabrasClave palabrasClave;
 
     public Usuario(String name) {
         this.name = name;
         this.first = null;
+        this.tiposDoc = new TipoDocumento();
+        this.tiposDoc.add();
+        this.palabrasClave = new PalabrasClave(); // Eliminamos la llamada a agregarPalabra() desde aquí
     }
 
-    private void addDoc(Documento doc) {
-        DocumentoNode newDocumentoNode = new DocumentoNode(doc);
+    private void addDoc(Documento food) {
+        DocumentoNode newDocumentoNode = new DocumentoNode(food);
         if (first == null) {
             first = newDocumentoNode;
         } else {
@@ -38,12 +43,23 @@ class Usuario {
                 String docAuthor = userInput.nextLine();
                 System.out.println("Año del documento");
                 String docYear = userInput.nextLine();
-                System.out.println("Tipo del documento");
-                String docType = userInput.nextLine();
-                System.out.println("Palabras clave del documento");
-                String docKeywords = userInput.nextLine();
-                Documento newDoc = new Documento(docName, docAuthor, docYear, docType, docKeywords);
-                addDoc(newDoc);
+                System.out.println("Tipos de documentos disponibles:");
+                tiposDoc.mostrar();
+    
+                System.out.println("Selecciona el tipo de documento (ingresa el número correspondiente):");
+                int opcionTipoDoc = userInput.nextInt();
+                userInput.nextLine();
+                if (opcionTipoDoc >= 1 && opcionTipoDoc <= tiposDoc.size()) {
+                    String docType = tiposDoc.mostrar(opcionTipoDoc - 1);
+                    palabrasClave.agregarPalabra();
+                    palabrasClave.mostrarPalabrasClave(); // Mostrar las palabras clave después de agregarlas
+                    System.out.println("Palabras clave del documento");
+                    String docKeywords = userInput.nextLine();
+                    Documento newDoc = new Documento(docName, docAuthor, docYear, docType, docKeywords);
+                    addDoc(newDoc);
+                } else {
+                    System.out.println("Opción no válida.");
+                }
             }
         }
     }
@@ -112,66 +128,56 @@ class Usuario {
     public void manage() {
         boolean managing = true;
         Scanner userInput = new Scanner(System.in);
-        char userOption = ' ';
         do {
-            System.out.println("Gestionando [" + this.name.toUpperCase() + "]");
-            System.out.println("==================================================================");
-            System.out.println("|| [C]reate / [R]ead / Re[N]ame  / [U]pdate / [D]elete / e[X]it ||");
-            System.out.println("==================================================================");
-            String input = userInput.nextLine();
-            if (input.isEmpty()) {
-                System.out.println("No se ha ingresado ninguna opción. Inténtelo de nuevo.");
-                continue;
-            }
-            userOption = input.toUpperCase().charAt(0);
-            switch (userOption) {
-                case 'C':
+            System.out.println("1. Crear documento");
+            System.out.println("2. Editar documento");
+            System.out.println("3. Eliminar documento");
+            System.out.println("4. Ver documentos");
+            System.out.println("5. Salir");
+            int option = userInput.nextInt();
+            userInput.nextLine(); // Consume the newline character after reading the integer
+            switch (option) {
+                case 1:
                     createDoc();
                     break;
-                case 'R':
-                    System.out.println(this);
-                    break;
-                case 'N':
+                case 2:
                     editDoc();
                     break;
-                case 'U':
-                    editDoc();
-                    break;
-                case 'D':
+                case 3:
                     deleteDoc();
                     break;
-                case 'X':
+                case 4:
+                    System.out.println(this);
+                    break;
+                case 5:
                     managing = !managing;
                     break;
                 default:
-                    System.out.println("Opción no válida. Inténtelo de nuevo.");
-                    break;
+                    System.out.println("Opción no válida");
             }
         } while (managing);
     }
 
     @Override
     public String toString() {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         DocumentoNode current = first;
         while (current != null) {
-            System.out.println("====================================");
-            System.out.println(result + "Documento: " + current.getDoc().getTitulo());
-            System.out.println("====================================");
-            System.out.println("Autor: " + current.getDoc().getAutor());
-            System.out.println("Año: " + current.getDoc().getAño());
-            System.out.println("Tipo: " + current.getDoc().getTipo());
-            System.out.println("Palabras clave: " + current.getDoc().getPalabrasClave());
+            result.append("====================================\n");
+            result.append("Documento: ").append(current.getDoc().getTitulo()).append("\n");
+            result.append("====================================\n");
+            result.append("Autor: ").append(current.getDoc().getAutor()).append("\n");
+            result.append("Año: ").append(current.getDoc().getAño()).append("\n");
+            result.append("Tipo: ").append(current.getDoc().getTipo()).append("\n");
+            result.append("Palabras clave: ").append(current.getDoc().getPalabrasClave()).append("\n");
             current = current.getNext();
         }
-        return result;
+        return result.toString();
     }
 
     public static void main(String[] args) {
         Usuario user = new Usuario("Antonio");
         user.startManagement();
     }
-
-    
 
 }
