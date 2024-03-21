@@ -1,14 +1,64 @@
 @startuml
+Document --  Author: Contains
+Document -- Title: Contains
+LibraryManager --  Document: Manages
+App ..> LibraryManager : creates
 
-Biblioteca -- Documento Documento -- Autor Documento -- Titulo Documento -- Keywords
+class Title {
+        - static contadorIds: int = 0
+        - id: int
+        - name: String
 
-Class Biblioteca { List documento }
+        + Title(name: String)
+        + getId(): int
+        + getName(): String
+    }
 
-Class Documento { int id Titulo titulo String tipo Autor[] autor String[] keywords String año de publicacion }
+class Author {
+        - static contadorIds: int = 0
+        - id: int
+        - name: String
 
-Class Titulo { int id string name }
+        + Author(name: String)
+        + getId(): int
+        + getName(): String
+    }
 
-Class Autor { int id String name }
+class Document {
+        - static contadorIds: int = 0
+        - id: int
+        - title: Title
+        - type: String
+        - language: String
+        - authors: Author[]
+        - keywords: String[]
+        - publishYear: String
 
-Class Keywords { int id String keyword } 
+        + Document(title: Title, type: String, language: String, publishYear: String)
+        + getId(): int
+        + getTitle(): Title
+        + getType(): String
+        + getLanguage(): String
+        + getAuthors(): Author[]
+        + setAuthors(authors: Author[])
+        + setKeywords(keywords: String[])
+        + getKeywords(): String[]
+        + getPublishYear(): String
+    }
+
+class LibraryManager {
+        - documents: List<Document>
+
+        + LibraryManager()
+        + addDocument(document: Document): void
+        + searchDocument(criterio: String, valor: String): List<Document>
+        + mostrarDocumentos(documents: List<Document>): void
+        + addDocument(): void
+        + searchOption(): void
+        + startLibraryManager(): void
+    }
+
+class App {
+        + main(args: String[]): void
+    }
 @enduml

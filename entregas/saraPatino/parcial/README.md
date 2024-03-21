@@ -17,5 +17,6 @@ Descripción: Representación visual del modelo establecido en clase por el prof
 Mi proposito con este proyecto es combinar los dos proyectos para crear una versión más limpia, sencilla y mejorada y así quedaría el modelo final...
 
 ### Modelo Final
-
+![Modelo Final](../images/modelo-final.svg)
+Descripción: Representación visual del modelo final desarrollado para este proyecto con la combinación de los dos proyectos.
 Se puede visualizar ejecutar a [aqui](App.java)

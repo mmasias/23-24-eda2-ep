@@ -121,6 +121,7 @@ class LibraryManager {
     public void searchOption() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Seleccione el criterio de búsqueda:");
+        System.out.println("1. Título");
         System.out.println("2. Autor");
         System.out.println("3. Año de publicación");
         System.out.println("4. Tipo");
@@ -163,7 +164,7 @@ class LibraryManager {
         } else {
             System.out.println("No se encontraron documentos que coincidan con la búsqueda.\n");
         }
-        System.out.println("1. Título");
+        
     }
 
     public void startLibraryManager() {
