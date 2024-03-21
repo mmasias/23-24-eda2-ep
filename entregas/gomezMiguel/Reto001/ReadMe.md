@@ -1,1 +1,0 @@
-Te mando ambas, el crud de Intake únicamente que hice hoy + el CRUD en todas que es lo más reciente que pediste
