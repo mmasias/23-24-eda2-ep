@@ -1,50 +1,16 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Gestion {
     private ArrayList<Documento> documentos;
-    private HashMap<String, ArrayList<Documento>> indiceAutores;
-    private HashMap<String, ArrayList<Documento>> indicePalabrasClave;
 
     public Gestion() {
         this.documentos = new ArrayList<>();
-        this.indiceAutores = new HashMap<>();
-        this.indicePalabrasClave = new HashMap<>();
     }
 
     public void agregar(Documento documento) {
-        try {
-            documentos.add(documento);
-
-            ArrayList<Autor> autores = documento.getAutores();
-            for (Autor autor : autores) {
-                String nombreCompleto = autor.getNombre() + " " + autor.getApellido();
-                if (indiceAutores.containsKey(nombreCompleto)) {
-                    indiceAutores.get(nombreCompleto).add(documento);
-                } else {
-                    ArrayList<Documento> documentosAutor = new ArrayList<>();
-                    documentosAutor.add(documento);
-                    indiceAutores.put(nombreCompleto, documentosAutor);
-                }
-            }
-
-            //hola
-
-            ArrayList<String> palabrasClave = documento.getPalabrasClave();
-            for (String palabra : palabrasClave) {
-                if (indicePalabrasClave.containsKey(palabra)) {
-                    indicePalabrasClave.get(palabra).add(documento);
-                } else {
-                    ArrayList<Documento> documentosPalabraClave = new ArrayList<>();
-                    documentosPalabraClave.add(documento);
-                    indicePalabrasClave.put(palabra, documentosPalabraClave);
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Error al agregar documento: " + e.getMessage());
-        }
+        documentos.add(documento);
     }
 
     public void modificar(Documento documento, String titulo, int año, ArrayList<Autor> autores,
@@ -112,14 +78,6 @@ public class Gestion {
         }
     }
 
-    public HashMap<String, ArrayList<Documento>> getIndiceAutores() {
-        return indiceAutores;
-    }
-
-    public HashMap<String, ArrayList<Documento>> getIndicePalabrasClave() {
-        return indicePalabrasClave;
-    }
-
     public static void main(String[] args) {
         Gestion biblioteca = new Gestion();
         Scanner scanner = new Scanner(System.in);
@@ -132,8 +90,6 @@ public class Gestion {
                 System.out.println("2. Buscar documento");
                 System.out.println("3. Modificar documento");
                 System.out.println("4. Eliminar documento");
-                System.out.println("5. Documentos de autor");
-                System.out.println("6. Documentos por palabra clave");
                 System.out.println("0. Salir");
                 System.out.print("Seleccione una opción: ");
                 opcion = scanner.nextInt();
@@ -151,12 +107,6 @@ public class Gestion {
                         break;
                     case 4:
                         eliminarDocumento(biblioteca, scanner);
-                        break;
-                    case 5:
-                        mostrarDocumentoPorAutor(biblioteca, scanner);
-                        break;
-                    case 6:
-                        mostrarDocumentoPorPalabrasClave(biblioteca, scanner);
                         break;
                     case 0:
                         System.out.println("Saliendo del programa...");
@@ -335,30 +285,5 @@ public class Gestion {
                 System.out.println("Documento eliminado correctamente.");
             }
         }
-    }
-
-    public static void mostrarDocumentoPorAutor(Gestion biblioteca, Scanner scanner) {
-        System.out.println("Ingrese el nombre del autor: ");
-        String nombreAutor = scanner.nextLine();
-        System.out.println("Ingrese el apellido del autor: ");
-        String apellidoAutor = scanner.nextLine();
-        String nombreCompleto = nombreAutor + " " + apellidoAutor;
-
-        ArrayList<Documento> docs = biblioteca.getIndiceAutores().get(nombreCompleto);
-        for (Documento documento : docs) {
-            System.out.println(documento.toString());
-        }
-        System.out.println("-------------------------\n");
-    }
-
-    public static void mostrarDocumentoPorPalabrasClave(Gestion biblioteca, Scanner scanner) {
-        System.out.println("Ingrese la palabra clave: ");
-        String palabra = scanner.nextLine();
-
-        ArrayList<Documento> docs = biblioteca.getIndicePalabrasClave().get(palabra);
-        for (Documento documento : docs) {
-            System.out.println(documento.toString());
-        }
-        System.out.println("-------------------------\n");
     }
 }

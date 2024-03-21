@@ -1,4 +1,4 @@
-# Proyecto de Estructura de Datos y Algoritmos II (EDA 2)
+# Proyecto de Estructura de Datos y Algoritmos II
 
 Este proyecto es parte de la asignatura "Estructura de Datos y Algoritmos II" y se centra en el desarrollo de un sistema de gestión de una biblioteca utilizando Java.
 
@@ -14,4 +14,4 @@ El objetivo de este proyecto es diseñar e implementar un sistema de gestión de
 El proyecto se desarrollará utilizando los principios de estructuras de datos y algoritmos aprendidos en la asignatura, con especial atención en la eficiencia y optimización del sistema.
 
 ## Autor
-- Alvaro Lostal
+- Álvaro Lostal
