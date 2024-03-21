@@ -1,37 +1,8 @@
-@startuml
+## Starting Point
 
+El proyecto comenzó con mi modelo inicial 
+|![](/images/modelo-inicial.svg)|
 
+Y el modelo establecido en clase
 
-Biblioteca -- Documento
-Documento -- Autor
-Documento -- Titulo
-Documento -- Keywords
-
-Class Biblioteca {
-List<Documento> documento
-}
-
-Class Documento {
-int id
-Titulo titulo
-String tipo
-Autor[] autor
-String[] keywords
-String año de publicacion
-}
-
-Class Titulo {
-int id
-string name
-}
-
-Class Autor {
-int id
-String name
-}
-
-Class Keywords {
-int id
-String keyword
-}
-@enduml
+|![](/images/modelo-masias.svg)|
