@@ -11,6 +11,9 @@ public class Autor {
         this.apellido = apellido;
     }
 
+    public Autor() {
+    }
+
     public String getNombre() {
         return nombre;
     }

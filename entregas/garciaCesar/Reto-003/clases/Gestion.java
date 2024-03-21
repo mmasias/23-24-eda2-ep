@@ -1,72 +1,119 @@
 package clases;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Gestion {
-    private ArrayList<Documento> documentos;
+    private List<Documento> documentos;
+    private List<Autor> autores;
+    private List<DocumentoPalabra> documentoPalabras;
+    private List<DocumentoAutor> documentoAutores;
+    private Scanner scanner;
 
-    public Gestion(ArrayList<Documento> documentos) {
-        this.documentos = documentos;
+    public Gestion() {
+        this.documentos = new ArrayList<>();
+        this.autores = new ArrayList<>();
+        this.documentoPalabras = new ArrayList<>();
+        this.documentoAutores = new ArrayList<>();
+        this.scanner = new Scanner(System.in);
     }
 
-    public void agregar() {
+    public void listarDocumento() {
+        System.out.println("Lista de documentos:\n");
+        for (Documento documento : documentos) {
+            System.out.println("    " + documento.toString());
+        }
+    }
 
+    public void agregarDocumento() {
+        Documento documento = new Documento();
+        System.out.println("Ingrese el ISBN del documento");
+        documento.setIsbn(scanner.nextLong());
         System.out.println("Ingrese el titulo del documento");
-        Scanner sc = new Scanner(System.in);
-        String titulo = sc.nextLine();
+        documento.setTitulo(scanner.nextLine());
         System.out.println("Ingrese el año de publicacion");
-        int año = sc.nextInt();
+        documento.setAnoDePublicacion(scanner.nextInt());
         System.out.println("Ingrese el tipo de documento");
         System.out.println("1. LIBRO 2. REVISTA 3. ARTICULO 4. PAPER");
-        int opcion = sc.nextInt();
-        Tipo tipo = null;
+        int opcion = scanner.nextInt();
         switch (opcion) {
             case 1:
-                tipo = Tipo.LIBRO;
+                documento.setTipo(Tipo.LIBRO);
                 break;
             case 2:
-                tipo = Tipo.REVISTA;
+                documento.setTipo(Tipo.REVISTA);
                 break;
             case 3:
-                tipo = Tipo.ARTICULO;
+                documento.setTipo(Tipo.ARTICULO);
                 break;
             case 4:
-                tipo = Tipo.PAPER;
+                documento.setTipo(Tipo.PAPER);
                 break;
             default:
                 break;
         }
-        boolean agregar = true;
-        ArrayList<Autor> autores = new ArrayList<Autor>();
-        do {
-            System.out.println("Ingrese el nombre del autor");
-            Scanner sc2 = new Scanner(System.in);
-            String nombre = sc2.nextLine();
-            System.out.println("Ingrese el apellido del autor");
-            String apellido = sc2.nextLine();
-            Autor autor = new Autor(nombre, apellido);
-            autores.add(autor);
-            System.out.println("Desea agregar otro autor? (si-no)");
-            String respuesta = sc2.nextLine();
-            if (respuesta.equals("no")) {
-                agregar = false;
-            } else {
-                agregar = true;
-            }
-        } while (agregar);
-        Documento documento = new Documento(titulo, año, autores, tipo);
-        String palabra = "";
-        do {
-            System.out.println("Introduzca palabras clave (fin-para terminar)");
-            palabra = sc.nextLine();
-            if (!palabra.equals("fin")) {
-                documento.añadirPalabraClave(palabra);
-            }
+        agregarDocumento(documento);
+    }
 
-        } while (!palabra.equals("fin"));
+    public boolean existeAutor(int id) {
+        for (Autor autor : autores) {
+            if (autor.getId() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void listarAutores() {
+        System.out.println("Lista de autores:\n");
+        for (Autor autor : autores) {
+            System.out.println(autor.toString());
+        }
+    }
+
+    public void agregarDocumento(Documento documento) {
         documentos.add(documento);
+        System.out.println("Documento agregado exitosamente.");
+        String respuesta = null;
+        do {
+            System.out.println("Desea agregar autores? (si-no)");
+            respuesta = scanner.nextLine();
+            if (respuesta.equals("no")) {
+                break;
+            }
+            listarAutores();
+            System.out.println("Escoja de la lista o ingrese un nuevo autor");
+            respuesta = scanner.nextLine();
+            if (respuesta.equals("nuevo")) {
+                Autor autor = agregarAutor();
+                añadirRelacion(autor.getId(), documento.getIsbn());
+            } else {
+                if (existeAutor(Integer.parseInt(respuesta))) {
+                    añadirRelacion(Integer.parseInt(respuesta), documento.getIsbn());
 
+                } else {
+                    System.out.println("El autor no existe");
+                }
+            }
+        } while (respuesta.equals("si"));
+    }
+
+    public void añadirRelacion(int idAutor, long isbnDocumento) {
+        DocumentoAutor documentoAutor = new DocumentoAutor(idAutor, isbnDocumento);
+        documentoAutores.add(documentoAutor);
+    }
+
+    public Autor agregarAutor() {
+        Autor autor = new Autor();
+        System.out.println("Ingrese el ID del autor");
+        autor.setId(scanner.nextInt());
+        System.out.println("Ingrese el nombre del autor");
+        autor.setNombre(scanner.nextLine());
+        System.out.println("Ingrese el apellido del autor");
+        autor.setApellido(scanner.nextLine());
+        autores.add(autor);
+        return autor;
     }
 
     public void modificar() {
@@ -147,7 +194,7 @@ public class Gestion {
                 }
             }
         }
-    
+
         if (!autorEncontrado) {
             System.out.println("No se encontró ningún autor con ese nombre.");
             return;
@@ -161,23 +208,23 @@ public class Gestion {
 
         System.out.println("Seleccione el número del documento que desea modificar:");
         int opcion = sc.nextInt();
-    
+
         if (opcion < 1 || opcion > documentosDelAutor.size()) {
             System.out.println("Opción no válida.");
             return;
         }
-    
+
         Documento documentoSeleccionado = documentosDelAutor.get(opcion - 1);
 
         System.out.println("Ingrese el nuevo titulo del documento:");
         sc.nextLine();
         String nuevoTitulo = sc.nextLine();
         documentoSeleccionado.setTitulo(nuevoTitulo);
-    
+
         System.out.println("Ingrese el nuevo año de publicacion:");
         int nuevoAño = sc.nextInt();
         documentoSeleccionado.setAnoDePublicacion(nuevoAño);
-    
+
         System.out.println("Ingrese el nuevo tipo de documento:");
         System.out.println("1. LIBRO 2. REVISTA 3. ARTICULO 4. PAPER");
         opcion = sc.nextInt();
@@ -202,7 +249,7 @@ public class Gestion {
 
         ArrayList<Autor> autores = new ArrayList<>();
         boolean agregar = true;
-        sc.nextLine(); 
+        sc.nextLine();
         do {
             System.out.println("Ingrese el nombre del autor:");
             String nombre = sc.nextLine();
@@ -210,7 +257,7 @@ public class Gestion {
             String apellido = sc.nextLine();
             Autor autor = new Autor(nombre, apellido);
             autores.add(autor);
-    
+
             System.out.println("Desea agregar otro autor? (si-no)");
             String respuesta = sc.nextLine();
             agregar = respuesta.equalsIgnoreCase("si");
@@ -227,7 +274,7 @@ public class Gestion {
             }
         } while (!palabra.equals("fin"));
         documentoSeleccionado.setPalabrasClave(palabrasClave);
-    
+
         System.out.println("Documento modificado exitosamente.");
     }
 
@@ -251,6 +298,7 @@ public class Gestion {
             }
         }
     }
+
     public void buscarPorAutor() {
         System.out.println("\n Ingrese el nombre del autor a buscar");
         Scanner sc = new Scanner(System.in);
@@ -267,12 +315,13 @@ public class Gestion {
                     }
                     System.out.println("    Palabras clave: ");
                     for (String palabra : documento.getPalabrasClave()) {
-                        
+
                     }
                 }
             }
         }
     }
+
     public void buscarPorPalabrasClave() {
         System.out.println("\n Ingrese la palabra clave a buscar");
         Scanner sc = new Scanner(System.in);

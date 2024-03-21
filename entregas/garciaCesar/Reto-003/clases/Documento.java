@@ -6,6 +6,9 @@ public  class Documento {
     private int añoDePublicacion;
     private Tipo tipo;
 
+    public Documento() {
+    }
+
     public Documento(long isbn, String titulo, int anoDePublicacion, Tipo tipo) {
         this.isbn = isbn;
         this.titulo = titulo;
@@ -43,5 +46,9 @@ public  class Documento {
 
     public void setTipo(Tipo tipo) {
         this.tipo = tipo;
+    }
+
+    public String toString() {
+        return "-> ISBN: " + isbn + "\n" + "-> Titulo: " + titulo + "\n" + "-> Año de publicacion: " + añoDePublicacion + "\n" + "-> Tipo: " + tipo + "\n";
     }
 }
