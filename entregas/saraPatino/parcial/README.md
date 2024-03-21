@@ -18,4 +18,4 @@ Mi proposito con este proyecto es combinar los dos proyectos para crear una vers
 
 ### Modelo Final
 
-Se puede visualizar ejecutar a [aqui](Library.java)
+Se puede visualizar ejecutar a [aqui](App.java)

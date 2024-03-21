@@ -4,13 +4,18 @@ class Document {
     private static int contadorIds = 0;
     private int id;
     private Title title;
-    private String tipo;
+    private String type;
+    private String language;
     private Author[] authors;
     private String[] keywords;
     private String publishYear;
 
-    public Document() {
+    public Document(Title title, String type, String language, String publishYear) {
         this.id = ++contadorIds;
+        this.title = title;
+        this.type = type;
+        this.language = language;
+        this.publishYear = publishYear;
     }
 
     public int getId() {
@@ -21,17 +26,14 @@ class Document {
         return title;
     }
 
-    public void setTitle(Title title) {
-        this.title = title;
-    }
-
     public String getType() {
-        return tipo;
+        return type;
     }
 
-    public void setType(String tipo) {
-        this.tipo = tipo;
+    public String getLanguage() {
+        return language;
     }
+
 
     public Author[] getAuthors() {
         return authors;
@@ -41,19 +43,18 @@ class Document {
         this.authors = authors;
     }
 
+    public void setKeywords(String[] keywords) {
+        this.keywords = keywords;
+    }
+
+
     public String[] getKeywords() {
         return keywords;
     }
 
-    public void setKeywords(String[] keywords) {
-        this.keywords = keywords;
-    }
 
     public String getPublishYear() {
         return publishYear;
     }
 
-    public void setPublishYear(String publishYear) {
-        this.publishYear = publishYear;
-    }
 }
