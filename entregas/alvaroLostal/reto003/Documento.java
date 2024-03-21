@@ -1,5 +1,3 @@
-package classes;
-
 import java.util.ArrayList;
 
 public class Documento {
@@ -8,7 +6,7 @@ public class Documento {
     private ArrayList<Autor> autores;
     private ArrayList<String> palabrasClave;
     private Tipo tipo;
-
+    
     public Documento(String titulo, int año, ArrayList<Autor> autores, ArrayList<String> palabrasClave, Tipo tipo) {
         this.titulo = titulo;
         this.año = año;
