@@ -4,48 +4,48 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-class Biblioteca {
-    List<Documento> documentos;
+class Library {
+    List<Document> documents;
 
-    public Biblioteca() {
-        this.documentos = new ArrayList<>();
+    public Library() {
+        this.documents = new ArrayList<>();
     }
 
-    public void agregarDocumento(Documento documento) {
-        this.documentos.add(documento);
+    public void addDocument(Document document) {
+        this.documents.add(document);
     }
 
-    public List<Documento> buscarDocumento(String criterio, String valor) {
-        List<Documento> resultados = new ArrayList<>();
-        for (Documento documento : documentos) {
+    public List<Document> searchDocument(String criterio, String valor) {
+        List<Document> resultados = new ArrayList<>();
+        for (Document document : documents) {
             switch (criterio) {
                 case "titulo":
-                    if (documento.getTitulo().getName().equalsIgnoreCase(valor)) {
-                        resultados.add(documento);
+                    if (document.getTitle().getName().equalsIgnoreCase(valor)) {
+                        resultados.add(document);
                     }
                     break;
                 case "autor":
-                    for (Autor autor : documento.getAutores()) {
-                        if (autor.getName().equalsIgnoreCase(valor)) {
-                            resultados.add(documento);
+                    for (Author author : document.getAuthors()) {
+                        if (author.getName().equalsIgnoreCase(valor)) {
+                            resultados.add(document);
                             break;
                         }
                     }
                     break;
                 case "año":
-                    if (documento.getAñoPublicacion().equalsIgnoreCase(valor)) {
-                        resultados.add(documento);
+                    if (document.getPublishYear().equalsIgnoreCase(valor)) {
+                        resultados.add(document);
                     }
                     break;
                 case "tipo":
-                    if (documento.getTipo().equalsIgnoreCase(valor)) {
-                        resultados.add(documento);
+                    if (document.getType().equalsIgnoreCase(valor)) {
+                        resultados.add(document);
                     }
                     break;
                 case "keyword":
-                    for (String keyword : documento.getKeywords()) {
+                    for (String keyword : document.getKeywords()) {
                         if (keyword.equalsIgnoreCase(valor)) {
-                            resultados.add(documento);
+                            resultados.add(document);
                             break;
                         }
                     }
@@ -55,18 +55,18 @@ class Biblioteca {
         return resultados;
     }
 
-    public void mostrarDocumentos(List<Documento> documentos) {
-        for (Documento documento : documentos) {
-            System.out.println("ID: " + documento.getId());
-            System.out.println("Título: " + documento.getTitulo().getName());
-            System.out.println("Tipo: " + documento.getTipo());
-            System.out.println("Autores:");
-            for (Autor autor : documento.getAutores()) {
-                System.out.println("- " + autor.getName());
+    public void mostrarDocumentos(List<Document> documents) {
+        for (Document document : documents) {
+            System.out.println("ID: " + document.getId());
+            System.out.println("Título: " + document.getTitle().getName());
+            System.out.println("Tipo: " + document.getType());
+            System.out.println("Authors:");
+            for (Author author : document.getAuthors()) {
+                System.out.println("- " + author.getName());
             }
-            System.out.println("Año de Publicación: " + documento.getAñoPublicacion());
+            System.out.println("Año de Publicación: " + document.getPublishYear());
             System.out.println("Keywords:");
-            for (String keyword : documento.getKeywords()) {
+            for (String keyword : document.getKeywords()) {
                 System.out.println("- " + keyword);
             }
             System.out.println();
@@ -74,7 +74,7 @@ class Biblioteca {
     }
 
     public static void main(String[] args) {
-        Biblioteca biblioteca = new Biblioteca();
+        Library biblioteca = new Library();
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -87,25 +87,25 @@ class Biblioteca {
 
             switch (opcion) {
                 case 1:
-                    Documento nuevoDocumento = new Documento();
+                    Document nuevoDocumento = new Document();
                     System.out.print("Ingrese el título del documento: ");
-                    nuevoDocumento.setTitulo(new Titulo(scanner.nextLine()));
+                    nuevoDocumento.setTitle(new Title(scanner.nextLine()));
 
                     System.out.print("Ingrese el tipo del documento: ");
-                    nuevoDocumento.setTipo(scanner.nextLine());
+                    nuevoDocumento.setType(scanner.nextLine());
 
                     System.out.print("Ingrese el año de publicación del documento: ");
-                    nuevoDocumento.setAñoPublicacion(scanner.nextLine());
+                    nuevoDocumento.setPublishYear(scanner.nextLine());
 
                     System.out.print("Ingrese la cantidad de autores del documento: ");
                     int numAutores = scanner.nextInt();
                     scanner.nextLine(); // Limpiar el buffer
-                    Autor[] autores = new Autor[numAutores];
+                    Author[] authors = new Author[numAutores];
                     for (int i = 0; i < numAutores; i++) {
                         System.out.print("Ingrese el nombre del autor " + (i + 1) + ": ");
-                        autores[i] = new Autor(scanner.nextLine());
+                        authors[i] = new Author(scanner.nextLine());
                     }
-                    nuevoDocumento.setAutores(autores);
+                    nuevoDocumento.setAuthors(authors);
 
                     System.out.print("Ingrese la cantidad de keywords del documento: ");
                     int numKeywords = scanner.nextInt();
@@ -117,7 +117,7 @@ class Biblioteca {
                     }
                     nuevoDocumento.setKeywords(keywords);
 
-                    biblioteca.agregarDocumento(nuevoDocumento);
+                    biblioteca.addDocument(nuevoDocumento);
                     System.out.println("Documento agregado correctamente.\n");
                     break;
                 case 2:
@@ -134,22 +134,22 @@ class Biblioteca {
                     System.out.print("Ingrese el valor de búsqueda: ");
                     String valor = scanner.nextLine();
 
-                    List<Documento> resultados = null;
+                    List<Document> resultados = null;
                     switch (criterio) {
                         case 1:
-                            resultados = biblioteca.buscarDocumento("titulo", valor);
+                            resultados = biblioteca.searchDocument("titulo", valor);
                             break;
                         case 2:
-                            resultados = biblioteca.buscarDocumento("autor", valor);
+                            resultados = biblioteca.searchDocument("autor", valor);
                             break;
                         case 3:
-                            resultados = biblioteca.buscarDocumento("año", valor);
+                            resultados = biblioteca.searchDocument("año", valor);
                             break;
                         case 4:
-                            resultados = biblioteca.buscarDocumento("tipo", valor);
+                            resultados = biblioteca.searchDocument("tipo", valor);
                             break;
                         case 5:
-                            resultados = biblioteca.buscarDocumento("keyword", valor);
+                            resultados = biblioteca.searchDocument("keyword", valor);
                             break;
                         default:
                             System.out.println("Opción inválida.");

@@ -1,11 +1,11 @@
 package src;
 
-class Titulo {
+class Title {
     private static int contadorIds = 0;
     private int id;
     private String name;
 
-    public Titulo(String name) {
+    public Title(String name) {
         this.id = ++contadorIds;
         this.name = name;
     }
@@ -16,10 +16,6 @@ class Titulo {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String newName) {
-        this.name = newName;
     }
 
 }
