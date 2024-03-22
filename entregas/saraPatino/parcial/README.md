@@ -19,4 +19,4 @@ Mi proposito con este proyecto es combinar los dos proyectos para crear una vers
 ### Modelo Final
 ![Modelo Final](../images/modelo-final.svg)
 Descripción: Representación visual del modelo final desarrollado para este proyecto con la combinación de los dos proyectos.
-Se puede visualizar ejecutar a [aqui](App.java)
+Se puede visualizar ejecutar a [aqui](src/App.java)
