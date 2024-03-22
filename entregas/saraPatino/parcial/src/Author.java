@@ -1,12 +1,11 @@
 package src;
 
 class Author {
-    private static int contadorIds = 0;
     private int id;
     private String name;
 
-    public Author(String name) {
-        this.id = ++contadorIds;
+    public Author(int id, String name) {
+        this.id = id;
         this.name = name;
     }
 
@@ -16,6 +15,14 @@ class Author {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String toString() {
+        return "> Author{" +
+               "id=" + id +
+               ", name='" + name + '\'' +
+               '}';
     }
 
 }

@@ -49,12 +49,12 @@ class Document {
 class LibraryManager {
         - documents: List<Document>
 
-        + LibraryManager()
-        + addDocument(document: Document): void
-        + searchDocument(criterio: String, valor: String): List<Document>
-        + mostrarDocumentos(documents: List<Document>): void
-        + addDocument(): void
-        + searchOption(): void
+        - LibraryManager()
+        - addDocument(document: Document): void
+        - searchDocument(criterio: String, valor: String): List<Document>
+        - mostrarDocumentos(documents: List<Document>): void
+        - addDocument(): void
+        - searchOption(): void
         + startLibraryManager(): void
     }
 
