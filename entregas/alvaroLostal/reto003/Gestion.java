@@ -1,12 +1,17 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Gestion {
     private ArrayList<Documento> documentos;
+    private ArrayList<Autor> autores;
+    private ArrayList<Relacion> relaciones;
 
     public Gestion() {
         this.documentos = new ArrayList<>();
+        this.autores = new ArrayList<>();
+        this.relaciones = new ArrayList<>();
     }
 
     public void agregar(Documento documento) {

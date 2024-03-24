@@ -1,9 +1,11 @@
 public class Autor {
     private String nombre, apellido;
+    private int id;
 
-    public Autor(String nombre, String apellido) {
+    public Autor(String nombre, String apellido, int id) {
         this.nombre = nombre;
         this.apellido = apellido;
+        this.id = id;
     }
 
     public String getNombre() {
@@ -21,4 +23,14 @@ public class Autor {
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    
 }

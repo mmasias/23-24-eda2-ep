@@ -6,13 +6,16 @@ public class Documento {
     private ArrayList<Autor> autores;
     private ArrayList<String> palabrasClave;
     private Tipo tipo;
+    private int id;
     
-    public Documento(String titulo, int año, ArrayList<Autor> autores, ArrayList<String> palabrasClave, Tipo tipo) {
+    public Documento(String titulo, int año, ArrayList<Autor> autores, ArrayList<String> palabrasClave, Tipo tipo,
+            int id) {
         this.titulo = titulo;
         this.año = año;
         this.autores = autores;
         this.palabrasClave = palabrasClave;
         this.tipo = tipo;
+        this.id = id;
     }
 
     public String getTitulo() {
@@ -61,6 +64,14 @@ public class Documento {
 
     public void agregarPalabrasClave(String palabra) {
         this.palabrasClave.add(palabra);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
