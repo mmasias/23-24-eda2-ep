@@ -1,5 +1,4 @@
-package entregas.puenteDaniel.Reto003;
-
+package puenteDaniel;
 public class Autor {
     private String nombre, apellido;
     private int id;

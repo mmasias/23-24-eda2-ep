@@ -1,11 +1,9 @@
-package entregas.puenteDaniel.Reto003;
+package puenteDaniel;
 import java.util.ArrayList;
-
-
 
 public class Main {
     public static void main(String[] args) {
-        Gestion gestion = new Gestion(new ArrayList<Documento>());
+        Gestion gestion = new Gestion(new ArrayList<Texto>());
         gestion.menu();
     }
         
