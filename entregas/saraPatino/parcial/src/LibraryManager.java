@@ -29,6 +29,11 @@ public class LibraryManager {
     public void startLibraryManager() {
         System.out.println("Bienvenido al Gestor de Biblioteca");
         boolean isWorking = true;
+
+        addDefaulAuthors();
+        addDefaultKeywords();
+        addDefaulLanguages();
+
         while (isWorking) {
             System.out.println("Elige una opción:");
             System.out.println("1. Agregar un nuevo libro");
@@ -82,6 +87,7 @@ public class LibraryManager {
                 System.out.println(book);
                 System.out.println(getAuthorsByBookId(book.getId()));
                 System.out.println(getKeywordsByBookId(book.getId()));
+                System.out.println(getLanguagesByBookId(book.getId()));
             }
         }
     }
@@ -104,7 +110,7 @@ public class LibraryManager {
         } else {
             for (Book book : booksByKeyword) {
                 System.out.println(book);
-                System.out.println(getAuthorsByBookId(book.getId()));
+                System.out.println(getKeywordsByBookId(book.getId()));
             }
         }
     }
@@ -127,7 +133,7 @@ public class LibraryManager {
         } else {
             for (Book book : booksByLanguage) {
                 System.out.println(book);
-                System.out.println(getAuthorsByBookId(book.getId()));
+                System.out.println(getLanguagesByBookId(book.getId()));
             }
         }
     }
@@ -202,7 +208,6 @@ public class LibraryManager {
 
     private void addAuthor(Book book) {
         boolean addingAuthors = true;
-        addDefaulAuthors();
         while (addingAuthors) {
             System.out.println(
                     "Selecciona el ID del autor para asociar con el libro, o introduce 'nuevo' para añadir un nuevo autor:");
@@ -254,7 +259,6 @@ public class LibraryManager {
 
     private void addKeyword(Book book) {
         boolean addingKeywords = true;
-        addDefaultKeywords();
         while (addingKeywords) {
             System.out.println(
                     "Selecciona el ID de la keyword para asociar con el libro, o introduce 'nuevo' para añadir una nueva keyword:");
@@ -300,8 +304,7 @@ public class LibraryManager {
 
     private void addLanguage(Book book) {
         boolean addingLanguages = true;
-        
-        addDefaulLanguages();
+    
 
         while (addingLanguages) {
             System.out.println(
@@ -318,7 +321,7 @@ public class LibraryManager {
             } else {
                 try {
                     int languageId = Integer.parseInt(input);
-                    addRelationKeyword(book.getId(), languageId);
+                    addRelationLanguage(book.getId(), languageId);
                     System.out.println("Lenguaje asociado al libro.");
                 } catch (NumberFormatException e) {
                     System.out.println("Entrada no válida.");
@@ -354,6 +357,16 @@ public class LibraryManager {
         for (BookKeyword relation : relationsKeyword) {
             if (relation.getBookId() == bookId) {
                 result.add(findKeywordById(relation.getKeywordId()));
+            }
+        }
+        return result;
+    }
+
+    private List<Language> getLanguagesByBookId(int bookId) {
+        List<Language> result = new ArrayList<>();
+        for (BookLanguage relation : relationsLanguage) {
+            if (relation.getBookId() == bookId) {
+                result.add(findLanguageById(relation.getLanguageId()));
             }
         }
         return result;
@@ -416,6 +429,15 @@ public class LibraryManager {
         return null;
     }
 
+    private Language findLanguageById(int languageId) {
+        for (Language language : languages) {
+            if (language.getId() == languageId) {
+                return language;
+            }
+        }
+        return null;
+    }
+
     private void listAuthors() {
         if (authors.isEmpty()) {
             System.out.println("> No hay autores disponibles.");
@@ -430,8 +452,8 @@ public class LibraryManager {
         if (keywords.isEmpty()) {
             System.out.println("> No hay keywords disponibles.");
         } else {
-            for (Keyword author : keywords) {
-                System.out.println("ID: " + author.getId() + ", Keyword: " + author.getKeyword());
+            for (Keyword keyword : keywords) {
+                System.out.println("ID: " + keyword.getId() + ", Keyword: " + keyword.getKeyword());
             }
         }
     }
@@ -440,8 +462,8 @@ public class LibraryManager {
         if (languages.isEmpty()) {
             System.out.println("> No hay languages disponibles.");
         } else {
-            for (Language author : languages) {
-                System.out.println("ID: " + author.getId() + ", Language: " + author.getLanguage());
+            for (Language language : languages) {
+                System.out.println("ID: " + language.getId() + ", Language: " + language.getLanguage());
             }
         }
     }
