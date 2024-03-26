@@ -37,4 +37,8 @@ public class Autor {
     public void setId(int id) {
         this.id = id;
     }
+
+    public String toString() {
+        return "-> ID: " + id + "\n" + "-> Nombre: " + nombre + "\n" + "-> Apellido: " + apellido + "\n";
+    }
 }
