@@ -56,6 +56,47 @@ public class Gestion {
         agregarDocumento(documento);
     }
 
+    public void agregarDocumento(Documento documento) {
+        documentos.add(documento);
+        System.out.println("Documento agregado exitosamente.");
+        String respuesta = null;
+        do {
+            System.out.println("Desea agregar autores? (si-no)");
+            respuesta = scanner.nextLine();
+            if (respuesta.equals("no")) {
+                break;
+            }
+            listarAutores();
+            System.out.println("Escoja de la lista o escriba 'nuevo' para agregar un nuevo autor:");
+            respuesta = scanner.nextLine();
+            if (respuesta.equals("nuevo")) {
+                Autor autor = agregarAutor();
+                añadirRelacion(autor.getId(), documento.getIsbn());
+            } else {
+                if (existeAutor(Integer.parseInt(respuesta))) {
+                    añadirRelacion(Integer.parseInt(respuesta), documento.getIsbn());
+
+                } else {
+                    System.out.println("El autor no existe");
+                }
+            }
+        } while (respuesta.equals("si"));
+        do {
+            System.out.println("Desea agregar palabras clave? (si-no)");
+            respuesta = scanner.nextLine();
+            if (respuesta.equals("no")) {
+                break;
+            }
+            System.out.println("Escriba la palabra clave:");
+            respuesta = scanner.nextLine();
+            if (!existePalabraClave(respuesta)) {
+                agregarPalabraClave(respuesta, documento.getIsbn());
+            } else {
+                System.out.println("La palabra clave ya existe");
+            }
+        } while (respuesta.equals("si"));
+    }
+
     public boolean existeAutor(int id) {
         for (Autor autor : autores) {
             if (autor.getId() == id) {
@@ -72,38 +113,6 @@ public class Gestion {
         }
     }
 
-    public void agregarDocumento(Documento documento) {
-        documentos.add(documento);
-        System.out.println("Documento agregado exitosamente.");
-        String respuesta = null;
-        do {
-            System.out.println("Desea agregar autores? (si-no)");
-            respuesta = scanner.nextLine();
-            if (respuesta.equals("no")) {
-                break;
-            }
-            listarAutores();
-            System.out.println("Escoja de la lista o ingrese un nuevo autor");
-            respuesta = scanner.nextLine();
-            if (respuesta.equals("nuevo")) {
-                Autor autor = agregarAutor();
-                añadirRelacion(autor.getId(), documento.getIsbn());
-            } else {
-                if (existeAutor(Integer.parseInt(respuesta))) {
-                    añadirRelacion(Integer.parseInt(respuesta), documento.getIsbn());
-
-                } else {
-                    System.out.println("El autor no existe");
-                }
-            }
-        } while (respuesta.equals("si"));
-    }
-
-    public void añadirRelacion(int idAutor, long isbnDocumento) {
-        DocumentoAutor documentoAutor = new DocumentoAutor(idAutor, isbnDocumento);
-        documentoAutores.add(documentoAutor);
-    }
-
     public Autor agregarAutor() {
         Autor autor = new Autor();
         System.out.println("Ingrese el ID del autor");
@@ -114,6 +123,74 @@ public class Gestion {
         autor.setApellido(scanner.nextLine());
         autores.add(autor);
         return autor;
+    }
+
+    public boolean existePalabraClave(String palabra) {
+        for (DocumentoPalabra documentoPalabra : documentoPalabras) {
+            if (documentoPalabra.getPalabraClave().equals(palabra)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void añadirRelacion(int idAutor, long isbnDocumento) {
+        DocumentoAutor documentoAutor = new DocumentoAutor(idAutor, isbnDocumento);
+        documentoAutores.add(documentoAutor);
+    }
+
+    public void agregarPalabraClave(String palabra, long isbnDocumento) {
+        DocumentoPalabra documentoPalabra = new DocumentoPalabra(isbnDocumento, palabra);
+        documentoPalabras.add(documentoPalabra);
+
+    }
+
+    public Documento encontrarDocumento(long isbn) {
+        for (Documento documento : documentos) {
+            if (documento.getIsbn() == isbn) {
+                return documento;
+            }
+        }
+        return null;
+    }
+
+    public Autor encontrarAutor(int id) {
+        for (Autor autor : autores) {
+            if (autor.getId() == id) {
+                return autor;
+            }
+        }
+        return null;
+    }
+
+    public List<Autor> encontrarAutorPorDocumento(long isbn) {
+        List<Autor> autoresDocumento = new ArrayList<>();
+        for (DocumentoAutor documentoAutor : documentoAutores) {
+            if (documentoAutor.getDocumentoIsbn()== isbn) {
+                autoresDocumento.add(encontrarAutor(documentoAutor.getAutorId()));
+            }
+        }
+        return autoresDocumento;
+    }
+
+    public List<String> encontrarPalabrasClavePorDocumento(long isbn) {
+        List<String> palabrasClaveDocumento = new ArrayList<>();
+        for (DocumentoPalabra documentoPalabra : documentoPalabras) {
+            if (documentoPalabra.getDocumentoIsbn() == isbn) {
+                palabrasClaveDocumento.add(documentoPalabra.getPalabraClave());
+            }
+        }
+        return palabrasClaveDocumento;
+    }
+
+    public List<Documento> encontrarDocumentosPorAutor(int idAutor) {
+        List<Documento> documentosAutor = new ArrayList<>();
+        for (DocumentoAutor documentoAutor : documentoAutores) {
+            if (documentoAutor.getAutorId() == idAutor) {
+                documentosAutor.add(encontrarDocumento(documentoAutor.getDocumentoIsbn()));
+            }
+        }
+        return documentosAutor;
     }
 
     public void modificar() {
