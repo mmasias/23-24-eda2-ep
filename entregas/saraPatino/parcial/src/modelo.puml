@@ -2,13 +2,17 @@
 LibraryManager --  Author: Manages
 LibraryManager -- Book: Manages
 LibraryManager --  Keyword: Manages
+LibraryManager --  Language: Manages
 LibraryManager --  BookKeyword: Manages
 LibraryManager --  BookAuthor: Manages
+LibraryManager --  BookLanguage: Manages
 App .. LibraryManager : creates
 Book "1" -l- "0..*" BookAuthor : contains
 Book "1" -l- "0..*" BookKeyword : contains
 Author "1" --r- "0..*" BookAuthor : contains
 Keyword"1" --r- "0..*" BookKeyword : contains
+Book "1" -l- "0..*" BookLanguage : contains
+Language "1" --r- "0..*" BookLanguage : contains
 
 
 
@@ -21,14 +25,26 @@ class Author {
         +String toString()
     }
 
-class Keyword{
+class Keyword {
         - id: int
         - name: String
 
         + Keyword(name: String)
         + getId(): int
         + getName(): String
+        + String toString()
     }
+
+class Language {
+        - id: int
+        - name: String
+
+        + Language(name: String)
+        + getId(): int
+        + getName(): String
+        + String toString()
+    }
+
 
 class BookAuthor {
         -int bookId
@@ -56,6 +72,15 @@ class BookKeyword {
         +int getKeywordId()
     }
 
+class BookLanguage {
+        -int bookId
+        -int languageId
+        +BookLanguage(int bookId, int languageId)
+        +int getBookId()
+        +int getLanguageId()
+    }
+
+
 
 
 class LibraryManager {
@@ -68,11 +93,16 @@ class LibraryManager {
 
         + LibraryManager()
         + startLibraryManager(): void
+        - addDefaulAuthors()
+        - addDefaultKeywords() : void
+        - addDefaulLanguages() : void
         - listBooks(): void
         - listBooksByKeywords(): void
         - listBooksByKeywords(keywordId: int): void
         - listBooksByAuthor(): void
         - listBooksByAuthor(authorId: int): void
+        - listBooksByLanguages(): void
+        - listBooksByLanguages(languageId: int): void
         - addBook(): void
         - addBook(book: Book): void
         - addAuthor(book: Book): void
@@ -80,16 +110,22 @@ class LibraryManager {
         - addRelationAuthor(bookId: int, authorId: int): void
         - addKeyword(book: Book): void
         - addKeyword(keyword: Keyword): void
+        - addLanguage(book: Book): void
+        - addLanguage(language: Language): void
         - addRelationKeyword(bookId: int, keywordId: int): void
         - getAuthorsByBookId(bookId: int): List<Author>
         - getKeywordsByBookId(bookId: int): List<Keyword>
+        - getLanguagesByBookId(bookId: int): List<Languages>
         - getBooksByKeywordId(keywordId: int): List<Book>
         - getBooksByAuthorId(authorId: int): List<Book>
+        - getBooksByLanguageId(languageId: int): List<Book>
         - findBookById(bookId: int): Book
         - findAuthorById(authorId: int): Author
         - findKeywordById(keywordId: int): Keyword
+        - findLanguageById(languageId: int): Language
         - listAuthors(): void
         - listKeywords(): void
+        - listLanguages(): void
     }
 
 class App {
