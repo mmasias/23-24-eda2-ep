@@ -11,6 +11,8 @@ public class LibraryManager {
     private List<Keyword> keywords;
     private List<BookAuthor> relationsAuthor;
     private List<BookKeyword> relationsKeyword;
+    private List<BookLanguage> relationsLanguage;
+    private List<Language> languages;
     private Scanner scanner;
 
     public LibraryManager() {
@@ -19,6 +21,8 @@ public class LibraryManager {
         this.keywords = new ArrayList<>();
         this.relationsAuthor = new ArrayList<>();
         this.relationsKeyword = new ArrayList<>();
+        this.relationsLanguage = new ArrayList<>();
+        this.languages = new ArrayList<>();
         this.scanner = new Scanner(System.in);
     }
 
@@ -32,6 +36,7 @@ public class LibraryManager {
             System.out.println("3. Listar autores");
             System.out.println("5. Listar libros por keyword");
             System.out.println("6. Listar libros por autor");
+            System.out.println("7. Listar libros por lenguaje");
             System.out.println("9. Salir");
             String choice = scanner.nextLine();
 
@@ -53,6 +58,9 @@ public class LibraryManager {
                     break;
                 case "6":
                     listBooksByAuthor();
+                    break;
+                case "7":
+                    listBooksByLanguages();
                     break;
                 case "9":
                     System.out.println("Saliendo del gestor de biblioteca...");
@@ -95,6 +103,29 @@ public class LibraryManager {
             System.out.println("> No hay libros asociados a esta keyword.");
         } else {
             for (Book book : booksByKeyword) {
+                System.out.println(book);
+                System.out.println(getAuthorsByBookId(book.getId()));
+            }
+        }
+    }
+
+    private void listBooksByLanguages() {
+        System.out.println("Introduce el ID del lenguage:");
+        listLanguages();
+        try {
+            int languageId = Integer.parseInt(scanner.nextLine());
+            listBooksByLanguages(languageId);
+        } catch (NumberFormatException e) {
+            System.out.println("Entrada no válida.");
+        }
+    }
+
+    private void listBooksByLanguages(int languageId) {
+        List<Book> booksByLanguage = getBooksByLanguageId(languageId);
+        if (booksByLanguage.isEmpty()) {
+            System.out.println("> No hay libros asociados a este lenguaje.");
+        } else {
+            for (Book book : booksByLanguage) {
                 System.out.println(book);
                 System.out.println(getAuthorsByBookId(book.getId()));
             }
@@ -149,10 +180,29 @@ public class LibraryManager {
         if ("s".equalsIgnoreCase(responseKeywords)) {
             addKeyword(book);
         }
+        System.out.println("¿Deseas añadir lenguajes a este libro? (s/n)");
+        String responseLanguages = scanner.nextLine();
+        if ("s".equalsIgnoreCase(responseLanguages)) {
+            addLanguage(book);
+        }
+    }
+
+    private void addDefaulAuthors() {
+        Author author1 = new Author(authors.size() + 1 , "J.K Rowling");
+        authors.add(author1);
+        Author author2 = new Author(authors.size() + 1 , "Sarah J Maas");
+        authors.add(author2);
+        Author author3 = new Author(authors.size() + 1 , "Louisa May Alcott");
+        authors.add(author3);
+        Author author4 = new Author(authors.size() + 1 , "Jane Austen");
+        authors.add(author4);
+        Author author5 = new Author(authors.size() + 1 , "Isaac Asimov");
+        authors.add(author5);
     }
 
     private void addAuthor(Book book) {
         boolean addingAuthors = true;
+        addDefaulAuthors();
         while (addingAuthors) {
             System.out.println(
                     "Selecciona el ID del autor para asociar con el libro, o introduce 'nuevo' para añadir un nuevo autor:");
@@ -189,8 +239,22 @@ public class LibraryManager {
         relationsAuthor.add(new BookAuthor(bookId, authorId));
     }
 
+    private void addDefaultKeywords() {
+        Keyword keyword1 = new Keyword(keywords.size() + 1 , "Fantasy");
+        keywords.add(keyword1);
+        Keyword keyword2 = new Keyword(keywords.size() + 1 , "Romance");
+        keywords.add(keyword2);
+        Keyword keyword3 = new Keyword(keywords.size() + 1 , "Science Fiction");
+        keywords.add(keyword3);
+        Keyword keyword4 = new Keyword(keywords.size() + 1 , "Clasic");
+        keywords.add(keyword4);
+        Keyword keyword5 = new Keyword(keywords.size() + 1 , "Mystery");
+        keywords.add(keyword5);
+    }   
+
     private void addKeyword(Book book) {
         boolean addingKeywords = true;
+        addDefaultKeywords();
         while (addingKeywords) {
             System.out.println(
                     "Selecciona el ID de la keyword para asociar con el libro, o introduce 'nuevo' para añadir una nueva keyword:");
@@ -227,6 +291,54 @@ public class LibraryManager {
         relationsKeyword.add(new BookKeyword(bookId, keywordId));
     }
 
+    private void addDefaulLanguages() {
+        Language english = new Language(languages.size() + 1 , "English");
+        languages.add(english);
+        Language espanol = new Language(languages.size() + 1 , "Espanol");
+        languages.add(espanol);
+    }
+
+    private void addLanguage(Book book) {
+        boolean addingLanguages = true;
+        
+        addDefaulLanguages();
+
+        while (addingLanguages) {
+            System.out.println(
+                    "Selecciona el ID del lenguaje para asociar con el libro, o introduce 'nuevo' para añadir un nuevo lenguaje:");
+            listLanguages();
+            String input = scanner.nextLine();
+            if ("nuevo".equalsIgnoreCase(input)) {
+                System.out.println("Introduce el nombre de el lenguaje que deseas agregar:");
+                String language = scanner.nextLine();
+                Language newLanguage = new Language(languages.size() + 1, language);
+                addLanguage(newLanguage);
+                addRelationLanguage(book.getId(), newLanguage.getId());
+                System.out.println("Language nuevo añadido y asociado al libro.");
+            } else {
+                try {
+                    int languageId = Integer.parseInt(input);
+                    addRelationKeyword(book.getId(), languageId);
+                    System.out.println("Lenguaje asociado al libro.");
+                } catch (NumberFormatException e) {
+                    System.out.println("Entrada no válida.");
+                }
+            }
+            System.out.println("¿Deseas añadir otro lenguaje a este libro? (s/n)");
+            if (!"s".equalsIgnoreCase(scanner.nextLine())) {
+                addingLanguages = !addingLanguages;
+            }
+        }
+    }
+
+    private void addLanguage(Language language) {
+        languages.add(language);
+    }
+
+    private void addRelationLanguage(int bookId, int languageId) {
+        relationsLanguage.add(new BookLanguage(bookId, languageId));
+    }
+
     private List<Author> getAuthorsByBookId(int bookId) {
         List<Author> result = new ArrayList<>();
         for (BookAuthor relation : relationsAuthor) {
@@ -251,6 +363,16 @@ public class LibraryManager {
         List<Book> result = new ArrayList<>();
         for (BookKeyword relation : relationsKeyword) {
             if (relation.getKeywordId() == keywordId) {
+                result.add(findBookById(relation.getBookId()));
+            }
+        }
+        return result;
+    }
+
+    private List<Book> getBooksByLanguageId(int languageId) {
+        List<Book> result = new ArrayList<>();
+        for (BookLanguage relation : relationsLanguage) {
+            if (relation.getLanguageId() == languageId) {
                 result.add(findBookById(relation.getBookId()));
             }
         }
@@ -310,6 +432,16 @@ public class LibraryManager {
         } else {
             for (Keyword author : keywords) {
                 System.out.println("ID: " + author.getId() + ", Keyword: " + author.getKeyword());
+            }
+        }
+    }
+
+    private void listLanguages() {
+        if (languages.isEmpty()) {
+            System.out.println("> No hay languages disponibles.");
+        } else {
+            for (Language author : languages) {
+                System.out.println("ID: " + author.getId() + ", Language: " + author.getLanguage());
             }
         }
     }
