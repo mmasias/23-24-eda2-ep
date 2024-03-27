@@ -154,10 +154,10 @@ public class Library {
         document.setTitle(newName);
     }
 
-    public void editDocumentName(String title) {
+    public void editDocumentName(Document document) {
         System.out.println("Introduce el nuevo título: ");
         String newTitle = userInput.nextLine();
-        editDocumentName(title, newTitle);
+        editDocumentName(document.getTitle(), newTitle);
         System.out.println("El título ha sido cambiado a " + searchDocumentByName(newTitle).getTitle());
 
     }
@@ -167,11 +167,11 @@ public class Library {
         document.setPublishingYear(newYear);
     }
 
-    public void editPublishingYear(String title) {
+    public void editPublishingYear(Document document) {
         System.out.println("Introduce el nuevo año de publicación: ");
         int newYear = userInput.nextInt();
-        editPublishingYear(title, newYear);
-        System.out.println("El año de publicación ha sido cambiado a " + searchDocumentByName(title).getPublishingYear());
+        editPublishingYear(document.getTitle(), newYear);
+        System.out.println("El año de publicación ha sido cambiado a " + document.getPublishingYear());
     }
 
     public void editKeyWord(String title, String oldKeyWord, String newKeyWord) {
@@ -181,15 +181,45 @@ public class Library {
         
     }
 
-    public void editKeyWord(String title) {
+    public void editKeyWord(Document document) {
         System.out.println("Introduce la palabra clave a editar: ");
         String oldKeyWord = userInput.nextLine();
 
         System.out.println("Introduce la nueva palabra clave: ");
         String newKeyWord = userInput.nextLine();
 
-        editKeyWord(title, oldKeyWord, newKeyWord);
+        editKeyWord(document.getTitle(), oldKeyWord, newKeyWord);
         System.out.println("La palabra clave " + oldKeyWord + " ha sido cambiada a " + newKeyWord);
+    }
+
+    public void editDocument() {
+        boolean isEditingRunning = true;
+
+        while (isEditingRunning) {
+            System.out.println("Introduce el título del documento: ");
+            String title = userInput.nextLine();
+            Document documentWanted = searchDocumentByName(title);
+            System.out.println("Seleccione la acción que desea realizar: ");
+            System.out.println("T - Editar Título | P - Editar Año de Publicación | K - Editar Palabra Clave | S - Salir");
+            String userResponse = userInput.nextLine();
+    
+            switch(userResponse) {
+                case "T": 
+                    editDocumentName(documentWanted);
+                    break;
+                case "P":
+                    editPublishingYear(documentWanted);
+                    break;
+                case "K":
+                    editKeyWord(documentWanted);
+                    break;
+                case "S": 
+                    isEditingRunning = false;
+                    userInput.close();
+                    break;
+            }
+        }
+      
     }
 
     public void deleteAllDocuments() {
