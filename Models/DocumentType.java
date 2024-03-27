@@ -1,10 +1,10 @@
 package Models;
 
 public enum DocumentType {
-    BOOK("Book"),
-    MAGAZINE("Magazine"),
-    ARTICLE("Article"),
-    SCIENTIFIC_PAPER("Scientific Paper");
+    BOOK("Libro"),
+    MAGAZINE("Revista"),
+    ARTICLE("Artículo"),
+    SCIENTIFIC_PAPER("Paper Científico");
 
 
     private String documentTypeName;
