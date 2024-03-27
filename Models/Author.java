@@ -23,8 +23,8 @@ public class Author {
         return surnames;
     }
 
-    @Override
-    public String toString() {
+    
+    public String toStringAuthor() {
         String fullAuthorInfo = "Author's Information: Id - " + id + ", Name - " + name + ", Surnames - " + surnames;
         return fullAuthorInfo;
     }
