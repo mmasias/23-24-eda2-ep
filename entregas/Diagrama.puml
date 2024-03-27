@@ -108,15 +108,15 @@ class Gestion {
     + menu(): void
 }
 
-class Main {
-    + main(args: String[]): void
-}
-
-MyScanner --> Gestion
-Documento --> Tipo
-Documento --> Gestion
+Tipo --> Documento
 Autor --> Gestion
 DocumentoPalabra --> Gestion
 DocumentoAutor --> Gestion
-Main --> Gestion
+Documento --> Gestion
+DocumentoAutor "0..*" -- "1" Autor
+DocumentoAutor "0..*" -- "1" Documento
+DocumentoPalabra "0..*" -- "1" Documento
+MyScanner --> Gestion
+
+
 @enduml
