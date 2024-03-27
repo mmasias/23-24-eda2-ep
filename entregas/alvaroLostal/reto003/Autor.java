@@ -1,6 +1,6 @@
 public class Autor {
-    private String nombre, apellido;
     private int id;
+    private String nombre, apellido;
 
     public Autor(String nombre, String apellido, int id) {
         this.nombre = nombre;

@@ -3,10 +3,13 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import javax.print.Doc;
+
 public class Gestion {
     private ArrayList<Documento> documentos;
     private ArrayList<Autor> autores;
     private ArrayList<Relacion> relaciones;
+    Scanner scanner = new Scanner(System.in);
 
     public Gestion() {
         this.documentos = new ArrayList<>();
@@ -14,8 +17,83 @@ public class Gestion {
         this.relaciones = new ArrayList<>();
     }
 
-    public void agregar(Documento documento) {
+    public void agregarDocumento(Documento documento) {
         documentos.add(documento);
+        System.out.println("Documento añadido. Deseas agregarle autores? (s/n)");
+        String respuesta = scanner.nextLine();
+        if ("s".equalsIgnoreCase(respuesta)) {
+            agregarAutor(documento);
+        }
+    }
+
+    public void agregarAutor() {
+        System.out.println("Ingrese el nombre del autor: ");
+        String nombre = scanner.nextLine();
+        System.out.println("Ingrese el apellido del autor: ");
+        String apellido = scanner.nextLine();
+        System.out.println("Ingrese el ID del autor: ");
+        int id = scanner.nextInt();
+        Autor autor = new Autor(nombre, apellido, id);
+        agregarAutor(autor);
+    }
+
+    public void agregarAutor(int id) {
+        System.out.println("Ingrese el nombre del autor: ");
+        String nombre = scanner.nextLine();
+        System.out.println("Ingrese el apellido del autor: ");
+        String apellido = scanner.nextLine();
+        Autor autor = new Autor(nombre, apellido, id);
+        agregarAutor(autor);
+    }
+
+    public void agregarAutor(Autor autor) {
+        autores.add(autor);
+    }
+
+    public void agregarAutor(Documento documento) {
+        listarAutores();
+        System.out.println("Ingrese el ID del autor que desea agregar: ");
+        int id = scanner.nextInt();
+        if(buscarAutorPorId(id)==null) {
+            agregarAutor(id);
+        }
+        Relacion relacion = new Relacion(documento.getId(), id);
+        relaciones.add(relacion);
+    }
+
+    public void listarDocumentos() {
+        for (Documento documento : documentos) {
+            System.out.println(documento);
+        }
+    }
+
+    public void listarAutores() {
+        for (Autor autor : autores) {
+            System.out.println(autor);
+        }
+    }
+
+    Documento buscarDocumentoPorId(int id) {
+        for (Documento documento : documentos) {
+            if (documento.getId() == id) {
+                return documento;
+            }
+        }
+        return null;
+    }
+
+    Autor buscarAutorPorId(int id) {
+        for (Autor autor : autores) {
+            if (autor.getId() == id) {
+                return autor;
+            }
+        }
+        return null;
+    }
+
+    public void añadirRelacion(Documento documento, Autor autor) {
+        Relacion relacion = new Relacion(documento.getId(), autor.getId());
+        relaciones.add(relacion);
     }
 
     public void modificar(Documento documento, String titulo, int año, ArrayList<Autor> autores,
@@ -26,6 +104,8 @@ public class Gestion {
         documento.setPalabrasClave(palabrasClave);
         documento.setTipo(tipo);
     }
+
+
 
     public ArrayList<Documento> buscar(String criterio, String valor) {
         ArrayList<Documento> resultado = new ArrayList<>();
@@ -83,8 +163,7 @@ public class Gestion {
         }
     }
 
-    public static void main(String[] args) {
-        Gestion biblioteca = new Gestion();
+    private void mostrarMenu(Gestion biblioteca) {
         Scanner scanner = new Scanner(System.in);
         int opcion;
 
@@ -130,44 +209,10 @@ public class Gestion {
         scanner.close();
     }
 
-    private static void agregarDocumento(Gestion biblioteca, Scanner scanner) {
-        System.out.println("Ingrese los detalles del documento:");
-        System.out.print("Título: ");
-        String titulo = scanner.nextLine();
-        System.out.print("Año: ");
-        int año = scanner.nextInt();
-        scanner.nextLine();
-
-        ArrayList<Autor> autores = new ArrayList<>();
-        System.out.println("Ingrese los autores del documento (escriba 'fin' para terminar):");
-        String nombreAutor;
-        do {
-            System.out.print("Nombre del autor: ");
-            nombreAutor = scanner.nextLine();
-            if (!nombreAutor.equalsIgnoreCase("fin")) {
-                System.out.print("Apellido del autor: ");
-                String apellidoAutor = scanner.nextLine();
-                autores.add(new Autor(nombreAutor, apellidoAutor));
-            }
-        } while (!nombreAutor.equalsIgnoreCase("fin"));
-
-        ArrayList<String> palabrasClave = new ArrayList<>();
-        System.out.println("Ingrese las palabras clave del documento (escriba 'fin' para terminar):");
-        String palabraClave;
-        do {
-            System.out.print("Palabra clave: ");
-            palabraClave = scanner.nextLine();
-            if (!palabraClave.equalsIgnoreCase("fin")) {
-                palabrasClave.add(palabraClave);
-            }
-        } while (!palabraClave.equalsIgnoreCase("fin"));
-
-        System.out.println("Ingrese el tipo del documento (LIBRO, REVISTA, ARTICULO, PAPER): ");
-        Tipo tipo = Tipo.valueOf(scanner.nextLine().toUpperCase());
-
-        Documento nuevoDocumento = new Documento(titulo, año, autores, palabrasClave, tipo);
-        biblioteca.agregar(nuevoDocumento);
-        System.out.println("Documento agregado correctamente.");
+    public static void main(String[] args) {
+        Gestion biblioteca = new Gestion();
+        biblioteca.mostrarMenu(biblioteca);
+        
     }
 
     private static void buscarDocumento(Gestion biblioteca, Scanner scanner) {
@@ -184,6 +229,7 @@ public class Gestion {
             System.out.println("Documentos encontrados:");
             for (Documento doc : resultado) {
                 System.out.println("-------------------------");
+                System.out.println("ID: " + doc.getId());
                 System.out.println("Título: " + doc.getTitulo());
                 System.out.println("Tipo: " + doc.getTipo());
                 System.out.println("Año: " + doc.getAño());
@@ -200,95 +246,6 @@ public class Gestion {
 
             }
             System.out.println("-------------------------");
-        }
-    }
-
-    private static void modificarDocumento(Gestion biblioteca, Scanner scanner) {
-        System.out.print("Ingrese el título del documento a modificar: ");
-        String titulo = scanner.nextLine();
-
-        ArrayList<Documento> resultado = biblioteca.buscar("titulo", titulo);
-        if (resultado.isEmpty()) {
-            System.out.println("No se encontró ningún documento con ese título.");
-        } else {
-            System.out.println("Documentos encontrados:");
-            for (int i = 0; i < resultado.size(); i++) {
-                Documento doc = resultado.get(i);
-                System.out.println((i + 1) + ". " + doc.getTitulo() + " - " + doc.getTipo() + " - " + doc.getAño());
-            }
-            System.out.print("Seleccione el número del documento que desea modificar: ");
-            int numDocumento = scanner.nextInt();
-            scanner.nextLine();
-
-            if (numDocumento < 1 || numDocumento > resultado.size()) {
-                System.out.println("Número de documento no válido.");
-            } else {
-                Documento documentoAModificar = resultado.get(numDocumento - 1);
-
-                System.out.println("Ingrese los nuevos detalles del documento:");
-                System.out.print("Nuevo título: ");
-                String nuevoTitulo = scanner.nextLine();
-                System.out.print("Nuevo año: ");
-                int nuevoAño = scanner.nextInt();
-                scanner.nextLine();
-
-                ArrayList<Autor> autores = new ArrayList<>();
-                System.out.println("Ingrese los nuevos autores del documento (escriba 'fin' para terminar):");
-                String nombreAutor;
-                do {
-                    System.out.print("Nombre del autor: ");
-                    nombreAutor = scanner.nextLine();
-                    if (!nombreAutor.equalsIgnoreCase("fin")) {
-                        System.out.print("Apellido del autor: ");
-                        String apellidoAutor = scanner.nextLine();
-                        autores.add(new Autor(nombreAutor, apellidoAutor));
-                    }
-                } while (!nombreAutor.equalsIgnoreCase("fin"));
-
-                ArrayList<String> palabrasClave = new ArrayList<>();
-                System.out.println("Ingrese las nuevas palabras clave del documento (escriba 'fin' para terminar):");
-                String palabraClave;
-                do {
-                    System.out.print("Palabra clave: ");
-                    palabraClave = scanner.nextLine();
-                    if (!palabraClave.equalsIgnoreCase("fin")) {
-                        palabrasClave.add(palabraClave);
-                    }
-                } while (!palabraClave.equalsIgnoreCase("fin"));
-
-                System.out.println("Ingrese el nuevo tipo del documento (LIBRO, REVISTA, ARTICULO, PAPER): ");
-                Tipo nuevoTipo = Tipo.valueOf(scanner.nextLine().toUpperCase());
-
-                biblioteca.modificar(documentoAModificar, nuevoTitulo, nuevoAño, autores, palabrasClave, nuevoTipo);
-                System.out.println("Documento modificado correctamente.");
-            }
-        }
-    }
-
-    private static void eliminarDocumento(Gestion biblioteca, Scanner scanner) {
-        System.out.print("Ingrese el título del documento a eliminar: ");
-        String titulo = scanner.nextLine();
-
-        ArrayList<Documento> resultado = biblioteca.buscar("titulo", titulo);
-        if (resultado.isEmpty()) {
-            System.out.println("No se encontró ningún documento con ese título.");
-        } else {
-            System.out.println("Documentos encontrados:");
-            for (int i = 0; i < resultado.size(); i++) {
-                Documento doc = resultado.get(i);
-                System.out.println((i + 1) + ". " + doc.getTitulo() + " - " + doc.getTipo() + " - " + doc.getAño());
-            }
-            System.out.print("Seleccione el número del documento que desea eliminar: ");
-            int numDocumento = scanner.nextInt();
-            scanner.nextLine();
-
-            if (numDocumento < 1 || numDocumento > resultado.size()) {
-                System.out.println("Número de documento no válido.");
-            } else {
-                Documento documentoAEliminar = resultado.get(numDocumento - 1);
-                biblioteca.eliminar(documentoAEliminar);
-                System.out.println("Documento eliminado correctamente.");
-            }
         }
     }
 }

@@ -1,12 +1,12 @@
 import java.util.ArrayList;
 
 public class Documento {
+    private int id;
     private String titulo;
     private int año;
     private ArrayList<Autor> autores;
     private ArrayList<String> palabrasClave;
     private Tipo tipo;
-    private int id;
     
     public Documento(String titulo, int año, ArrayList<Autor> autores, ArrayList<String> palabrasClave, Tipo tipo,
             int id) {
@@ -78,6 +78,7 @@ public class Documento {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("-------------------------\n");
+        sb.append("ID: ").append(id).append("\n");
         sb.append("Título: ").append(titulo).append("\n");
         sb.append("Año: ").append(año).append("\n");
         sb.append("Autores: ");
