@@ -3,21 +3,37 @@ import java.util.Scanner;
 
 public class Gestion {
     private ArrayList<Documento> documentos;
+    private ArrayList<Autor> autores;
+    private ArrayList<AutorDocumento> autorDocumentos;
+    Scanner scanner;
 
-    public Gestion(ArrayList<Documento> documentos) {
+    public Gestion(ArrayList<Documento> documentos, ArrayList<Autor> autores, ArrayList<AutorDocumento> autorDocumentos,
+            Scanner scanner) {
         this.documentos = documentos;
+        this.autores = autores;
+        this.autorDocumentos = autorDocumentos;
+        this.scanner = scanner;
+    }
+   
+    private void listarDocumentos() {
+        for(int i=0; i<documentos.size();i++){
+            System.out.println(documentos.get(i));
+        }
     }
 
-    public void agregar() {
+    private void agregarDocumento() {
 
         System.out.println("Ingrese el titulo del documento");
         Scanner sc = new Scanner(System.in);
         String titulo = sc.nextLine();
+
         System.out.println("Ingrese el año de publicacion");
         int año = sc.nextInt();
+
         System.out.println("Ingrese el tipo de documento");
         System.out.println("1. LIBRO 2. REVISTA 3. ARTICULO 4. PAPER");
         int opcion = sc.nextInt();
+
         Tipo tipo = null;
         switch (opcion) {
             case 1:
@@ -35,35 +51,13 @@ public class Gestion {
             default:
                 break;
         }
-        boolean agregar = true;
-        ArrayList<Autor> autores = new ArrayList<Autor>();
-        do {
-            System.out.println("Ingrese el nombre del autor");
-            Scanner sc2 = new Scanner(System.in);
-            String nombre = sc2.nextLine();
-            System.out.println("Ingrese el apellido del autor");
-            String apellido = sc2.nextLine();
-            Autor autor = new Autor(nombre, apellido);
-            autores.add(autor);
-            System.out.println("Desea agregar otro autor? (si-no)");
-            String respuesta = sc2.nextLine();
-            if (respuesta.equals("no")) {
-                agregar = false;
-            } else {
-                agregar = true;
-            }
-        } while (agregar);
-        Documento documento = new Documento(titulo, año, autores, tipo);
-        String palabra = "";
-        do {
-            System.out.println("Introduzca palabras clave (fin-para terminar)");
-            palabra = sc.nextLine();
-            if (!palabra.equals("fin")) {
-                documento.añadirPalabraClave(palabra);
-            }
+
+        System.out.println("Ingrese el id del documento");
+        int id = sc.nextInt();
+        scanner.nextLine();
 
 
-        } while (!palabra.equals("fin"));
+        Documento documento = new Documento(titulo, año, tipo,id);
         documentos.add(documento);
 
     }
@@ -223,7 +217,7 @@ public class Gestion {
             int opcion = sc.nextInt();
             switch (opcion) {
                 case 1:
-                    agregar();
+                    agregarDocumento();
                     break;
                 case 2:
                     modificar();
