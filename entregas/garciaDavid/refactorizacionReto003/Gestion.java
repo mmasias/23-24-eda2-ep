@@ -62,6 +62,40 @@ public class Gestion {
 
     }
 
+    private void agregarAutor(Documento documento){
+
+        System.out.println("Ingresa el id  del autor");
+        int id=scanner.nextInt();
+
+        System.out.println("Ingresa el nombre del autor");
+        String nombre=scanner.nextLine();
+
+        System.out.println("Ingresa el apellido del autor");
+        String apellido=scanner.nextLine();
+
+        Autor autor=new Autor(id, nombre, apellido);
+        autores.add(autor);
+    }
+
+    private void agregarRelacion(int documentoId,int autorId){
+        AutorDocumento autorDoc=new AutorDocumento(documentoId, autorId);
+        autorDocumentos.add(autorDoc);
+
+        Documento documento= buscarDocPorId(documentoId);
+        if (documento!=null) {
+            Autor autor= buscarAutorPorId(autorId);
+            if (autor!=null) {
+                agregarAutor(autor);                
+            }
+        }
+    }
+
+    
+
+
+
+
+
     public void modificar() {
         System.out.println("Ingrese el titulo del documento a modificar");
         Scanner sc = new Scanner(System.in);
