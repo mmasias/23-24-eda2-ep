@@ -25,8 +25,16 @@ public class Document {
         return title;
     }
 
+    public void setTitle(String name) {
+        this.title = name;
+    }
+
     public int getPublishingYear() {
         return publishingYear;
+    }
+
+    public void setPublishingYear(int year) {
+        this.publishingYear = year;
     }
 
     public DocumentType getDocumentType() {
