@@ -37,6 +37,11 @@ public class Document {
         return keyWords;
     }
 
+    public int searchKeyWordIndex(String word) {
+        int index = keyWords.indexOf(word);
+        return index;
+    }
+
     private String toStringKeyWords() {
         StringBuilder sb = new StringBuilder();
         for (String kW : keyWords) {
