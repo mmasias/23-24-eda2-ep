@@ -1,0 +1,122 @@
+@startuml
+
+class MyScanner {
+    - scanner: Scanner
+    + MyScanner()
+    + nextLine(): String
+    + nextLong(): long
+    + nextInt(): int
+    + nextInt2(): int
+    + nextDouble(): double
+    + close(): void
+    + nextIntInRange(min: int, max: int): int
+}
+
+enum Tipo {
+    LIBRO
+    REVISTA
+    ARTICULO
+    PAPER
+}
+
+class Documento {
+    - isbn: long
+    - titulo: String
+    - añoDePublicacion: int
+    - tipo: Tipo
+    + Documento()
+    + Documento(isbn: long, titulo: String, anoDePublicacion: int, tipo: Tipo)
+    + getIsbn(): long
+    + setIsbn(isbn: long): void
+    + getTitulo(): String
+    + setTitulo(titulo: String): void
+    + getAnoDePublicacion(): int
+    + setAnoDePublicacion(anoDePublicacion: int): void
+    + getTipo(): Tipo
+    + setTipo(tipo: Tipo): void
+    + toString(): String
+}
+
+class Autor {
+    - id: int
+    - nombre: String
+    - apellido: String
+    + Autor()
+    + Autor(id: int, nombre: String, apellido: String)
+    + getNombre(): String
+    + setNombre(nombre: String): void
+    + getApellido(): String
+    + setApellido(apellido: String): void
+    + getId(): int
+    + setId(id: int): void
+    + toString(): String
+}
+
+class DocumentoPalabra {
+    - documentoIsbn: long
+    - palabraClave: String
+    + DocumentoPalabra(documentoIsbn: long, palabraClave: String)
+    + getDocumentoIsbn(): long
+    + setDocumentoIsbn(documentoIsbn: long): void
+    + getPalabraClave(): String
+    + setPalabraClave(palabraClave: String): void
+}
+
+class DocumentoAutor {
+    - autorId: int
+    - documentoIsbn: long
+    + DocumentoAutor(autorId: int, documentoIsbn: long)
+    + getAutorId(): int
+    + setAutorId(autorId: int): void
+    + getDocumentoIsbn(): long
+    + setDocumentoIsbn(documentoIsbn: long): void
+}
+
+class Gestion {
+    - documentos: List<Documento>
+    - autores: List<Autor>
+    - documentoPalabras: List<DocumentoPalabra>
+    - documentoAutores: List<DocumentoAutor>
+    - scanner: MyScanner
+    + Gestion()
+    + agregarDocumento(): void
+    + agregarDocumento(documento: Documento): void
+    + agregarAutor(): Autor
+    + existeAutor(id: int): boolean
+    + existePalabraClave(palabra: String): boolean
+    + añadirRelacion(idAutor: int, isbnDocumento: long): void
+    + agregarPalabraClave(palabra: String, isbnDocumento: long): void
+    + encontrarDocumento(isbn: long): Documento
+    + encontrarAutor(id: int): Autor
+    + encontrarAutorPorDocumento(isbn: long): List<Autor>
+    + encontrarPalabrasClavePorDocumento(isbn: long): List<String>
+    + encontrarDocumentosPorAutor(idAutor: int): List<Documento>
+    + modificarDocumento(): void
+    + modificarDocumentoPorAutor(): void
+    + modificarTitulo(isbn: long): void
+    + modificarAnoDePublicacion(isbn: long): void
+    + modificarTipo(isbn: long): void
+    + modificarAutores(isbn: long): void
+    + modificarPalabrasClave(isbn: long): void
+    + listarDocumento(): void
+    + listarAutores(): void
+    + eliminarDocumento(): void
+    + quitarPalabraClave(palabra: String, isbnDocumento: long): boolean
+    + quitarAutor(idAutor: int, isbnDocumento: long): boolean
+    + listarPorAutor(): void
+    + menuModificar(): void
+    + menu(): void
+}
+
+class Main {
+    + main(args: String[]): void
+}
+
+MyScanner --> Gestion
+Documento --> Tipo
+Documento --> Gestion
+Autor --> Gestion
+DocumentoPalabra --> Gestion
+DocumentoAutor --> Gestion
+Main --> Gestion
+@enduml
