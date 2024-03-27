@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Gestion {
@@ -90,9 +91,40 @@ public class Gestion {
         }
     }
 
+    private List<Autor> obtenerAutorPorDocumentoId(int documentoId){
+        List<Autor> autores=new ArrayList<>();
+        for(int i=0;i<autorDocumentos.size();i++){
+            AutorDocumento autorDoc= autorDocumentos.get(i);
+            if (autorDoc.getDocumentoId()==documentoId) {
+                Autor autor= buscarDocumentoPorId(autorDoc.getAutorId());
+                if(autor!=null){
+                    autores.add(autor);
+                }
+            }
+        }
+        return autores;
+    }
+
+    private List<Documento> obtenerDocumentoPorAutorId(int autorId){
+        List<Documento> documentos=new ArrayList<>();
+
+        for(int i=0;i<autorDocumentos.size();i++){
+            AutorDocumento autorDoc= autorDocumentos.get(i);
+            if (autorDoc.getAutorId()==autorId) {
+                Documento libro= buscarDocumentoPorId(autorDoc.getDocumentoId());
+                if(libro!=null){
+                    documentos.add(libro);
+                }
+            }
+        }
+        return documentos;
+    }
+
+
+
+
+
     
-
-
 
 
 
