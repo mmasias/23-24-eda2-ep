@@ -6,8 +6,6 @@ public class Documento {
     private int año;
     private ArrayList<String> palabrasClave;
     private Tipo tipo;
-    
-    
 
     public Documento(int id, String titulo, int año, ArrayList<String> palabrasClave, Tipo tipo) {
         this.id = id;

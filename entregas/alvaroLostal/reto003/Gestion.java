@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -25,16 +24,23 @@ public class Gestion {
     }
 
     public void agregarDocumento() {
-        System.out.println("Ingrese el título del documento: ");
+        System.out.println("Ingrese los detalles del documento:");
+        System.out.print("Título: ");
         String titulo = scanner.nextLine();
-        System.out.println("Ingrese el año del documento: ");
+        System.out.print("Año: ");
         int año = scanner.nextInt();
+        scanner.nextLine();
         Tipo tipo = null;
-        try {
-            System.out.println("Ingrese el tipo del documento (LIBRO, REVISTA, ARTICULO, PAPER): ");
-            tipo = Tipo.valueOf(scanner.next().toUpperCase());
-        } catch (IllegalArgumentException e) {
-            System.out.println("Tipo de documento no válido. Por favor, ingrese uno de los siguientes: LIBRO, REVISTA, ARTICULO, PAPER");
+        boolean inputValido = false;
+        while (!inputValido) {
+            try {
+                System.out.println("Ingrese el tipo del documento (LIBRO, REVISTA, ARTICULO, PAPER): ");
+                tipo = Tipo.valueOf(scanner.next().toUpperCase());
+                inputValido = true;
+            } catch (IllegalArgumentException e) {
+                System.out.println("Tipo de documento no válido. Por favor, ingrese uno de los siguientes: LIBRO, REVISTA, ARTICULO, PAPER");
+                scanner.nextLine();
+            }
         }
         scanner.nextLine();
         System.out.println("Ingrese las palabras clave del documento (separadas por comas): ");
@@ -78,16 +84,25 @@ public class Gestion {
             }
             System.out.println("¿Deseas añadir otro autor a este libro? (s/n)");
             if (!"s".equalsIgnoreCase(scanner.nextLine())) {
-                agregarAutor = !agregarAutor;
+                agregarAutor = false;
             }
         }
     }
 
     public void listarDocumentos() {
-        for (Documento documento : documentos) {
-            System.out.println(documento);
+        if(documentos.isEmpty()){
+            System.out.println("No hay documentos en la biblioteca.");
+        } else {
+            for (Documento documento : documentos) {
+                System.out.println(documento);
+                System.out.println("Autores:");
+                ArrayList<Autor> autores = obtenerAutoresPorId(documento.getId());
+                for (Autor autor : autores) {
+                    System.out.println(autor);
+                }
+            }
+            System.out.println("-------------------------");
         }
-        System.out.println("-------------------------");
     }
 
     public void listarAutores() {
@@ -96,7 +111,7 @@ public class Gestion {
         }
     }
 
-    Documento buscarDocumentoPorId(int id) {
+    Documento obtenerDocumentoPorId(int id) {
         for (Documento documento : documentos) {
             if (documento.getId() == id) {
                 return documento;
@@ -105,7 +120,7 @@ public class Gestion {
         return null;
     }
 
-    Autor buscarAutorPorId(int id) {
+    Autor obtenerAutorPorId(int id) {
         for (Autor autor : autores) {
             if (autor.getId() == id) {
                 return autor;
@@ -114,32 +129,31 @@ public class Gestion {
         return null;
     }
 
-    ArrayList<Autor> buscarAutoresPorId(int idDocumento){
+    ArrayList<Autor> obtenerAutoresPorId(int idDocumento){
         ArrayList<Autor> autores = new ArrayList<>();
 
         for (Relacion relacion : relaciones) {
             if (relacion.getIdLibro() == idDocumento) {
-                autores.add(buscarAutorPorId(relacion.getIdAutor()));
+                autores.add(obtenerAutorPorId(relacion.getIdAutor()));
             }
             
         }
         return autores;
     }
 
-    ArrayList<Documento> buscarDocumentosPorId(int idAutor){
+    ArrayList<Documento> obtenerDocumentosPorId(int idAutor){
         ArrayList<Documento> documentos = new ArrayList<>();
 
         for (Relacion relacion : relaciones) {
             if (relacion.getIdAutor() == idAutor) {
-                documentos.add(buscarDocumentoPorId(relacion.getIdLibro()));
+                documentos.add(obtenerDocumentoPorId(relacion.getIdLibro()));
             }
             
         }
         return documentos;
     }
 
-    public void modificar(Documento documento, String titulo, int año, ArrayList<Autor> autores,
-            ArrayList<String> palabrasClave, Tipo tipo) {
+    public void modificar(Documento documento, String titulo, int año, ArrayList<String> palabrasClave, Tipo tipo) {
         documento.setTitulo(titulo);
         documento.setAño(año);
         documento.setPalabrasClave(palabrasClave);
@@ -206,7 +220,7 @@ public class Gestion {
         listarDocumentos();
         System.out.print("Ingrese el ID del documento que desea eliminar: ");
         int id = scanner.nextInt();
-        Documento documento = buscarDocumentoPorId(id);
+        Documento documento = obtenerDocumentoPorId(id);
         if (documento != null) {
             eliminarDocumento(documento);
             System.out.println("Documento eliminado.");
@@ -227,7 +241,7 @@ public class Gestion {
         listarAutores();
         System.out.print("Ingrese el ID del autor que desea eliminar: ");
         int id = scanner.nextInt();
-        Autor autor = buscarAutorPorId(id);
+        Autor autor = obtenerAutorPorId(id);
         if (autor != null) {
             eliminarAutor(autor);
             System.out.println("Autor eliminado.");
