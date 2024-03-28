@@ -22,6 +22,4 @@ public class Relacion {
     public void setIdAutor(int idAutor) {
         this.idAutor = idAutor;
     }
-
-    
 }

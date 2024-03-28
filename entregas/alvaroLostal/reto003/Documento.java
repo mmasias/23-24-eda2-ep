@@ -4,18 +4,17 @@ public class Documento {
     private int id;
     private String titulo;
     private int año;
-    private ArrayList<Autor> autores;
     private ArrayList<String> palabrasClave;
     private Tipo tipo;
     
-    public Documento(String titulo, int año, ArrayList<Autor> autores, ArrayList<String> palabrasClave, Tipo tipo,
-            int id) {
+    
+
+    public Documento(int id, String titulo, int año, ArrayList<String> palabrasClave, Tipo tipo) {
+        this.id = id;
         this.titulo = titulo;
         this.año = año;
-        this.autores = autores;
         this.palabrasClave = palabrasClave;
         this.tipo = tipo;
-        this.id = id;
     }
 
     public String getTitulo() {
@@ -34,14 +33,6 @@ public class Documento {
         this.año = año;
     }
 
-    public ArrayList<Autor> getAutores() {
-        return autores;
-    }
-
-    public void setAutores(ArrayList<Autor> autores) {
-        this.autores = autores;
-    }
-
     public ArrayList<String> getPalabrasClave() {
         return palabrasClave;
     }
@@ -56,10 +47,6 @@ public class Documento {
 
     public void setTipo(Tipo tipo) {
         this.tipo = tipo;
-    }
-
-    public void agregarAutor(Autor autor) {
-        this.autores.add(autor);
     }
 
     public void agregarPalabrasClave(String palabra) {
@@ -81,15 +68,7 @@ public class Documento {
         sb.append("ID: ").append(id).append("\n");
         sb.append("Título: ").append(titulo).append("\n");
         sb.append("Año: ").append(año).append("\n");
-        sb.append("Autores: ");
-        for (int i = 0; i < autores.size(); i++) {
-            Autor autor = autores.get(i);
-            sb.append(autor.getNombre()).append(" ").append(autor.getApellido());
-            if (i < autores.size() - 1) {
-                sb.append(", ");
-            }
-        }
-        sb.append("\nPalabras Clave: ").append(palabrasClave.toString()).append("\n");
+        sb.append("Palabras Clave: ").append(palabrasClave.toString()).append("\n");
         sb.append("Tipo: ").append(tipo);
         return sb.toString();
     }

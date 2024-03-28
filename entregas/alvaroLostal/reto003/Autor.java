@@ -2,10 +2,10 @@ public class Autor {
     private int id;
     private String nombre, apellido;
 
-    public Autor(String nombre, String apellido, int id) {
+    public Autor(int id, String nombre, String apellido) {
+        this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.id = id;
     }
 
     public String getNombre() {
@@ -32,5 +32,9 @@ public class Autor {
         this.id = id;
     }
 
+    @Override
+    public String toString() {
+        return id + ". " + nombre + " " + apellido;
+    }
     
 }
