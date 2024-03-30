@@ -36,28 +36,28 @@ public class LibraryManager {
 
             switch (choice) {
                 case "1":
-                    addDocument();
+                    addBook();
                     break;
                 case "2":
-                    deleteDocumentByTitle();
+                    removeBook();
                     break;
                 case "3":
-                    updateDocument();
+                    updateBok();
                     break;
                 case "4":
-                    searchDocuments();
+                    searchBook();
                     break;
                 case "5":
-                    showSelectedDocument();
+                    showSelected();
                     break;
                 case "6":
-                    deselectDocument();
+                    deselect();
                     break;
                 case "7":
-                    ListDocuments();
+                    listBooks();
                     break;
                 case "8":
-                    ListAuthors();
+                    listAuthors();
                     break;
                 case "0":
                     running = false;
@@ -70,7 +70,7 @@ public class LibraryManager {
         }
     }
 
-    private void addDocument() {
+    private void addBook() {
         String title = getInput("Enter document title: ");
         
         String authorsStr = getInput("Enter authors (comma-separated): ");
@@ -91,7 +91,7 @@ public class LibraryManager {
         selectedDocument = newDocument;
     }
 
-    private void deleteDocumentByTitle() {
+    private void removeBook() {
         String title;
         if (selectedDocument != null){
             title = selectedDocument.getTitle();
@@ -102,7 +102,7 @@ public class LibraryManager {
         System.out.println("Document deleted.");
     }
 
-    private void updateDocument() {
+    private void updateBok() {
         String title;
         if (selectedDocument != null){
             title = selectedDocument.getTitle();
@@ -165,7 +165,7 @@ public class LibraryManager {
         selectedDocument = updatedDocument;
     }
     
-    private void searchDocuments() {
+    private void searchBook() {
         List<Book> searchResults;
         String searchType = getInput("Search by (title/author/year/type/keyword): ");
         switch (searchType.toLowerCase()) {
@@ -219,7 +219,7 @@ public class LibraryManager {
         }
     } 
 
-    private void ListDocuments() {
+    private void listBooks() {
         System.out.println("Available Documents, listed by Author:");
         for (Author author : getAllAuthors()) {
             System.out.println("  - " + author.getName() + ":");
@@ -229,7 +229,7 @@ public class LibraryManager {
         }
     }
 
-    private void ListAuthors() {
+    private void listAuthors() {
         System.out.println("Available Authors, listed by Document:");
         for (Book document : getAllDocuments()) {
             System.out.println("  - " + document.getTitle() + ":");
@@ -239,7 +239,7 @@ public class LibraryManager {
         }
     }
     
-    private void showSelectedDocument() {
+    private void showSelected() {
         if (selectedDocument != null){
             System.out.println(" Document: " + selectedDocument);
                     System.out.println(" - Title: " + selectedDocument.getTitle());
@@ -250,16 +250,16 @@ public class LibraryManager {
         } else System.out.println("No Document Selected.");
     }
 
-    private void deselectDocument() {
+    private void deselect() {
         selectedDocument = null;
         System.out.println("Document Deselected.");
     }
 
-    public List<Book> getAllDocuments() {
+    private List<Book> getAllDocuments() {
         return this.documents;
     }
 
-    public List<Author> getAllAuthors() {
+    private List<Author> getAllAuthors() {
         return this.authors;        
     }
 
@@ -383,13 +383,13 @@ public class LibraryManager {
         }
     }
 
-    public static String getInput(String msg){
+    private static String getInput(String msg){
         System.out.print(msg);
         String userInput = scanner.nextLine();
         return userInput;
     }
 
-    public static int getInt(String msg){
+    private static int getInt(String msg){
         System.out.print(msg);
         int userInput = scanner.nextInt();
         return userInput;
