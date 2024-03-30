@@ -3,10 +3,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class User {
-    private Library library;
-    private Document selectedDocument = null;
+    private LibraryManager library;
+    private Book selectedDocument = null;
 
-    public User(Library library) {
+    public User(LibraryManager library) {
         this.library = library;
     }
 
@@ -78,7 +78,7 @@ public class User {
         String keywordsStr = UserIO.getInput("Enter keywords (comma-separated): ");
         List<String> keywords = new ArrayList<>(Arrays.asList(keywordsStr.split("\\s*,\\s*")));
 
-        Document newDocument = new Document(title, year, type, keywords);
+        Book newDocument = new Book(title, year, type, keywords);
         
         library.addDocument(title, authors, year, type, keywords);
         System.out.println("Document added successfully.");
@@ -105,7 +105,7 @@ public class User {
             title = UserIO.getInput("Enter the title of the document you want to update: ");
         } 
 
-        Document existingDocument = library.searchDocByTitle(title);
+        Book existingDocument = library.searchDocByTitle(title);
         if (existingDocument == null) {
             System.out.println("Document not found.");
             return;
@@ -152,7 +152,7 @@ public class User {
         String keywordsStr = UserIO.getInput("Enter new keywords (comma-separated, or press Enter to keep existing): ");
         List<String> keywords = keywordsStr.isEmpty() ? existingDocument.getKeyWords() : new ArrayList<>(Arrays.asList(keywordsStr.split("\\s*,\\s*")));
     
-        Document updatedDocument = new Document(newTitle, year, type, keywords);
+        Book updatedDocument = new Book(newTitle, year, type, keywords);
         
         library.updateDocument(title, updatedDocument);
         System.out.println("Document updated successfully.");
@@ -161,12 +161,12 @@ public class User {
     }
     
     private void searchDocuments() {
-        List<Document> searchResults;
+        List<Book> searchResults;
         String searchType = UserIO.getInput("Search by (title/author/year/type/keyword): ");
         switch (searchType.toLowerCase()) {
             case "title":
                 String title = UserIO.getInput("Enter title: ");
-                Document document = library.searchDocByTitle(title);
+                Book document = library.searchDocByTitle(title);
                 if (document != null) {
                     System.out.println(" Document found: " + document);
                     System.out.println(" - Title: " + document.getTitle());
@@ -183,28 +183,28 @@ public class User {
             case "author":
                 String author = UserIO.getInput("Enter author: ");
                 searchResults = library.searchDocByAuthor(author);
-                for (Document doc : searchResults) {
+                for (Book doc : searchResults) {
                     System.out.println("Found: " + doc.getTitle() + " By: " + String.join(", ", doc.getAuthorNames()));
                 }
                 break;
             case "year":
                 int year = UserIO.getInt("Enter year: ");
                 searchResults = library.searchDocByYear(year);
-                for (Document doc : searchResults) {
+                for (Book doc : searchResults) {
                     System.out.println("Found: " + doc.getTitle() + " By: " + String.join(", ", doc.getAuthorNames()));
                 }
                 break;
             case "type":
                 String type = UserIO.getInput("Enter document type: ");
                 searchResults = library.searcDocByType(type);
-                for (Document doc : searchResults) {
+                for (Book doc : searchResults) {
                     System.out.println("Found: " + doc.getTitle() + " By: " + String.join(", ", doc.getAuthorNames()));
                 }
                 break;
             case "keyword":
                 String keyword = UserIO.getInput("Enter keyword: ");
                 searchResults = library.searchDocByKeyword(keyword);
-                for (Document doc : searchResults) {
+                for (Book doc : searchResults) {
                     System.out.println("Found: " + doc.getTitle() + " By: " + String.join(", ", doc.getAuthorNames()));
                 }
                 break;
@@ -218,7 +218,7 @@ public class User {
         System.out.println("Available Documents, listed by Author:");
         for (Author author : library.getAllAuthors()) {
             System.out.println("  - " + author.getName() + ":");
-            for (Document document : author.getDocuments()){
+            for (Book document : author.getDocuments()){
                 System.out.println("    * " + document.getTitle());
             }
         }
@@ -226,7 +226,7 @@ public class User {
 
     private void ListAuthors() {
         System.out.println("Available Authors, listed by Document:");
-        for (Document document : library.getAllDocuments()) {
+        for (Book document : library.getAllDocuments()) {
             System.out.println("  - " + document.getTitle() + ":");
             for (Author author : document.getAuthors()){
                 System.out.println("    * " + author.getName());

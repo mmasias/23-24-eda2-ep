@@ -3,7 +3,7 @@ import java.util.List;
 
 public class Author {
     private String name;
-    private List<Document> documents;
+    private List<Book> documents;
 
     public Author(String name) {
         this.name = name;
@@ -14,11 +14,11 @@ public class Author {
         return name;
     }
 
-    public List<Document> getDocuments() {
+    public List<Book> getDocuments() {
         return documents;
     }
 
-    public void addDocument(Document document) {
+    public void addDocument(Book document) {
         if (!documents.contains(document)) {
             documents.add(document);
             if (!document.getAuthors().contains(this)) {
@@ -27,7 +27,7 @@ public class Author {
         }
     }
 
-    public void removeDocument(Document document) {
+    public void removeDocument(Book document) {
         if (documents.remove(document)) {
             if (document.getAuthors().contains(this)) {
                 document.removeAuthor(this);

@@ -1,16 +1,16 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Library {
-    private List<Document> documents;
+public class LibraryManager {
+    private List<Book> documents;
     private List<Author> authors;
 
-    public Library() {
+    public LibraryManager() {
         this.documents = new ArrayList<>();
         this.authors = new ArrayList<>();
     }
 
-    public List<Document> getAllDocuments() {
+    public List<Book> getAllDocuments() {
         return this.documents;
     }
 
@@ -19,7 +19,7 @@ public class Library {
     }
 
     public void addDocument(String title, List<String> authorNames, int publishingYear, String type, List<String> keywords) {
-        Document document = new Document(title, publishingYear, type, keywords);
+        Book document = new Book(title, publishingYear, type, keywords);
         
         for (String authorName : authorNames) {
             Author author = null;
@@ -43,7 +43,7 @@ public class Library {
         authors.add(author);
     }
     
-    public List<String> getDocAuthors(Document document) {
+    public List<String> getDocAuthors(Book document) {
         List<String> authorNames = new ArrayList<>();
         for (Author author : this.authors) {
             if (author.getDocuments().contains(document)) {
@@ -53,8 +53,8 @@ public class Library {
         return authorNames;
     }
     
-    public Document searchDocByTitle(String title) {
-        for (Document doc : documents) {
+    public Book searchDocByTitle(String title) {
+        for (Book doc : documents) {
             if (doc.getTitle().equalsIgnoreCase(title)) {
                 return doc;
             }
@@ -62,8 +62,8 @@ public class Library {
         return null;
     }
     
-    public List<Document> searchDocByAuthor(String authorName) {
-        List<Document> results = new ArrayList<>();
+    public List<Book> searchDocByAuthor(String authorName) {
+        List<Book> results = new ArrayList<>();
         Author author = searchAuthorByName(authorName);
         if (author != null) {
             results.addAll(author.getDocuments());
@@ -80,9 +80,9 @@ public class Library {
         return null;
     }
     
-    public List<Document> searcDocByType(String type) {
-        List<Document> results = new ArrayList<>();
-        for (Document doc : documents) {
+    public List<Book> searcDocByType(String type) {
+        List<Book> results = new ArrayList<>();
+        for (Book doc : documents) {
             if (doc.getType().equalsIgnoreCase(type)) {
                 results.add(doc);
             }
@@ -90,9 +90,9 @@ public class Library {
         return results;
     }
 
-    public List<Document> searchDocByYear(int year) {
-        List<Document> results = new ArrayList<>();
-        for (Document doc : documents) {
+    public List<Book> searchDocByYear(int year) {
+        List<Book> results = new ArrayList<>();
+        for (Book doc : documents) {
             if (doc.getPublishingYear() == year) {
                 results.add(doc);
             }
@@ -100,9 +100,9 @@ public class Library {
         return results;
     }
     
-    public List<Document> searchDocByKeyword(String keyword) {
-        List<Document> results = new ArrayList<>();
-        for (Document doc : documents) {
+    public List<Book> searchDocByKeyword(String keyword) {
+        List<Book> results = new ArrayList<>();
+        for (Book doc : documents) {
             if (doc.getKeyWords().contains(keyword)) {
                 results.add(doc);
             }
@@ -110,8 +110,8 @@ public class Library {
         return results;
     }
 
-    public void updateDocument(String title, Document updatedDocument) {
-        for (Document doc : documents) {
+    public void updateDocument(String title, Book updatedDocument) {
+        for (Book doc : documents) {
             if (doc.getTitle().equalsIgnoreCase(title)) {
                 doc.setTitle(updatedDocument.getTitle());
                 doc.setPublishingYear(updatedDocument.getPublishingYear());
@@ -139,7 +139,7 @@ public class Library {
     }
 
     public void deleteDocument(String title) {
-        Document toDelete = searchDocByTitle(title);
+        Book toDelete = searchDocByTitle(title);
         
         if (toDelete != null) {
             List<Author> docAuthors = toDelete.getAuthors();

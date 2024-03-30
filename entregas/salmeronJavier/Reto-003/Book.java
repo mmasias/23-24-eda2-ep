@@ -1,14 +1,14 @@
 import java.util.ArrayList;
 import java.util.List;
 
-class Document {
+class Book {
     private String title;
     private List<Author> authors = new ArrayList<>();
     private int publishingYear;
     private String type;
     private List<String> keyWords = new ArrayList<>();
 
-    public Document(String title, int publishingYear, String type, List<String> keyWords) {
+    public Book(String title, int publishingYear, String type, List<String> keyWords) {
         this.title = title;
         this.publishingYear = publishingYear;
         this.type = type;
