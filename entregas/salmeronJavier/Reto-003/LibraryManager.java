@@ -1,11 +1,14 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 public class LibraryManager {
     private List<Book> documents;
     private List<Author> authors;
     private Book selectedDocument = null;
+    private static final Scanner scanner = new Scanner(System.in);
+
 
     public LibraryManager() {
         this.documents = new ArrayList<>();
@@ -29,7 +32,7 @@ public class LibraryManager {
             if (selectedDocument != null){
                 System.out.println("\nSelected Document: " + selectedDocument.getTitle());
             } else System.out.println("\nNothing selected");
-            String choice = UserIO.getInput(" Choose an option: ");
+            String choice = getInput(" Choose an option: ");
 
             switch (choice) {
                 case "1":
@@ -68,16 +71,16 @@ public class LibraryManager {
     }
 
     private void addDocument() {
-        String title = UserIO.getInput("Enter document title: ");
+        String title = getInput("Enter document title: ");
         
-        String authorsStr = UserIO.getInput("Enter authors (comma-separated): ");
+        String authorsStr = getInput("Enter authors (comma-separated): ");
         List<String> authors = new ArrayList<>(Arrays.asList(authorsStr.split("\\s*,\\s*")));
 
-        int year = Integer.parseInt(UserIO.getInput("Enter publishing year: "));
+        int year = Integer.parseInt(getInput("Enter publishing year: "));
 
-        String type = UserIO.getInput("Enter document type: ");
+        String type = getInput("Enter document type: ");
 
-        String keywordsStr = UserIO.getInput("Enter keywords (comma-separated): ");
+        String keywordsStr = getInput("Enter keywords (comma-separated): ");
         List<String> keywords = new ArrayList<>(Arrays.asList(keywordsStr.split("\\s*,\\s*")));
 
         Book newDocument = new Book(title, year, type, keywords);
@@ -93,7 +96,7 @@ public class LibraryManager {
         if (selectedDocument != null){
             title = selectedDocument.getTitle();
         } else{
-            title = UserIO.getInput("Enter the title of the document to delete: ");
+            title = getInput("Enter the title of the document to delete: ");
         } 
         deleteDocument(title);
         System.out.println("Document deleted.");
@@ -104,7 +107,7 @@ public class LibraryManager {
         if (selectedDocument != null){
             title = selectedDocument.getTitle();
         } else{
-            title = UserIO.getInput("Enter the title of the document you want to update: ");
+            title = getInput("Enter the title of the document you want to update: ");
         } 
 
         Book existingDocument = searchDocByTitle(title);
@@ -113,16 +116,16 @@ public class LibraryManager {
             return;
         }
 
-        String newTitle = UserIO.getInput("Enter new document title (or press Enter to keep '" + existingDocument.getTitle() + "''): ");
+        String newTitle = getInput("Enter new document title (or press Enter to keep '" + existingDocument.getTitle() + "''): ");
         if (newTitle.isEmpty()) {
             newTitle = existingDocument.getTitle();
         }
 
-        String modifyAuthors = UserIO.getInput("Do you want to modify authors? (yes/no): ");
+        String modifyAuthors = getInput("Do you want to modify authors? (yes/no): ");
         if ("yes".equalsIgnoreCase(modifyAuthors)) {
             System.out.println("Current document authors: " + String.join(", ", existingDocument.getAuthorNames()));
             while (true) {
-                String authorModification = UserIO.getInput("Add or remove authors (+ AuthorName / - AuthorName). Type 'done' to finish: ");
+                String authorModification = getInput("Add or remove authors (+ AuthorName / - AuthorName). Type 'done' to finish: ");
                 if ("done".equalsIgnoreCase(authorModification)) {
                     break;
                 } else if (authorModification.startsWith("+")) {
@@ -143,15 +146,15 @@ public class LibraryManager {
             }
         }
 
-        String yearStr = UserIO.getInput("Enter new publishing year (or press Enter to keep '" + existingDocument.getPublishingYear() + "''): ");
+        String yearStr = getInput("Enter new publishing year (or press Enter to keep '" + existingDocument.getPublishingYear() + "''): ");
         int year = yearStr.isEmpty() ? existingDocument.getPublishingYear() : Integer.parseInt(yearStr);
 
-        String type = UserIO.getInput("Enter new document type (or press Enter to keep '" + existingDocument.getType() + "''): ");
+        String type = getInput("Enter new document type (or press Enter to keep '" + existingDocument.getType() + "''): ");
         if (type.isEmpty()) {
             type = existingDocument.getType();
         }
 
-        String keywordsStr = UserIO.getInput("Enter new keywords (comma-separated, or press Enter to keep existing): ");
+        String keywordsStr = getInput("Enter new keywords (comma-separated, or press Enter to keep existing): ");
         List<String> keywords = keywordsStr.isEmpty() ? existingDocument.getKeyWords() : new ArrayList<>(Arrays.asList(keywordsStr.split("\\s*,\\s*")));
     
         Book updatedDocument = new Book(newTitle, year, type, keywords);
@@ -164,10 +167,10 @@ public class LibraryManager {
     
     private void searchDocuments() {
         List<Book> searchResults;
-        String searchType = UserIO.getInput("Search by (title/author/year/type/keyword): ");
+        String searchType = getInput("Search by (title/author/year/type/keyword): ");
         switch (searchType.toLowerCase()) {
             case "title":
-                String title = UserIO.getInput("Enter title: ");
+                String title = getInput("Enter title: ");
                 Book document = searchDocByTitle(title);
                 if (document != null) {
                     System.out.println(" Document found: " + document);
@@ -183,28 +186,28 @@ public class LibraryManager {
                 }
                 break;
             case "author":
-                String author = UserIO.getInput("Enter author: ");
+                String author = getInput("Enter author: ");
                 searchResults = searchDocByAuthor(author);
                 for (Book doc : searchResults) {
                     System.out.println("Found: " + doc.getTitle() + " By: " + String.join(", ", doc.getAuthorNames()));
                 }
                 break;
             case "year":
-                int year = UserIO.getInt("Enter year: ");
+                int year = getInt("Enter year: ");
                 searchResults = searchDocByYear(year);
                 for (Book doc : searchResults) {
                     System.out.println("Found: " + doc.getTitle() + " By: " + String.join(", ", doc.getAuthorNames()));
                 }
                 break;
             case "type":
-                String type = UserIO.getInput("Enter document type: ");
+                String type = getInput("Enter document type: ");
                 searchResults = searcDocByType(type);
                 for (Book doc : searchResults) {
                     System.out.println("Found: " + doc.getTitle() + " By: " + String.join(", ", doc.getAuthorNames()));
                 }
                 break;
             case "keyword":
-                String keyword = UserIO.getInput("Enter keyword: ");
+                String keyword = getInput("Enter keyword: ");
                 searchResults = searchDocByKeyword(keyword);
                 for (Book doc : searchResults) {
                     System.out.println("Found: " + doc.getTitle() + " By: " + String.join(", ", doc.getAuthorNames()));
@@ -378,6 +381,18 @@ public class LibraryManager {
             }
             documents.remove(toDelete);
         }
+    }
+
+    public static String getInput(String msg){
+        System.out.print(msg);
+        String userInput = scanner.nextLine();
+        return userInput;
+    }
+
+    public static int getInt(String msg){
+        System.out.print(msg);
+        int userInput = scanner.nextInt();
+        return userInput;
     }
     
 }
