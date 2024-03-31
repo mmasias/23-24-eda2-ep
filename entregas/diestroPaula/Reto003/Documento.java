@@ -3,10 +3,10 @@ package entregas.diestroPaula.Reto003;
 public class Documento {
     private int id;
     private String titulo;
-    private String añoPublicacion;
+    private int añoPublicacion;
     private String tipo;
 
-    public Documento(int id, String titulo, String añoPublicacion, String tipo) {
+    public Documento(int id, String titulo, int añoPublicacion, String tipo) {
         this.id = id;
         this.titulo = titulo;
         this.añoPublicacion = añoPublicacion;
@@ -15,6 +15,30 @@ public class Documento {
 
     public int getId() {
         return id;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public int getAñoPublicacion() {
+        return añoPublicacion;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public void setAñoPublicaion(int añoPublicacion) {
+        this.añoPublicacion = añoPublicacion;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     @Override
