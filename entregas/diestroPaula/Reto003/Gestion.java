@@ -24,7 +24,7 @@ public class Gestion {
             System.out.println("Menú:");
             System.out.println("1. Agregar nuevo documento");
             System.out.println("2. Mostrar todos los documentos");
-            System.out.println("3. Mostrat todos los autores");
+            System.out.println("3. Mostrar todos los autores");
             System.out.println("4. Editar documento");
             System.out.println("5. Eliminar documento");
             System.out.println("6. Salir");
@@ -62,7 +62,7 @@ public class Gestion {
         System.out.println("Introduzca el año de publicación:");
         int año = scanner.nextInt();
         scanner.nextLine();
-        System.out.println("Introduzca el tipo de libro:");
+        System.out.println("Introduzca el tipo de documento:");
         String tipo = scanner.nextLine();
 
         Documento nuevoDocumento = new Documento(documentos.size() + 1, titulo, año, tipo);
@@ -128,17 +128,17 @@ public class Gestion {
                 Autor nuevoAutor = new Autor(autores.size() + 1, nombre);
                 agregarAutor(nuevoAutor);
                 agregarRelacion(documento.getId(), nuevoAutor.getId());
-                System.out.println("Autor nuevo añadido y asociado al libro.");
+                System.out.println("Autor nuevo añadido y asociado al documento.");
             } else {
                 try {
                     int idAutor = Integer.parseInt(input);
                     agregarRelacion(documento.getId(), idAutor);
-                    System.out.println("Autor asociado al libro.");
+                    System.out.println("Autor asociado al documento.");
                 } catch (NumberFormatException e) {
                     System.out.println("Entrada no válida.");
                 }
             }
-            System.out.println("¿Desea añadir otro autor a este libro? (s/n)");
+            System.out.println("¿Desea añadir otro autor a este documento? (s/n)");
             if (!"s".equalsIgnoreCase(scanner.nextLine())) {
                 añadiendoAutores = !añadiendoAutores;
             }
