@@ -15,3 +15,6 @@ El proyecto se desarrollará utilizando los principios de estructuras de datos y
 
 ## Autor
 - Álvaro Lostal
+
+## PUML
+![](/img/puml.png)

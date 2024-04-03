@@ -407,7 +407,7 @@ public class Gestion {
                         if (String.valueOf(autor.getId()).equals(valor)) {
                             resultado.add(doc);
                         }
-                    }
+                    }   
                     break;
                 case "iddocumento":
                     listarAutoresPorDocumento(doc);
