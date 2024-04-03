@@ -13,20 +13,20 @@ public class AutorTexto {
         return id_autor;
     }
 
-    public void setId_autor(int id_autor) {
-        this.id_autor = id_autor;
-    }
-
     public int getId_texto() {
         return id_texto;
     }
 
-    public void setId_texto(int id_texto) {
-        this.id_texto = id_texto;
-    }
-
     public String getTipo() {
         return tipo;
+    }
+
+    public void setId_autor(int id_autor) {
+        this.id_autor = id_autor;
+    }
+
+    public void setId_texto(int id_texto) {
+        this.id_texto = id_texto;
     }
 
     public void setTipo(String tipo) {

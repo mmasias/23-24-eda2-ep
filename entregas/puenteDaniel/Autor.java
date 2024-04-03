@@ -8,25 +8,16 @@ public class Autor {
         this.apellido = apellido;
         this.id = id;
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String toString() {
-        return nombre + " " + apellido;
-    }
-
     public String getNombre() {
         return nombre;
     }
 
     public String getApellido() {
         return apellido;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setNombre(String nombre) {
@@ -37,4 +28,12 @@ public class Autor {
         this.apellido = apellido;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString(){
+        return "Nombre: "+nombre+" Apellido: "+apellido+" Id: "+id;
+    }
 }
