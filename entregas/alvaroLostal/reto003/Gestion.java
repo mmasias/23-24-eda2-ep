@@ -24,6 +24,7 @@ public class Gestion {
     }
 
     public void agregarDocumento() {
+        scanner = new Scanner(System.in);
         System.out.println("Ingrese los detalles del documento:");
         System.out.print("Título: ");
         String titulo = scanner.nextLine();
@@ -38,7 +39,8 @@ public class Gestion {
                 tipo = Tipo.valueOf(scanner.next().toUpperCase());
                 inputValido = true;
             } catch (IllegalArgumentException e) {
-                System.out.println("Tipo de documento no válido. Por favor, ingrese uno de los siguientes: LIBRO, REVISTA, ARTICULO, PAPER");
+                System.out.println(
+                        "Tipo de documento no válido. Por favor, ingrese uno de los siguientes: LIBRO, REVISTA, ARTICULO, PAPER");
                 scanner.nextLine();
             }
         }
@@ -60,6 +62,7 @@ public class Gestion {
 
     public void agregarAutor(Documento documento) {
         boolean agregarAutor = true;
+        ArrayList<Integer> autoresAgregados = new ArrayList<>();
         while (agregarAutor) {
             System.out.println("Selecciona el ID del autor para asociar con el libro, o introduce 'nuevo' para añadir un nuevo autor:");
             listarAutores();
@@ -70,14 +73,24 @@ public class Gestion {
                 System.out.println("Introduce el apellido del nuevo autor:");
                 String apellido = scanner.nextLine();
                 Autor nuevoAutor = new Autor(autores.size() + 1, nombre, apellido);
-                agregarAutor(nuevoAutor);
-                añadirRelacion(documento.getId(), nuevoAutor.getId());
-                System.out.println("Autor nuevo añadido y asociado al libro.");
+                if (nombreExistente(documento, nombre)) {
+                    System.out.println("Este autor ya ha sido asociado al documento.");
+                } else {
+                    agregarAutor(nuevoAutor);
+                    añadirRelacion(documento.getId(), nuevoAutor.getId());
+                    System.out.println("Autor nuevo añadido y asociado al libro.");
+                    autoresAgregados.add(nuevoAutor.getId());
+                }
             } else {
                 try {
-                    int authorId = Integer.parseInt(input);
-                    añadirRelacion(documento.getId(), authorId);
-                    System.out.println("Autor asociado al libro.");
+                    int autorId = Integer.parseInt(input);
+                    if (autoresAgregados.contains(autorId)) {
+                        System.out.println("Este autor ya ha sido agregado al documento.");
+                    } else {
+                        añadirRelacion(documento.getId(), autorId);
+                        System.out.println("Autor asociado al libro.");
+                        autoresAgregados.add(autorId);
+                    }
                 } catch (NumberFormatException e) {
                     System.out.println("Entrada no válida.");
                 }
@@ -88,9 +101,21 @@ public class Gestion {
             }
         }
     }
+    
+    private boolean nombreExistente(Documento documento, String nombre) {
+        ArrayList<Autor> autoresDocumento = obtenerAutoresPorId(documento.getId());
+        for (Autor autor : autoresDocumento) {
+            if (autor.getNombre().equalsIgnoreCase(nombre)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    
 
     public void listarDocumentos() {
-        if(documentos.isEmpty()){
+        if (documentos.isEmpty()) {
             System.out.println("No hay documentos en la biblioteca.");
         } else {
             for (Documento documento : documentos) {
@@ -98,7 +123,7 @@ public class Gestion {
                 System.out.println("Autores:");
                 ArrayList<Autor> autores = obtenerAutoresPorId(documento.getId());
                 for (Autor autor : autores) {
-                    System.out.println(autor);
+                    System.out.println("    " + autor);
                 }
             }
             System.out.println("-------------------------");
@@ -129,31 +154,34 @@ public class Gestion {
         return null;
     }
 
-    ArrayList<Autor> obtenerAutoresPorId(int idDocumento){
+    ArrayList<Autor> obtenerAutoresPorId(int idDocumento) {
         ArrayList<Autor> autores = new ArrayList<>();
 
         for (Relacion relacion : relaciones) {
             if (relacion.getIdLibro() == idDocumento) {
                 autores.add(obtenerAutorPorId(relacion.getIdAutor()));
             }
-            
+
         }
         return autores;
     }
 
-    ArrayList<Documento> obtenerDocumentosPorId(int idAutor){
+    ArrayList<Documento> obtenerDocumentosPorId(int idAutor) {
         ArrayList<Documento> documentos = new ArrayList<>();
 
         for (Relacion relacion : relaciones) {
             if (relacion.getIdAutor() == idAutor) {
                 documentos.add(obtenerDocumentoPorId(relacion.getIdLibro()));
             }
-            
+
         }
         return documentos;
     }
 
-    public void modificarDocumento(Documento documento, String titulo, int año, ArrayList<String> palabrasClave, Tipo tipo) {
+    // comprobar que en las relaciones no esta metido el autor 2 veces
+
+    public void modificarDocumento(Documento documento, String titulo, int año, ArrayList<String> palabrasClave,
+            Tipo tipo) {
         documento.setTitulo(titulo);
         documento.setAño(año);
         documento.setPalabrasClave(palabrasClave);
@@ -161,48 +189,74 @@ public class Gestion {
     }
 
     public void modificarDocumento() {
+        if (documentos.isEmpty()) {
+            System.out.println("No hay documentos en la biblioteca.");
+            return;
+        }
+        
         listarDocumentos();
         System.out.print("Ingrese el ID del documento que desea modificar: ");
         int id = scanner.nextInt();
+        scanner.nextLine();
         Documento documento = obtenerDocumentoPorId(id);
         if (documento != null) {
-            System.out.println("Ingrese los nuevos detalles del documento:");
+            System.out.println("Ingrese los nuevos detalles del documento (Pulse enter para no modificar)");
             System.out.print("Título: ");
             String titulo = scanner.nextLine();
-            scanner.nextLine();
-            System.out.print("Año: ");
-            int año = scanner.nextInt();
-            scanner.nextLine();
-            Tipo tipo = null;
-            boolean inputValido = false;
-            while (!inputValido) {
-                try {
-                    System.out.println("Ingrese el tipo del documento (LIBRO, REVISTA, ARTICULO, PAPER): ");
-                    tipo = Tipo.valueOf(scanner.next().toUpperCase());
-                    inputValido = true;
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Tipo de documento no válido. Por favor, ingrese uno de los siguientes: LIBRO, REVISTA, ARTICULO, PAPER");
-                    scanner.nextLine();
-                }
+            if (titulo.equals("")) {
+                titulo = documento.getTitulo();
             }
-            scanner.nextLine();
+
+            int año = 0;
+            System.out.print("Año: ");
+            String anio = scanner.nextLine();
+            if (!anio.equals("")) {
+                try {
+                    año = Integer.parseInt(anio);
+                } catch (NumberFormatException e) {
+                    System.out.println("Año no válido. Manteniendo el año original.");
+                    año = documento.getAño();
+                }
+            } else {
+                año = documento.getAño();
+            }
+
+            Tipo tipo = null;
+            System.out.println("Ingrese el tipo del documento (LIBRO, REVISTA, ARTICULO, PAPER): ");
+            String tipoInput = scanner.nextLine().toUpperCase();
+            if (!tipoInput.isEmpty()) {
+                try {
+                    tipo = Tipo.valueOf(tipoInput);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Tipo de documento no válido. Manteniendo el tipo original.");
+                    tipo = documento.getTipo();
+                }
+            } else {
+                tipo = documento.getTipo();
+            }
+
             System.out.println("Ingrese las palabras clave del documento (separadas por comas): ");
             String palabrasClave = scanner.nextLine();
-            String[] palabrasClaveArray = palabrasClave.split(",");
             ArrayList<String> palabrasClaveList = new ArrayList<>();
-            for (String palabra : palabrasClaveArray) {
-                palabrasClaveList.add(palabra.trim());
+            if (palabrasClave.equals("")) {
+                palabrasClaveList = documento.getPalabrasClave();
+            } else {
+                String[] palabrasClaveArray = palabrasClave.split(",");
+                for (String palabra : palabrasClaveArray) {
+                    palabrasClaveList.add(palabra.trim());
+                }
             }
             modificarDocumento(documento, titulo, año, palabrasClaveList, tipo);
             System.out.println("Documento modificado.");
         } else {
             System.out.println("Documento no encontrado.");
+
         }
     }
 
     public ArrayList<Documento> buscar(String criterio, String valor) {
         ArrayList<Documento> resultado = new ArrayList<>();
-        
+
         for (Documento doc : documentos) {
             switch (criterio.toLowerCase()) {
                 case "titulo":
@@ -223,10 +277,10 @@ public class Gestion {
                 case "autor":
                     ArrayList<Autor> autoresDocumento = obtenerAutoresPorId(doc.getId());
                     for (Autor autor : autoresDocumento) {
-                        if (autor.getNombre().toLowerCase().contains(valor.toLowerCase()) || 
-                            autor.getApellido().toLowerCase().contains(valor.toLowerCase())) {
+                        if (autor.getNombre().toLowerCase().contains(valor.toLowerCase()) ||
+                                autor.getApellido().toLowerCase().contains(valor.toLowerCase())) {
                             resultado.add(doc);
-                            break; // Agregar el documento una vez si coincide con el autor
+                            break;
                         }
                     }
                     break;
@@ -235,10 +289,10 @@ public class Gestion {
                     break;
             }
         }
-        
+
         return resultado;
     }
-    
+
     public void buscar() {
         System.out.println("Seleccione el criterio de búsqueda:");
         System.out.println("1. Título");
@@ -316,6 +370,11 @@ public class Gestion {
     public void eliminarAutor(Autor autor) {
         try {
             autores.remove(autor);
+            for (Relacion relacion : relaciones) {
+                if (relacion.getIdAutor() == autor.getId()) {
+                    relaciones.remove(relacion);
+                }
+            }
         } catch (Exception e) {
             System.out.println("Error al eliminar autor: " + e.getMessage());
         }
@@ -324,6 +383,7 @@ public class Gestion {
     public void eliminarAutor() {
         listarAutores();
         System.out.print("Ingrese el ID del autor que desea eliminar: ");
+        scanner = new Scanner(System.in);
         int id = scanner.nextInt();
         Autor autor = obtenerAutorPorId(id);
         if (autor != null) {
@@ -395,7 +455,7 @@ public class Gestion {
     public static void main(String[] args) {
         Gestion biblioteca = new Gestion();
         biblioteca.mostrarMenu(biblioteca);
-        
+
     }
 
     public void añadirRelacion(int idDocumento, int idAutor) {

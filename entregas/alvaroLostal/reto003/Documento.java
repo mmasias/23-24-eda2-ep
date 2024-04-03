@@ -31,12 +31,12 @@ public class Documento {
         this.año = año;
     }
 
-    public ArrayList<String> getPalabrasClave() {
-        return palabrasClave;
-    }
-
     public void setPalabrasClave(ArrayList<String> palabrasClave) {
         this.palabrasClave = palabrasClave;
+    }
+
+    public ArrayList<String> getPalabrasClave() {
+        return palabrasClave;
     }
 
     public Tipo getTipo() {
@@ -47,17 +47,10 @@ public class Documento {
         this.tipo = tipo;
     }
 
-    public void agregarPalabrasClave(String palabra) {
-        this.palabrasClave.add(palabra);
-    }
-
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     @Override
     public String toString() {
