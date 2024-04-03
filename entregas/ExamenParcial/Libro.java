@@ -52,7 +52,7 @@ public  class Libro {
     public void eliminarPalabraClave(String palabraClave){
         this.palabrasClave.remove(palabraClave);
     }
-    public String toString(){
+    public String toStriNg(){
         return titulo + añoDePublicacion + tipo + palabrasClave;
     }
 

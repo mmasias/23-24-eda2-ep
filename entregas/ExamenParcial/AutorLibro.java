@@ -18,7 +18,6 @@ public void setIdAutor(int idAutor) {
     this.idAutor = idAutor;
 }
 public void add(AutorLibro autorLibro) {
-    throw new UnsupportedOperationException("Unimplemented method 'add'");
+    }
 }
 
-}

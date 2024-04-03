@@ -153,8 +153,9 @@ public class Gestion {
             System.out.println("3. Buscar documento");
             System.out.println("4. Buscar por autor");
             System.out.println("5. Buscar por palabras clave");
-            System.out.println("6. Eliminar documento");
-            System.out.println("7. Salir");
+            System.out.println("6. Crear relación autor-libro");
+            System.out.println("7. Eliminar documento");
+            System.out.println("8. Salir");
             Scanner sc = new Scanner(System.in);
             int opcion = sc.nextInt();
             switch (opcion) {
@@ -174,10 +175,14 @@ public class Gestion {
                     buscarPorPalabrasClave();
                     break;
                 case 6:
-                    eliminar();
+                    añadirRelacion(opcion, opcion);
                     break;
                 case 7:
-                    salir = true;
+                eliminar();
+                    break;
+
+                case 8:
+                salir = true;
                     break;
                 default:
                     break;
@@ -240,6 +245,18 @@ public class Gestion {
     public void listarAutores(){
         for (Autor autor : autores) {
             System.out.println(autor.toString());
+        }
+    }
+    public void añadirRelacion(int idLibro, int idAutor){
+        AutorLibro autorLibro = new AutorLibro(idLibro, idAutor);
+        autorLibro.add(autorLibro);
+
+        Libro libro = buscarLibroPorID(idLibro);
+        if(libro != null){
+            Autor autor = buscarAutorPorID(idAutor);
+            if (autor != null) {
+                añadirAutor(autor);
+            }
         }
     }
 
