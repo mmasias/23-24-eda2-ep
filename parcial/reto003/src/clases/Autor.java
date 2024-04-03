@@ -36,6 +36,6 @@ public class Autor {
     }
 
     public String toString() {
-        return nombre + " " + apellido;
+        return "Autor: "+nombre + " " + apellido+ " con id: "+id+"\n";
     }
 }
