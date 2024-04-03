@@ -153,61 +153,145 @@ public class Gestion {
         return documentos;
     }
 
-    public void modificar(Documento documento, String titulo, int año, ArrayList<String> palabrasClave, Tipo tipo) {
+    public void modificarDocumento(Documento documento, String titulo, int año, ArrayList<String> palabrasClave, Tipo tipo) {
         documento.setTitulo(titulo);
         documento.setAño(año);
         documento.setPalabrasClave(palabrasClave);
         documento.setTipo(tipo);
     }
 
-    /*public ArrayList<Documento> buscar(String criterio, String valor) {
-        ArrayList<Documento> resultado = new ArrayList<>();
-        try {
-            for (Documento doc : documentos) {
-                switch (criterio.toLowerCase()) {
-                    case "titulo":
-                        if (doc.getTitulo().toLowerCase().contains(valor.toLowerCase())) {
-                            resultado.add(doc);
-                        }
-                        break;
-                    case "autor":
-                        for (Autor autor : doc.getAutores()) {
-                            if (autor.getNombre().toLowerCase().contains(valor.toLowerCase()) ||
-                                    autor.getApellido().toLowerCase().contains(valor.toLowerCase())) {
-                                resultado.add(doc);
-                                break;
-                            }
-                        }
-                        break;
-                    case "anio":
-                        if(doc.getAño()==Integer.parseInt(valor)){
-                            resultado.add(doc);
-                        }
-                        break;
-                    case "tipo":
-                        if (doc.getTipo().toString().toLowerCase().equals(valor.toLowerCase())) {
-                            resultado.add(doc);
-                        }
-                        break;
-                    case "palabras clave":
-                        for (String palabraClave : doc.getPalabrasClave()) {
-                            if (palabraClave.toLowerCase().contains(valor.toLowerCase())) {
-                                resultado.add(doc);
-                                break;
-                            }
-                        }
-                        break;
-                    default:
-                        System.out.println("Criterio de búsqueda no válido.");
-                        break;
+    public void modificarDocumento() {
+        listarDocumentos();
+        System.out.print("Ingrese el ID del documento que desea modificar: ");
+        int id = scanner.nextInt();
+        Documento documento = obtenerDocumentoPorId(id);
+        if (documento != null) {
+            System.out.println("Ingrese los nuevos detalles del documento:");
+            System.out.print("Título: ");
+            String titulo = scanner.nextLine();
+            scanner.nextLine();
+            System.out.print("Año: ");
+            int año = scanner.nextInt();
+            scanner.nextLine();
+            Tipo tipo = null;
+            boolean inputValido = false;
+            while (!inputValido) {
+                try {
+                    System.out.println("Ingrese el tipo del documento (LIBRO, REVISTA, ARTICULO, PAPER): ");
+                    tipo = Tipo.valueOf(scanner.next().toUpperCase());
+                    inputValido = true;
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Tipo de documento no válido. Por favor, ingrese uno de los siguientes: LIBRO, REVISTA, ARTICULO, PAPER");
+                    scanner.nextLine();
                 }
             }
-        } catch (Exception e) {
-            System.out.println("Error al buscar documentos: " + e.getMessage());
+            scanner.nextLine();
+            System.out.println("Ingrese las palabras clave del documento (separadas por comas): ");
+            String palabrasClave = scanner.nextLine();
+            String[] palabrasClaveArray = palabrasClave.split(",");
+            ArrayList<String> palabrasClaveList = new ArrayList<>();
+            for (String palabra : palabrasClaveArray) {
+                palabrasClaveList.add(palabra.trim());
+            }
+            modificarDocumento(documento, titulo, año, palabrasClaveList, tipo);
+            System.out.println("Documento modificado.");
+        } else {
+            System.out.println("Documento no encontrado.");
         }
+    }
+
+    public ArrayList<Documento> buscar(String criterio, String valor) {
+        ArrayList<Documento> resultado = new ArrayList<>();
+        
+        for (Documento doc : documentos) {
+            switch (criterio.toLowerCase()) {
+                case "titulo":
+                    if (doc.getTitulo().toLowerCase().contains(valor.toLowerCase())) {
+                        resultado.add(doc);
+                    }
+                    break;
+                case "anio":
+                    if (String.valueOf(doc.getAño()).equals(valor)) {
+                        resultado.add(doc);
+                    }
+                    break;
+                case "tipo":
+                    if (doc.getTipo().toString().toLowerCase().equals(valor.toLowerCase())) {
+                        resultado.add(doc);
+                    }
+                    break;
+                case "autor":
+                    ArrayList<Autor> autoresDocumento = obtenerAutoresPorId(doc.getId());
+                    for (Autor autor : autoresDocumento) {
+                        if (autor.getNombre().toLowerCase().contains(valor.toLowerCase()) || 
+                            autor.getApellido().toLowerCase().contains(valor.toLowerCase())) {
+                            resultado.add(doc);
+                            break; // Agregar el documento una vez si coincide con el autor
+                        }
+                    }
+                    break;
+                default:
+                    System.out.println("Criterio de búsqueda no válido.");
+                    break;
+            }
+        }
+        
         return resultado;
     }
-*/
+    
+    public void buscar() {
+        System.out.println("Seleccione el criterio de búsqueda:");
+        System.out.println("1. Título");
+        System.out.println("2. Año");
+        System.out.println("3. Tipo");
+        System.out.println("4. Autor");
+        System.out.print("Seleccione una opción: ");
+        int opcion = scanner.nextInt();
+        scanner.nextLine();
+        String criterio = "";
+        String valor = "";
+        switch (opcion) {
+            case 1:
+                criterio = "titulo";
+                System.out.print("Introduce el título a buscar: ");
+                valor = scanner.nextLine();
+                break;
+            case 2:
+                criterio = "anio";
+                System.out.print("Introduce el año a buscar: ");
+                valor = scanner.nextLine();
+                break;
+            case 3:
+                criterio = "tipo";
+                System.out.print("Introduce el tipo a buscar: ");
+                valor = scanner.nextLine();
+                break;
+            case 4:
+                criterio = "autor";
+                System.out.print("Introduce el nombre o apellido del autor a buscar: ");
+                valor = scanner.nextLine();
+                break;
+            default:
+                System.out.println("Opción no válida.");
+                break;
+        }
+        ArrayList<Documento> resultado = buscar(criterio, valor);
+        if (resultado.isEmpty()) {
+            System.out.println("No se encontraron documentos que coincidan con la búsqueda.");
+        } else {
+            System.out.println("Documentos encontrados:");
+            for (Documento doc : resultado) {
+                System.out.println(doc);
+                System.out.println("Autores:");
+                ArrayList<Autor> autores = obtenerAutoresPorId(doc.getId());
+                for (Autor autor : autores) {
+                    System.out.println(autor);
+                }
+            }
+            System.out.println("-------------------------");
+        }
+    }
+
     public void eliminarDocumento(Documento documento) {
         try {
             documentos.remove(documento);
@@ -260,8 +344,10 @@ public class Gestion {
                 System.out.println("1. Agregar documento");
                 System.out.println("2. Listar documentos");
                 System.out.println("3. Listar autores");
-                System.out.println("4. Eliminar documento");
-                System.out.println("5. Eliminar autor");
+                System.out.println("4. Modificar documento");
+                System.out.println("5. Eliminar documento");
+                System.out.println("6. Eliminar autor");
+                System.out.println("7. Buscar documento");
                 System.out.println("0. Salir");
                 System.out.print("Seleccione una opción: ");
                 opcion = scanner.nextInt();
@@ -278,10 +364,16 @@ public class Gestion {
                         biblioteca.listarAutores();
                         break;
                     case 4:
-                        biblioteca.eliminarDocumento();
+                        biblioteca.modificarDocumento();
                         break;
                     case 5:
+                        biblioteca.eliminarDocumento();
+                        break;
+                    case 6:
                         biblioteca.eliminarAutor();
+                        break;
+                    case 7:
+                        biblioteca.buscar();
                         break;
                     case 0:
                         System.out.println("Saliendo del programa...");
@@ -306,32 +398,6 @@ public class Gestion {
         
     }
 
-    /* 
-    private static void buscarDocumento(Gestion biblioteca, Scanner scanner) {
-        System.out.print("Ingrese el criterio de búsqueda (titulo, autor, anio, tipo, palabras clave): ");
-        String criterio = scanner.nextLine();
-        System.out.print("Ingrese el valor a buscar: ");
-        String valor = scanner.nextLine();
-
-        ArrayList<Documento> resultado = biblioteca.buscar(criterio, valor);
-
-        if (resultado.isEmpty()) {
-            System.out.println("No se encontraron documentos que coincidan con la búsqueda.");
-        } else {
-            System.out.println("Documentos encontrados:");
-            for (Documento doc : resultado) {
-                System.out.println("-------------------------");
-                System.out.println("ID: " + doc.getId());
-                System.out.println("Título: " + doc.getTitulo());
-                System.out.println("Tipo: " + doc.getTipo());
-                System.out.println("Año: " + doc.getAño());
-                System.out.println("Palabras Clave: " + doc.getPalabrasClave().toString());
-
-            }
-            System.out.println("-------------------------");
-        }
-    }
-    */
     public void añadirRelacion(int idDocumento, int idAutor) {
         Relacion relacion = new Relacion(idDocumento, idAutor);
         relaciones.add(relacion);
