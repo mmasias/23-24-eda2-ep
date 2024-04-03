@@ -1,0 +1,134 @@
+@startuml
+LibraryManager --  Author: Manages
+LibraryManager -- Book: Manages
+LibraryManager --  Keyword: Manages
+LibraryManager --  Language: Manages
+LibraryManager --  BookKeyword: Manages
+LibraryManager --  BookAuthor: Manages
+LibraryManager --  BookLanguage: Manages
+App .. LibraryManager : creates
+Book "1" -l- "0..*" BookAuthor : contains
+Book "1" -l- "0..*" BookKeyword : contains
+Author "1" --r- "0..*" BookAuthor : contains
+Keyword"1" --r- "0..*" BookKeyword : contains
+Book "1" -l- "0..*" BookLanguage : contains
+Language "1" --r- "0..*" BookLanguage : contains
+
+
+
+class Author {
+        -int id
+        -String name
+        +Author(int id, String name)
+        +int getId()
+        +String getName()
+        +String toString()
+    }
+
+class Keyword {
+        - id: int
+        - name: String
+
+        + Keyword(name: String)
+        + getId(): int
+        + getName(): String
+        + String toString()
+    }
+
+class Language {
+        - id: int
+        - name: String
+
+        + Language(name: String)
+        + getId(): int
+        + getName(): String
+        + String toString()
+    }
+
+
+class BookAuthor {
+        -int bookId
+        -int authorId
+        +BookAuthor(int bookId, int authorId)
+        +int getBookId()
+        +int getAuthorId()
+    }
+
+class Book {
+        -int id
+        -String title
+        -int publicationYear
+        -final String type
+        +Book(int id, String title, int publicationYear, String type)
+        +int getId()
+        +String toString()
+    }
+
+class BookKeyword {
+        -int bookId
+        -int keywordId
+        +BookKeyword(int bookId, int keywordId)
+        +int getBookId()
+        +int getKeywordId()
+    }
+
+class BookLanguage {
+        -int bookId
+        -int languageId
+        +BookLanguage(int bookId, int languageId)
+        +int getBookId()
+        +int getLanguageId()
+    }
+
+
+
+
+class LibraryManager {
+        - books: List<Book>
+        - authors: List<Author>
+        - keywords: List<Keyword>
+        - relationsAuthor: List<BookAuthor>
+        - relationsKeyword: List<BookKeyword>
+        - scanner: Scanner
+
+        + LibraryManager()
+        + startLibraryManager(): void
+        - addDefaulAuthors()
+        - addDefaultKeywords() : void
+        - addDefaulLanguages() : void
+        - listBooks(): void
+        - listBooksByKeywords(): void
+        - listBooksByKeywords(keywordId: int): void
+        - listBooksByAuthor(): void
+        - listBooksByAuthor(authorId: int): void
+        - listBooksByLanguages(): void
+        - listBooksByLanguages(languageId: int): void
+        - addBook(): void
+        - addBook(book: Book): void
+        - addAuthor(book: Book): void
+        - addAuthor(author: Author): void
+        - addRelationAuthor(bookId: int, authorId: int): void
+        - addKeyword(book: Book): void
+        - addKeyword(keyword: Keyword): void
+        - addLanguage(book: Book): void
+        - addLanguage(language: Language): void
+        - addRelationKeyword(bookId: int, keywordId: int): void
+        - getAuthorsByBookId(bookId: int): List<Author>
+        - getKeywordsByBookId(bookId: int): List<Keyword>
+        - getLanguagesByBookId(bookId: int): List<Languages>
+        - getBooksByKeywordId(keywordId: int): List<Book>
+        - getBooksByAuthorId(authorId: int): List<Book>
+        - getBooksByLanguageId(languageId: int): List<Book>
+        - findBookById(bookId: int): Book
+        - findAuthorById(authorId: int): Author
+        - findKeywordById(keywordId: int): Keyword
+        - findLanguageById(languageId: int): Language
+        - listAuthors(): void
+        - listKeywords(): void
+        - listLanguages(): void
+    }
+
+class App {
+        + main(args: String[]): void
+    }
+@enduml
