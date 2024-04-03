@@ -1,20 +1,32 @@
 # Proyecto de Estructura de Datos y Algoritmos II
 
-Este proyecto es parte de la asignatura "Estructura de Datos y Algoritmos II" y se centra en el desarrollo de un sistema de gestión de una biblioteca utilizando Java.
+Este proyecto es parte de la asignatura "Estructura de Datos y Algoritmos II" y tiene como objetivo el desarrollo de un sistema de gestión de una biblioteca utilizando Java.
 
 ## Descripción del Proyecto
 
-El objetivo de este proyecto es diseñar e implementar un sistema de gestión de una biblioteca que permita realizar las siguientes funciones principales:
+El sistema de gestión de bibliotecas permite realizar las siguientes funciones principales:
 
-1. Registro y gestión de libros: incluyendo información como título, autor, año de publicación y tipo.
-2. Listar los libros que hayamos introducido en la biblioteca.
-3. Listar los autores de los libros que hayamos introducido en la biblioteca.
-4. Poder asociar un libro a un autor mediante un ID.
+1. **Registro y gestión de documentos:** Se pueden agregar documentos con información como título, autor, año de publicación, palabras clave y tipo.
+2. **Listado de documentos:** El sistema puede mostrar todos los documentos registrados en la biblioteca.
+3. **Listado de autores:** Permite listar todos los autores asociados a los documentos de la biblioteca.
+4. **Asociación de documentos y autores:** Permite asociar documentos a autores mediante un identificador único.
 
-El proyecto se desarrollará utilizando los principios de estructuras de datos y algoritmos aprendidos en la asignatura, con especial atención en la eficiencia y optimización del sistema.
+El proyecto se enfoca en la implementación eficiente de las estructuras de datos y algoritmos necesarios para la gestión de la biblioteca.
+
+## Funcionalidades
+
+- **Agregar Documento:** Permite agregar un nuevo documento a la biblioteca, ingresando detalles como título, año, tipo y palabras clave.
+- **Agregar Autor:** Permite agregar un nuevo autor a la biblioteca, asociándolo a uno o varios documentos existentes.
+- **Listar Documentos:** Muestra todos los documentos registrados en la biblioteca, incluyendo información sobre autores asociados.
+- **Listar Autores:** Muestra todos los autores registrados en la biblioteca.
+- **Eliminar Documento:** Permite eliminar un documento existente de la biblioteca.
+- **Eliminar Autor:** Permite eliminar un autor existente de la biblioteca.
+- **Modificar Documento:** Permite modificar los detalles de un documento existente en la biblioteca.
+- **Buscar:** Permite buscar documentos por título, año, tipo, palabra clave, ID de autor o ID de documento.
+
+## Diagrama UML
+
+![Diagrama UML del proyecto](/img/puml.png)
 
 ## Autor
-- Álvaro Lostal
-
-## PUML
-![](/img/puml.png)
+- **Álvaro Lostal**
