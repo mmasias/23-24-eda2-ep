@@ -99,11 +99,23 @@ public class LibraryManager {
     }
 
     private List<Author> getAuthorsByBookId(int bookId) {
-
+        ArrayList<Author> auxiliar = new ArrayList<>();
+        for (BookAuthor relation : relations) {
+            if (relation.getBookId() == bookId) {
+                auxiliar.add(findAuthorById(relation.getAuthorId()));
+            }
+        }
+        return auxiliar;
     }
 
     private List<Book> getBooksByAuthorId(int authorId) {
-
+        ArrayList<Book> auxiliar = new ArrayList<>();
+        for (BookAuthor relation : relations) {
+            if (relation.getAuthorId() == authorId) {
+                auxiliar.add(( findBookById(relation.getBookId()) ));
+            }
+        }
+        return auxiliar;
     }
 
     private Book findBookById(int BookId) {
@@ -131,8 +143,8 @@ public class LibraryManager {
     }
 
 
-    public void agregar() {
-        /*Book documento = new Book(titulo, año, autores, tipo);
+   /* public void agregar() {
+        Book documento = new Book(titulo, año, autores, tipo);
         String palabra = "";
         do {
             System.out.println("Introduzca palabras clave (fin-para terminar)");
@@ -144,7 +156,7 @@ public class LibraryManager {
 
         } while (!palabra.equals("fin"));
         books.add(documento);
-        */
+
 
         for (Author autor : authors) {
             if (indiceAutores.containsKey(autor.getNombre())) {
@@ -158,7 +170,7 @@ public class LibraryManager {
             }
         }
 
-       /* ArrayList<String> misPalabras = documento.getPalabrasClave();
+        ArrayList<String> misPalabras = documento.getPalabrasClave();
         for (String word : misPalabras) {
             if (indicePalabrasClave.containsKey(word)) {
                 ArrayList<Book> documentoPalabras = indicePalabrasClave.get(word);
@@ -169,7 +181,7 @@ public class LibraryManager {
                 documentoPalabras.add(documento);
                 indicePalabrasClave.put(word, documentoPalabras);
             }
-        }*/
+        }
 
 
     }
@@ -284,7 +296,7 @@ public class LibraryManager {
         }
     }
 
- /*   public void buscarPorPalabrasClave() {
+    public void buscarPorPalabrasClave() {
         System.out.println("Ingrese la palabra clave a buscar");
         Scanner sc = new Scanner(System.in);
         String palabra = sc.nextLine();
@@ -306,7 +318,7 @@ public class LibraryManager {
             }
         }
     }
-    */
+
 
     public void eliminar() {
         System.out.println("Ingrese el titulo del documento a eliminar");
@@ -359,6 +371,6 @@ public class LibraryManager {
             }
         } while (!salir);
     }
-
+*/
 }
 
