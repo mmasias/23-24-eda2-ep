@@ -11,24 +11,22 @@ public class Gestion {
     private List<AutorLibro> autorLibros;
     Scanner sc = new Scanner(System.in);
 
-
     public Gestion() {
         libros = new ArrayList<Libro>();
         autores = new ArrayList<Autor>();
         autorLibros = new ArrayList<AutorLibro>();
     }
+
     private HashMap<String, ArrayList<Libro>> indiceAutores;
     private HashMap<String, ArrayList<Libro>> indicePalabras;
 
-
-    
-    public void listaLibros(){
+    public void listaLibros() {
         for (Libro libro : libros) {
             System.out.println(libro);
         }
     }
 
-    public void listaAutores(){
+    public void listaAutores() {
         for (Autor autor : autores) {
             System.out.println(autor);
         }
@@ -41,7 +39,7 @@ public class Gestion {
         String titulo = sc.nextLine();
         System.out.println("Ingrese el año de publicacion");
         int año = sc.nextInt();
-        System.out.println("Ingrese el tipo de documento");
+        System.out.println("Ingrese el tipo de libro");
         System.out.println("1. LIBRO 2. REVISTA 3. ARTICULO 4. PAPEL");
         int opcion = sc.nextInt();
         Tipo tipo = null;
@@ -61,70 +59,183 @@ public class Gestion {
             default:
                 break;
         }
-        libros.add(new Libro(titulo, año, tipo));
+        libros.add(new Libro(id, titulo, año, tipo));
+        String respuesta;
+        do {
+            System.out.println("Desea agregar autores? (s/n)");
+            respuesta = sc.nextLine();
+            if (respuesta.equals("s")) {
+                listaAutores();
+                System.out.println("Seleccione el id del autor o -1 para agregar un autor nuevo");
+                int idAutor = sc.nextInt();
+                if (idAutor == -1) {
+                    Autor autor = agregarAutor();
+                    agregarAutorLibro(id, autor.getId());
+                } else {
+                    agregarAutorLibro(id, idAutor);
+                }
 
-        System.out.println("Desea agregar autores? (s/n)");
-        String respuesta = sc.nextLine();
-        if (respuesta.equals("s")) {
-            listaAutores();
-            System.out.println("Seleccione el id del autor o -1 para agregar un autor nuevo");
-            int idAutor = sc.nextInt();
-            if (idAutor == -1) {
-                Autor autor = agregarAutor();
-                agregarAutorLibro(id, autor.getId());
-            } else {
-                agregarAutorLibro(id, idAutor);
-            }  
-            
-        }
+            }
+        } while (respuesta.equals("s"));
+
     }
 
     public Autor agregarAutor() {
+
         System.out.println("Ingrese el nombre del autor");
         Scanner sc = new Scanner(System.in);
         String nombre = sc.nextLine();
         System.out.println("Ingrese el apellido del autor");
         String apellido = sc.nextLine();
         System.out.println("Ingrese el id del autor");
-        int id = sc.nextInt();        
-        autores.add(new Autor(id,nombre, apellido));
-        return new Autor(id,nombre, apellido);
+        int id = sc.nextInt();
+        autores.add(new Autor(id, nombre, apellido));
+        return new Autor(id, nombre, apellido);
+
     }
 
     public void agregarAutorLibro(int idLibro, int idAutor) {
         autorLibros.add(new AutorLibro(idLibro, idAutor));
     }
-       
 
-    
+    public void agregarPalabraClave() {
+        String respuesta;
+        do {
+            System.out.println("Ingrese el id del libro");
+            int idLibro = sc.nextInt();
+            System.out.println("Ingrese la palabra clave");
+            String palabra = sc.nextLine();
+            for (Libro libro : libros) {
+                if (libro.getId() == idLibro) {
+                    libro.añadirPalabraClave(palabra);
+                }
+            }
+            System.out.println("Desea agregar otra palabra clave (s/n)");
+            respuesta = sc.nextLine();
+        } while (respuesta.equals("s"));
 
-    
+    }
 
+    public void buscarLibroPorId() {
+        System.out.println("Ingrese el id del libro");
+        int id = sc.nextInt();
+        for (Libro libro : libros) {
+            if (libro.getId() == id) {
+                System.out.println(libro);
+            }
+        }
+    }
 
+    public void buscarAutorPorId() {
+        System.out.println("Ingrese el id del autor");
+        int id = sc.nextInt();
+        for (Autor autor : autores) {
+            if (autor.getId() == id) {
+                System.out.println(autor);
+            }
+        }
+    }
 
+    public void buscarAutorPorLibro() {
+        System.out.println("Ingrese el id del libro");
+        int id = sc.nextInt();
+        for (AutorLibro autorLibro : autorLibros) {
+            if (autorLibro.getIdLibro() == id) {
+                for (Autor autor : autores) {
+                    if (autor.getId() == autorLibro.getIdAutor()) {
+                        System.out.println(autor);
+                    }
+                }
+            }
+        }
+    }
 
+    public void buscarLibroPorAutor() {
+        System.out.println("Ingrese el id del autor");
+        int id = sc.nextInt();
+        for (AutorLibro autorLibro : autorLibros) {
+            if (autorLibro.getIdAutor() == id) {
+                for (Libro libro : libros) {
+                    if (libro.getId() == autorLibro.getIdLibro()) {
+                        System.out.println(libro);
+                    }
+                }
+            }
+        }
+    }
 
+    public void modificarPorLibro() { //falta terminar listando libros despues lo uqe quieres modificar y el editar el autor aqui ¿¿¿con la clase agregar autor??
+        System.out.println(listaLibros());
+        System.out.println("Ingrese el id del libro");
+        int id = sc.nextInt();
+        for (Libro libro : libros) {
+            if (libro.getId() == id) {
+                System.out.println("Quieres modificar el titulo? (s/n)");
+                String respuestaTitulo = sc.nextLine();
+                if (respuestaTitulo.equals("s")) {
+                    System.out.println("Ingrese el nuevo titulo");
+                    String titulo = sc.nextLine();
+                    libro.setTitulo(titulo);
+                }
 
+                System.out.println("Quieres modificar el año de publicacion? (s/n)");
+                String respuestaAño = sc.nextLine();
+                if (respuestaAño.equals("s")) {
+                    System.out.println("Ingrese el nuevo año de publicacion");
+                    int año = sc.nextInt();
+                    libro.setAnoDePublicacion(año);
+                }
 
+                System.out.println("Quieres modificar el tipo de libro? (s/n)");
+                String respuestaTipo = sc.nextLine();
+                if (respuestaTipo.equals("s")) {
+                    System.out.println("Ingrese el nuevo tipo de libro");
+                    System.out.println("1. LIBRO 2. REVISTA 3. ARTICULO 4. PAPEL");
+                    int opcion = sc.nextInt();
+                    Tipo tipo = null;
+                    switch (opcion) {
+                        case 1:
+                            tipo = Tipo.LIBRO;
+                            break;
+                        case 2:
+                            tipo = Tipo.REVISTA;
+                            break;
+                        case 3:
+                            tipo = Tipo.ARTICULO;
+                            break;
+                        case 4:
+                            tipo = Tipo.PAPEL;
+                            break;
+                        default:
+                            break;
+                    }
+                    libro.setTipo(tipo);
 
+                }
 
+                System.out.println("Quieres modificar los autores? (s/n)");
+                String respuestaAutores = sc.nextLine();
+                if (respuestaAutores.equals("s")) {
+                    agregarAutor();
+                }
 
+            }
+        }
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public void modificarPorAutor() {
+        System.out.println("Ingrese el id del autor");
+        int id = sc.nextInt();
+        for (Autor autor : autores) {
+            if (autor.getId() == id) {
+                System.out.println("Ingrese el nuevo nombre del autor");
+                String nombre = sc.nextLine();
+                System.out.println("Ingrese el nuevo apellido del autor");
+                String apellido = sc.nextLine();
+                autores.add(new Autor(id, nombre, apellido));
+            }
+        }
+    }
 
 
 
@@ -170,7 +281,7 @@ public class Gestion {
     }
 
     public void modificar() {
-        
+
         Scanner scanner = new Scanner(System.in);
         System.out.println("Ingrese el titulo del libro a editar");
         String tituloLibro = scanner.nextLine();

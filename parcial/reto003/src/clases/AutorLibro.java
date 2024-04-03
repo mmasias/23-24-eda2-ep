@@ -1,27 +1,27 @@
 package clases;
 
 public class AutorLibro {
-    int bookId;
-    int authorId;
+    int idLibro;
+    int idAutor;
 
-    public AutorLibro(int bookId, int authorId) {
-        this.bookId = bookId;
-        this.authorId = authorId;
+    public AutorLibro(int idLibro, int idAutor) {
+        this.idLibro = idLibro;
+        this.idAutor = idAutor;
     }
 
-    public int getBookId() {
-        return bookId;
+    public int getIdLibro() {
+        return idLibro;
     }
 
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
+    public void setIdLibro(int idLibro) {
+        this.idLibro = idLibro;
     }
 
-    public int getAuthorId() {
-        return authorId;
+    public int getIdAutor() {
+        return idAutor;
     }
 
-    public void setAuthorId(int authorId) {
-        this.authorId = authorId;
+    public void setIdAutor(int idAutor) {
+        this.idAutor = idAutor;
     }
 }
