@@ -21,6 +21,22 @@ public class Gestion {
         }
     }
 
+    public void listarTextos(){
+        for(Texto texto : textos){
+            System.out.println(texto.toString());
+        }
+    }
+
+    public void listarRelacionesAutorTexto() {
+        for (AutorTexto autorTexto : autoresTextos) {
+            Autor autor = buscarAutorPorId(autorTexto.getId_autor());
+            Texto texto = buscarTextoPorId(autorTexto.getId_texto());
+            if (autor != null && texto != null) {
+                System.out.println("Relación: " + autorTexto.getTipo() + " - Autor: " + autor + ", Texto: " + texto.getTitulo());
+            }
+        }
+    }
+
 
     public void añadirTexto() {
         System.out.println("Introduce el titulo del texto");
@@ -31,7 +47,7 @@ public class Gestion {
         System.out.println("Introduce el id del texto");
         int id = sc.nextInt();
         sc.nextLine();
-        System.out.println("Introduce el tipo del texto: ");
+        System.out.println("Introduce el tipo del texto:LIBRO|REVISTA|ARTICULO|PAPER");
         String tipo = sc.nextLine();
         textos.add(new Texto( titulo, año_publicacion, id, tipo));
     }
@@ -66,14 +82,30 @@ public class Gestion {
         }
     }
 
+    public void eliminarAutor(int idAutor) {
+        Autor autorAEliminar = buscarAutorPorId(idAutor);
+        if (autorAEliminar != null) {
+            autores.remove(autorAEliminar);
+            autoresTextos.removeIf(autorTexto -> autorTexto.getId_autor() == idAutor);
+        } else {
+            System.out.println("Autor no encontrado.");
+        }
+    }
+
     public void añadirAutor(Autor autor){
         autores.add(autor);
     }
 
-    public void añadirRelacion(int id_texto,int id_autor){
-        System.out.println("Introduce el tipo de relación");
-        String tipo = sc.nextLine();
-        autoresTextos.add(new AutorTexto(id_autor,id_texto,tipo));
+    public void añadirRelacion(int idTexto, int idAutor, String tipo) {
+        Autor autor = buscarAutorPorId(idAutor);
+        Texto texto = buscarTextoPorId(idTexto);
+    
+        if (autor != null && texto != null) {
+            autoresTextos.add(new AutorTexto(idAutor, idTexto, tipo));
+            System.out.println("Relación añadida correctamente.");
+        } else {
+            System.out.println("Error: Autor o Texto no encontrado.");
+        }
     }
 
     public void eliminarTexto(int idTexto) {
@@ -131,11 +163,5 @@ public class Gestion {
             }
         }
         return null;
-    }
-
-    public void listarTextos(){
-        for(Texto texto : textos){
-            System.out.println(texto.toString());
-        }
     }
 }
