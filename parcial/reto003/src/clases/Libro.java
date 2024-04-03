@@ -70,10 +70,18 @@ public class Libro {
         this.palabrasClave.remove(palabraClave);
     }
 
+    @Override
+    public String toString() {
+        return "Libro [id=" + id + ", titulo=" + titulo + ", añoDePublicacion=" + añoDePublicacion + ", tipo=" + tipo
+                + ", palabrasClave=" + palabrasClave + "]";
+    }
+
+    
+
     
         
 
-    public void modificar() {
+    /*public void modificar() {
         boolean salir = false;
         Scanner scanner = new Scanner(System.in);
 
@@ -149,4 +157,5 @@ public class Libro {
             }
         } while (!salir);
     }
+    */
 }
