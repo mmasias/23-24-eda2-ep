@@ -8,98 +8,96 @@ public class Gestion {
     private ArrayList<AutorDocumento> autorDocumentos;
     Scanner scanner;
 
-    public Gestion(ArrayList<Documento> documentos, ArrayList<Autor> autores, ArrayList<AutorDocumento> autorDocumentos,
-            Scanner scanner) {
-        this.documentos = documentos;
-        this.autores = autores;
-        this.autorDocumentos = autorDocumentos;
-        this.scanner = scanner;
+    public Gestion() {
+        this.documentos = new ArrayList<>();
+        this.autores = new ArrayList<>();
+        this.autorDocumentos = new ArrayList<>();
+        this.scanner = new Scanner(System.in);
     }
-   
+
     private void listarDocumentos() {
-        for(int i=0; i<documentos.size();i++){
-            System.out.println(documentos.get(i));
+        
+        for (int i = 0; i < documentos.size(); i++) {
+        System.out.println(documentos.get(i));
         }
     }
 
     private void agregarDocumento() {
+    System.out.println("Ingrese el titulo del documento");
+    String titulo = scanner.nextLine();
 
-        System.out.println("Ingrese el titulo del documento");
-        Scanner sc = new Scanner(System.in);
-        String titulo = sc.nextLine();
+    System.out.println("Ingrese el año de publicacion");
+    int año = scanner.nextInt();
 
-        System.out.println("Ingrese el año de publicacion");
-        int año = sc.nextInt();
+    System.out.println("Ingrese el tipo de documento");
+    System.out.println("1. LIBRO 2. REVISTA 3. ARTICULO 4. PAPER");
+    int opcion = scanner.nextInt();
 
-        System.out.println("Ingrese el tipo de documento");
-        System.out.println("1. LIBRO 2. REVISTA 3. ARTICULO 4. PAPER");
-        int opcion = sc.nextInt();
-
-        Tipo tipo = null;
-        switch (opcion) {
-            case 1:
-                tipo = Tipo.LIBRO;
-                break;
-            case 2:
-                tipo = Tipo.REVISTA;
-                break;
-            case 3:
-                tipo = Tipo.ARTICULO;
-                break;
-            case 4:
-                tipo = Tipo.PAPER;
-                break;
-            default:
-                break;
-        }
-
-        System.out.println("Ingrese el id del documento");
-        int id = sc.nextInt();
-        scanner.nextLine();
-        Documento documento = new Documento(titulo, año, tipo,id);
+    Tipo tipo = null;
+    switch (opcion) {
+        case 1:
+            tipo = Tipo.LIBRO;
+            break;
+        case 2:
+            tipo = Tipo.REVISTA;
+            break;
+        case 3:
+            tipo = Tipo.ARTICULO;
+            break;
+        case 4:
+            tipo = Tipo.PAPER;
+            break;
+        default:
+            break;
     }
+
+    System.out.println("Ingrese el id del documento");
+    int id = scanner.nextInt();
+    Documento documento = new Documento(titulo, año, tipo, id);
+    documentos.add(documento); 
+    scanner.nextLine();
+}
 
     private void agregarDocumento(Documento documento) {
         documentos.add(documento);
     }
 
-    private void agregarAutor(Documento documento){
+    private void agregarAutor(Documento documento) {
 
         System.out.println("Ingresa el id  del autor");
-        int id=scanner.nextInt();
+        int id = scanner.nextInt();
 
         System.out.println("Ingresa el nombre del autor");
-        String nombre=scanner.nextLine();
+        String nombre = scanner.nextLine();
 
         System.out.println("Ingresa el apellido del autor");
-        String apellido=scanner.nextLine();
-        Autor autor=new Autor(id, nombre, apellido);
+        String apellido = scanner.nextLine();
+        Autor autor = new Autor(id, nombre, apellido);
     }
-
-    private void agregarAutor(Autor autor){
+    private void agregarAutor(Autor autor) {
         autores.add(autor);
     }
 
-    private void agregarRelacion(int documentoId,int autorId){
-        AutorDocumento autorDoc=new AutorDocumento(documentoId, autorId);
+    private void agregarRelacion(int documentoId, int autorId) {
+        AutorDocumento autorDoc = new AutorDocumento(documentoId, autorId);
         autorDocumentos.add(autorDoc);
 
-        Documento documento= buscarDocPorId(documentoId);
-        if (documento!=null) {
-            Autor autor= buscarAutorPorId(autorId);
-            if (autor!=null) {
-                agregarAutor(autor);                
+        Documento documento = buscarDocPorId(documentoId);
+        if (documento != null) {
+            Autor autor = buscarAutorPorId(autorId);
+            if (autor != null) {
+                agregarAutor(autor);
             }
         }
     }
 
-    private List<Autor> obtenerAutorPorDocumentoId(int documentoId){
-        List<Autor> autores=new ArrayList<>();
-        for(int i=0;i<autorDocumentos.size();i++){
-            AutorDocumento autorDoc= autorDocumentos.get(i);
-            if (autorDoc.getDocumentoId()==documentoId) {
-                Autor autor= buscarAutorPorId(autorDoc.getAutorId());
-                if(autor!=null){
+    private List<Autor> obtenerAutorPorDocumentoId(int documentoId) {
+        List<Autor> autores = new ArrayList<>();
+        for (int i = 0; i < autorDocumentos.size(); i++) {
+            AutorDocumento autorDoc = autorDocumentos.get(i);
+            if (autorDoc.getDocumentoId() == documentoId) {
+                Autor autor = buscarAutorPorId(autorDoc.getAutorId());
+                if (autor != null) {
                     autores.add(autor);
                 }
             }
@@ -107,14 +105,14 @@ public class Gestion {
         return autores;
     }
 
-    private List<Documento> obtenerDocumentoPorAutorId(int autorId){
-        List<Documento> documentos=new ArrayList<>();
+    private List<Documento> obtenerDocumentoPorAutorId(int autorId) {
+        List<Documento> documentos = new ArrayList<>();
 
-        for(int i=0;i<autorDocumentos.size();i++){
-            AutorDocumento autorDoc= autorDocumentos.get(i);
-            if (autorDoc.getAutorId()==autorId) {
-                Documento libro= buscarDocPorId(autorDoc.getDocumentoId());
-                if(libro!=null){
+        for (int i = 0; i < autorDocumentos.size(); i++) {
+            AutorDocumento autorDoc = autorDocumentos.get(i);
+            if (autorDoc.getAutorId() == autorId) {
+                Documento libro = buscarDocPorId(autorDoc.getDocumentoId());
+                if (libro != null) {
                     documentos.add(libro);
                 }
             }
@@ -122,10 +120,12 @@ public class Gestion {
         return documentos;
     }
 
-    private Documento buscarDocPorId(int id){
-        for(int i=0;i<documentos.size();i++){
-            Documento documento=documentos.get(i);
-            if (documento.getId()==id) {
+
+
+    private Documento buscarDocPorId(int id) {
+        for (int i = 0; i < documentos.size(); i++) {
+            Documento documento = documentos.get(i);
+            if (documento.getId() == id) {
                 return documento;
             }
         }
@@ -133,15 +133,23 @@ public class Gestion {
     }
 
     private Autor buscarAutorPorId(int id) {
-        for(int i=0;i<autores.size();i++){
-            Autor autor=autores.get(i);
-            if (autor.getId()==id) {
-                return autor;   
+        for (int i = 0; i < autores.size(); i++) {
+            Autor autor = autores.get(i);
+            if (autor.getId() == id) {
+                return autor;
             }
         }
         return null;
     }
-    
+
+    private void listarAutores() {
+        System.out.println("Lista de Autores:");
+        for (Autor autor : autores) {
+            System.out.println(
+                    "ID: " + autor.getId() + ", Nombre: " + autor.getNombre() + ", Apellido: " + autor.getApellido());
+        }
+    }
+
     public void menu() {
         boolean salir = false;
         do {
