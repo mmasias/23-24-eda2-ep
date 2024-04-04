@@ -39,7 +39,8 @@ public class Gestion {
                 tipo = Tipo.valueOf(scanner.next().toUpperCase());
                 inputValido = true;
             } catch (IllegalArgumentException e) {
-                System.out.print("Tipo de documento no válido. Por favor, ingrese uno de los siguientes: LIBRO, REVISTA, ARTICULO, PAPER");
+                System.out.print(
+                        "Tipo de documento no válido. Por favor, ingrese uno de los siguientes: LIBRO, REVISTA, ARTICULO, PAPER");
                 scanner.nextLine();
             }
         }
@@ -307,15 +308,6 @@ public class Gestion {
         System.out.println("-------------------------");
     }
 
-    public void listarAutoresPorDocumento(Documento documento) {
-        ArrayList<Autor> autores = obtenerAutoresPorId(documento.getId());
-        System.out.println("-------------------------");
-        for (Autor autor : autores) {
-            System.out.println(autor);
-        }
-        System.out.println("-------------------------");
-    }
-
     Documento obtenerDocumentoPorId(int id) {
         for (Documento documento : documentos) {
             if (documento.getId() == id) {
@@ -407,10 +399,12 @@ public class Gestion {
                         if (String.valueOf(autor.getId()).equals(valor)) {
                             resultado.add(doc);
                         }
-                    }   
+                    }
                     break;
                 case "iddocumento":
-                    listarAutoresPorDocumento(doc);
+                    if (String.valueOf(doc.getId()).equals(valor)) {
+                        resultado.add(doc);
+                    }
                     break;
                 default:
                     System.out.println("Criterio de búsqueda no válido.");
@@ -457,6 +451,7 @@ public class Gestion {
                 break;
             case 5:
                 criterio = "idautor";
+                listarAutores();
                 System.out.print("Introduce el ID del autor a buscar: ");
                 valor = scanner.nextLine();
                 break;
@@ -470,9 +465,9 @@ public class Gestion {
                 break;
         }
         ArrayList<Documento> resultado = buscar(criterio, valor);
-        if (resultado.isEmpty() && opcion != 6) {
+        if (resultado.isEmpty()) {
             System.out.println("No se encontraron documentos que coincidan con la búsqueda.");
-        } else if (opcion != 6) {
+        } else {
             System.out.println("Documentos encontrados:");
             for (Documento doc : resultado) {
                 System.out.println(doc);
