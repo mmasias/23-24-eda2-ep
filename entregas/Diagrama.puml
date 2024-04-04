@@ -1,16 +1,18 @@
 @startuml
 
-class MyScanner {
-    - scanner: Scanner
-    + MyScanner()
-    + nextLine(): String
-    + nextLong(): long
-    + nextInt(): int
-    + nextInt2(): int
-    + nextDouble(): double
-    + close(): void
-    + nextIntInRange(min: int, max: int): int
-}
+class MyScanner{
+        - scanner: Scanner
+        + MyScanner()
+        + nextLine(): String
+        + nextLine(mensaje: String): String
+        + nextLong(): long
+        + nextLong(mensaje: String): long
+        + nextInt(): int
+        + nextDouble(): double
+        + close(): void
+        + nextInt(min: int, max: int): int
+        + nextInt(mensaje: String, min: int, max: int): int
+    }
 
 enum Tipo {
     LIBRO
