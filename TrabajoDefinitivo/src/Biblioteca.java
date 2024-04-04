@@ -1,12 +1,52 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
 
 public class Biblioteca {
+
     private ArrayList<Documento> documentos;
-    private Gestionador gestionador;
+    private ArrayList<Autor> autores;
+    private Scanner scanner;
 
     public Biblioteca() {
         documentos = new ArrayList<>();
-        gestionador = new Gestionador(this);
+        autores = new ArrayList<>();
+        scanner = new Scanner(System.in);
+    }
+
+    public void iniciarGestionBiblioteca() {
+        boolean gestionando = true;
+        while (gestionando) {
+            System.out.println("Elige una opción:");
+            System.out.println("1. Gestionar Documentos");
+            System.out.println("2. Buscar Documentos");
+            System.out.println("3. Salir del gestor");
+            int eleccion = scanner.nextInt();
+            scanner.nextLine(); 
+            switch (eleccion) {
+                case 1:
+                    gestionarDocumentos();
+                    break;
+                case 2:
+                    buscarDocumentos();
+                    break;
+                case 3:
+                    gestionando = false;
+                    System.out.println("Saliendo del gestor de biblioteca...");
+                    break;
+                default:
+                    System.out.println("Introduce una opción válida.");
+            }
+        }
+    }
+    private void gestionarDocumentos() {
+        System.out.println("Gestionando Documentos");
+        // Implementa la gestión de documentos aquí
+    }
+
+    private void buscarDocumentos() {
+        System.out.println("Buscando Documentos");
+        // Implementa la búsqueda de documentos aquí
     }
 
     public void anadirDocumento(Documento documento){
@@ -77,9 +117,7 @@ public class Biblioteca {
 
 
 
-    public void accederGestionador(){
-        gestionador.gestionar();
-    }
+   
 
     public ArrayList<Documento> todoDocumentos() {
         return documentos;
