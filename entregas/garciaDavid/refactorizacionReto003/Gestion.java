@@ -66,7 +66,7 @@ public class Gestion {
         documentos.add(documento);
     }
 
-    private void agregarAutor() {
+    private void agregarAutor(Documento documento) {
         System.out.println("Ingresa el id del autor");
         int id = scanner.nextInt();
         scanner.nextLine();
