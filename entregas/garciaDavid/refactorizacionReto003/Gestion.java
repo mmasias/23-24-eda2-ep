@@ -66,17 +66,16 @@ public class Gestion {
         documentos.add(documento);
     }
 
-    private void agregarAutor(Documento documento) {
-
-        System.out.println("Ingresa el id  del autor");
+    private void agregarAutor() {
+        System.out.println("Ingresa el id del autor");
         int id = scanner.nextInt();
-
+        scanner.nextLine();
         System.out.println("Ingresa el nombre del autor");
         String nombre = scanner.nextLine();
-
         System.out.println("Ingresa el apellido del autor");
         String apellido = scanner.nextLine();
         Autor autor = new Autor(id, nombre, apellido);
+        autores.add(autor); 
     }
 
     private void agregarAutor(Autor autor) {
@@ -176,7 +175,7 @@ public class Gestion {
                 case 3:
                     System.out.println("Ingresa el id del autor");
                     int id = scanner.nextInt();
-                    scanner.nextLine(); // Consume the newline
+                    scanner.nextLine(); 
                     System.out.println("Ingresa el nombre del autor");
                     String nombre = scanner.nextLine();
                     System.out.println("Ingresa el apellido del autor");
