@@ -4,14 +4,15 @@ public  class Libro {
     private String titulo;
     private int añoDePublicacion;
     private Tipo tipo;
-    private ArrayList<String> palabrasClave;
     private int idLibro;
+    private ArrayList<Autor> autores; 
 
     public Libro(String titulo, int añoDePublicacion, Tipo tipo, int idLibro) {
         this.titulo = titulo;
         this.añoDePublicacion = añoDePublicacion;
         this.tipo = tipo;
-        this.palabrasClave = new ArrayList<String>();
+        this.idLibro = idLibro;
+        this.autores = new ArrayList<>();
     }
 
     public String getTitulo() {
@@ -38,22 +39,15 @@ public  class Libro {
         this.tipo = tipo;
     }
 
-    public ArrayList<String> getPalabrasClave() {
-        return palabrasClave;
-    }
 
-    public void setPalabrasClave(ArrayList<String> palabrasClave) {
-        this.palabrasClave = palabrasClave;
-    }
-    public  void añadirPalabraClave(String palabraClave){
-        this.palabrasClave.add(palabraClave);
-    }
-
-    public void eliminarPalabraClave(String palabraClave){
-        this.palabrasClave.remove(palabraClave);
-    }
-    public String toStriNg(){
-        return titulo + añoDePublicacion + tipo + palabrasClave;
+    @Override
+    public String toString() {
+        return "Libro{" +
+                "titulo='" + titulo + '\'' +
+                ", añoDePublicacion=" + añoDePublicacion +
+                ", tipo=" + tipo +
+                ", idLibro=" + idLibro +
+                '}';
     }
 
     public int getId() {
@@ -64,4 +58,8 @@ public  class Libro {
         this.idLibro = idLibro;
     }
 
+
+    public void añadirAutor(Autor autor) {
+        autores.add(autor);
+    }
 }

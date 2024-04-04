@@ -13,6 +13,62 @@ public class Gestion {
         this.autorLibro = new ArrayList<AutorLibro>();
     }
 
+    public void agregar(){
+        System.out.println("Ingrese el id del libro");
+        int id = sc.nextInt();
+        System.out.println("Ingrese el titulo del libro");
+        sc = new Scanner(System.in);
+        String titulo = sc.nextLine();
+        System.out.println("Ingrese el año de publicacion");
+        int año = sc.nextInt();
+        System.out.println("Ingrese el tipo de libro");
+        System.out.println("1. LIBRO 2. REVISTA 3. ARTICULO 4. PAPER 5. ID");
+        int opcion = sc.nextInt();
+        Tipo tipo = null;
+        switch (opcion) {
+            case 1:
+                tipo = Tipo.LIBRO;
+                break;
+            case 2:
+                tipo = Tipo.REVISTA;
+                break;
+            case 3:
+                tipo = Tipo.ARTICULO;
+                break;
+            case 4:
+                tipo = Tipo.PAPER;
+                break;
+            case 5:
+                tipo = Tipo.ID;
+                break;
+            default:
+                break;
+        }
+        Libro libro = new Libro(titulo, año, tipo, id);
+        boolean agregar = true;
+        do {
+            System.out.println("Ingrese el nombre del autor");
+            sc = new Scanner(System.in);
+            String nombre = sc.nextLine();
+            System.out.println("Ingrese el apellido del autor");
+            String apellido = sc.nextLine();
+            System.out.println("Ingrese el ID del autor");
+            int idAutor = sc.nextInt();
+            Autor autor = new Autor(nombre, apellido, idAutor);
+            ArrayList<Autor> autores = new ArrayList<Autor>();
+            autores.add(autor);
+            System.out.println("Desea agregar otro autor? (si-no)");
+            sc = new Scanner(System.in);
+            String respuesta = sc.nextLine();
+            if (respuesta.equals("no")) {
+                agregar = false;
+            } else {
+                agregar = true;
+            }
+        } while (agregar);
+        String palabra = "";
+    }
+
     public void editar() {
         System.out.println("Ingrese el titulo del documento a editar");
         Scanner sc = new Scanner(System.in);
@@ -52,6 +108,7 @@ public class Gestion {
                 boolean agregar = true;
                 do {
                     System.out.println("Ingrese el nombre del autor");
+                    sc = new Scanner(System.in);
                     String nombre = sc.nextLine();
                     System.out.println("Ingrese el apellido del autor");
                     String apellido = sc.nextLine();
@@ -61,6 +118,7 @@ public class Gestion {
                     ArrayList<Autor> autores = new ArrayList<Autor>();
                     autores.add(autor);
                     System.out.println("Desea agregar otro autor? (si-no)");
+                    sc = new Scanner(System.in);
                     String respuesta = sc.nextLine();
                     if (respuesta.equals("no")) {
                         agregar = false;
@@ -70,16 +128,6 @@ public class Gestion {
                 } while (agregar);
             }
 
-
-            String palabra = "";
-            do {
-                System.out.println("Introduzca palabras clave (fin-para terminar)");
-                palabra = sc.nextLine();
-                if (!palabra.equals("fin")) {
-                    libro.añadirPalabraClave(palabra);
-                }
-
-            } while (!palabra.equals("fin"));
         }
     }
 
@@ -92,37 +140,11 @@ public class Gestion {
                 System.out.println("Titulo: " + libro.getTitulo());
                 System.out.println("Año de publicacion: " + libro.getAñoDePublicacion());
                 System.out.println("Tipo: " + libro.getTipo());
-                System.out.println("Autores: ");
-                System.out.println("Palabras clave: ");
-                for (String palabra : libro.getPalabrasClave()) {
-                    System.out.println(palabra);
-                }
+                System.out.println("Autores: " +autores);
+
             }
         }
     }
-    
-
-    public void buscarPorPalabrasClave() {
-        System.out.println("Ingrese la palabra clave a buscar");
-        Scanner sc = new Scanner(System.in);
-        String palabra = sc.nextLine();
-        for (Libro libro : libros) {
-            for (String palabraClave : libro.getPalabrasClave()) {
-                if (palabraClave.equals(palabra)) {
-                    System.out.println("Titulo: " + libro.getTitulo());
-                    System.out.println("Año de publicacion: " + libro.getAñoDePublicacion());
-                    System.out.println("Tipo: " + libro.getTipo());
-                    System.out.println("Autores: ");
-                    
-                    System.out.println("Palabras clave: ");
-                    for (String palabra2 : libro.getPalabrasClave()) {
-                        System.out.println(palabra2);
-                    }
-                }
-            }
-        }
-    }
-
     public void eliminar() {
         System.out.println("Ingrese el titulo del libro a eliminar");
         Scanner sc = new Scanner(System.in);
@@ -152,15 +174,14 @@ public class Gestion {
             System.out.println("2. Modificar documento");
             System.out.println("3. Buscar documento");
             System.out.println("4. Buscar por autor");
-            System.out.println("5. Buscar por palabras clave");
-            System.out.println("6. Crear relación autor-libro");
-            System.out.println("7. Eliminar documento");
-            System.out.println("8. Salir");
+            System.out.println("5. Crear relación autor-libro");
+            System.out.println("6. Eliminar documento");
+            System.out.println("7. Salir");
             Scanner sc = new Scanner(System.in);
             int opcion = sc.nextInt();
             switch (opcion) {
                 case 1:
-                    editar();
+                    agregar();
                     break;
                 case 2:
                     editar();
@@ -172,17 +193,13 @@ public class Gestion {
                     getAutoresPorId(opcion);
                     break;
                 case 5:
-                    buscarPorPalabrasClave();
-                    break;
-                case 6:
                     añadirRelacion(opcion, opcion);
                     break;
-                case 7:
-                eliminar();
+                case 6:
+                    eliminar();
                     break;
-
-                case 8:
-                salir = true;
+                 case 7:
+                    salir = true;
                     break;
                 default:
                     break;
@@ -247,17 +264,18 @@ public class Gestion {
             System.out.println(autor.toString());
         }
     }
+
     public void añadirRelacion(int idLibro, int idAutor){
-        AutorLibro autorLibro = new AutorLibro(idLibro, idAutor);
-        autorLibro.add(autorLibro);
+        AutorLibro nuevaRelacion = new AutorLibro(idLibro, idAutor);
+        autorLibro.add(nuevaRelacion);
 
         Libro libro = buscarLibroPorID(idLibro);
         if(libro != null){
             Autor autor = buscarAutorPorID(idAutor);
             if (autor != null) {
-                añadirAutor(autor);
+                libro.añadirAutor(autor);
             }
         }
     }
-
 }
+
