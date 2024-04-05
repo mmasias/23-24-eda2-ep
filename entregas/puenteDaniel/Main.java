@@ -129,10 +129,12 @@ public class Main {
             System.out.println("\nGestión de Relaciones Autor-Texto:");
             System.out.println("1. Añadir relación autor-texto");
             System.out.println("2. Listar relaciones autor-texto");
-            System.out.println("3. Volver al menú principal");
+            System.out.println("3. Buscar textos por ID de autor");
+            System.out.println("4. Buscar autores por ID de texto");
+            System.out.println("5. Volver al menú principal");
             System.out.print("Selecciona una opción: ");
             int opcion = sc.nextInt();
-            sc.nextLine(); 
+            sc.nextLine();
     
             switch (opcion) {
                 case 1:
@@ -149,11 +151,22 @@ public class Main {
                     gestion.listarRelacionesAutorTexto();
                     break;
                 case 3:
-                    return;
+                    System.out.println("Introduce el ID del autor:");
+                    int id_autor = sc.nextInt();
+                    gestion.listarTextosPorAutorId(id_autor);
+                    break;
+                case 4:
+                    System.out.println("Introduce el ID del texto:");
+                    int id_texto = sc.nextInt();
+                    gestion.listarAutoresPorTextoId(id_texto);
+                    break;
+                case 5:
+                    return; 
                 default:
                     System.out.println("Opción no válida. Por favor, intenta de nuevo.");
             }
         }
     }
+    
     
 }

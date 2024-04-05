@@ -164,4 +164,30 @@ public class Gestion {
         }
         return null;
     }
+
+    public void listarTextosPorAutorId(int idAutor) {
+        ArrayList<Texto> textosDelAutor = getTextosPorAutorId(idAutor);
+        if (!textosDelAutor.isEmpty()) {
+            System.out.println("Textos del autor ID " + idAutor + ":");
+            for (Texto texto : textosDelAutor) {
+                System.out.println("ID: " + texto.getId() + " - Título: " + texto.getTitulo());
+            }
+        } else {
+            System.out.println("No se encontraron textos para el autor con ID " + idAutor);
+        }
+    }
+
+    public void listarAutoresPorTextoId(int idTexto) {
+        ArrayList<Autor> autoresDelTexto = getAutoresPorTextoId(idTexto);
+        if (!autoresDelTexto.isEmpty()) {
+            System.out.println("Autores del texto ID " + idTexto + ":");
+            for (Autor autor : autoresDelTexto) {
+                System.out.println("ID: " + autor.getId() + " - Nombre: " + autor.getNombre() + " " + autor.getApellido());
+            }
+        } else {
+            System.out.println("No se encontraron autores para el texto con ID " + idTexto);
+        }
+    }
+
+    
 }
