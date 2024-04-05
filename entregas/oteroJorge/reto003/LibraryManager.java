@@ -3,31 +3,31 @@ package entregas.oteroJorge.reto003;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Gestor {
+public class LibraryManager {
 
-    private ArrayList<Documento> documentos;
-    GestorAutores gestorAutores;
+    private ArrayList<Book> documentos;
+    BookAuthor gestorAutores;
 
-    public Gestor() {
+    public LibraryManager() {
         this.documentos = new ArrayList<>();
-        this.gestorAutores = new GestorAutores();
+        this.gestorAutores = new BookAuthor();
     }
 
-    public GestorAutores getGestorAutores(){
+    public BookAuthor getGestorAutores(){
         return this.gestorAutores;
     }
 
-    public void setDocumentos(ArrayList<Documento> documentos) {
+    public void setDocumentos(ArrayList<Book> documentos) {
         this.documentos = documentos;
     }
 
-    public void addDocumento(Documento documento) {
+    public void addDocumento(Book documento) {
         this.documentos.add(documento);
     }
 
     private void editDocumento(String titulo) {
-        Documento documento = null;
-        for (Documento doc : documentos) {
+        Book documento = null;
+        for (Book doc : documentos) {
             if (doc.getTitulo().equals(titulo)) {
                 documento = doc;
                 break;
@@ -50,13 +50,13 @@ public class Gestor {
 
     }
 
-    private void removeDocumento(Documento documento) {
+    private void removeDocumento(Book documento) {
         this.documentos.remove(documento);
     }
 
     private void removeDocumentoPorTitulo(String titulo) {
-        Documento documento = null;
-        for (Documento doc : documentos) {
+        Book documento = null;
+        for (Book doc : documentos) {
             if (doc.getTitulo().equalsIgnoreCase(titulo)) {
                 documento = doc;
                 break;
@@ -70,8 +70,8 @@ public class Gestor {
     }
 
     private void buscarDocumentoPorTitulo(String titulo) {
-        Documento documento = null;
-        for (Documento doc : this.documentos) {
+        Book documento = null;
+        for (Book doc : this.documentos) {
             if (doc.getTitulo().toLowerCase().contains(titulo.toLowerCase())) {
                 documento = doc;
                 break;
@@ -86,10 +86,10 @@ public class Gestor {
     
 
     private void buscarDocumentoPorAutor(String autor) {
-        ArrayList<Documento> documentosAutor = new ArrayList<>();
-        for (Documento doc : documentos) {
+        ArrayList<Book> documentosAutor = new ArrayList<>();
+        for (Book doc : documentos) {
             for (int id : doc.getIdAutores()) {
-                for (Autor aut : gestorAutores.getAutores()) {
+                for (Author aut : gestorAutores.getAutores()) {
                     if (aut.getId() == id && aut.getNombreCompleto().equals(autor)) {
                         documentosAutor.add(doc);
                     }
@@ -97,7 +97,7 @@ public class Gestor {
             }
         }
         if (documentosAutor.size() > 0) {
-            for (Documento doc : documentosAutor) {
+            for (Book doc : documentosAutor) {
                 doc.printDocumento(this.gestorAutores);
             }
         } else {
@@ -116,14 +116,14 @@ public class Gestor {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (Documento documento : documentos) {
+        for (Book documento : documentos) {
             sb.append(documento.toString(this.gestorAutores));
             sb.append("\n");
         }
         return sb.toString();
     }
 
-    private void añadirDocumento(GestorAutores gestorAutores){
+    private void añadirDocumento(BookAuthor gestorAutores){
         Scanner sc = new Scanner(System.in);
         System.out.println("Introduce el titulo del documento");
         String titulo = sc.nextLine();
@@ -153,7 +153,7 @@ public class Gestor {
                     añadiendoAutores = false;
                 } 
         }
-        Documento documento = new Documento(titulo, idAutores, año, tipo);
+        Book documento = new Book(titulo, idAutores, año, tipo);
         addDocumento(documento);
     }
 

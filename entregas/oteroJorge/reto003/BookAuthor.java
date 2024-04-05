@@ -3,26 +3,26 @@ package entregas.oteroJorge.reto003;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class GestorAutores {
+public class BookAuthor {
 
-    private ArrayList<Autor> autores;
+    private ArrayList<Author> autores;
 
-    public GestorAutores() {
+    public BookAuthor() {
         this.autores = new ArrayList<>();
     }
 
-    public ArrayList<Autor> getAutores(){
+    public ArrayList<Author> getAutores(){
         return this.autores;
     }
 
     public void agregarAutor(int id, String nombreCompleto){
-        Autor autor = new Autor(id, nombreCompleto);
+        Author autor = new Author(id, nombreCompleto);
         this.autores.add(autor);
     }
 
     public void editarAutor(String nombreViejo){
-        Autor autor = null;
-        for (Autor aut : autores) {
+        Author autor = null;
+        for (Author aut : autores) {
             if (aut.getNombreCompleto().equals(nombreViejo)) {
                 autor = aut;
                 break;
@@ -38,8 +38,8 @@ public class GestorAutores {
     }
     
     public void eliminarAutor(String nombre){
-        Autor autor = null;
-        for (Autor aut : autores) {
+        Author autor = null;
+        for (Author aut : autores) {
             if (aut.getNombreCompleto().equals(nombre)) {
                 autor = aut;
                 break;
@@ -52,13 +52,13 @@ public class GestorAutores {
         }
     }
 
-    public void agregarAutor(Autor autor){
+    public void agregarAutor(Author autor){
         this.autores.add(autor);
     }
     
     public void listarAutores(){
         System.out.println("Autores:");
-        for (Autor autor : autores) {
+        for (Author autor : autores) {
             System.out.println(autor.getId() + " - " + autor.getNombreCompleto());
         }
     }
@@ -66,7 +66,7 @@ public class GestorAutores {
     public String listarEsteAutor(ArrayList<Integer> idAutores){
         String autores = "";
         for (int id : idAutores) {
-            for (Autor autor : this.autores) {
+            for (Author autor : this.autores) {
                 if (autor.getId() == id) {
                     autores += autor.getNombreCompleto() + ", ";
                 }
@@ -76,7 +76,7 @@ public class GestorAutores {
     }
 
     public boolean existeAutor(int id){
-        for (Autor autor : autores) {
+        for (Author autor : autores) {
             if (autor.getId() == id) {
                 return true;
             }
@@ -84,10 +84,10 @@ public class GestorAutores {
         return false;
     }
     public static void main(String[] args) {
-        GestorAutores gestorAutores = new GestorAutores();
-        Autor autor1 = new Autor(1, "J.R.R. Tolkien");
-        Autor autor2 = new Autor(2, "Isaac Asimov");
-        Autor autor3 = new Autor(3, "Jorge");
+        BookAuthor gestorAutores = new BookAuthor();
+        Author autor1 = new Author(1, "J.R.R. Tolkien");
+        Author autor2 = new Author(2, "Isaac Asimov");
+        Author autor3 = new Author(3, "Jorge");
 
         gestorAutores.agregarAutor(autor1);
         gestorAutores.agregarAutor(autor2);
