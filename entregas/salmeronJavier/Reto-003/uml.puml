@@ -1,0 +1,65 @@
+@startuml Library
+
+class LibraryManager {
+    -documents: List<Book>
+    -authors: List<Author>
+    -selectedDocument: Book
+
+    +start(): void
+    -addBook(): void
+    -removeBook(): void
+    -updateBok(): void
+    -searchBook(): void
+    -listBooks(): void
+    -listAuthors(): void
+    -showSelected(): void
+    -deselect(): void
+    -addDocument(title, authorNames, publishingYear, type, keywords): void
+    -getAllDocuments(): List<Book>
+    -getAllAuthors(): List<Author>
+    -searchDocByTitle(title: String): Book
+    -searchDocByAuthor(authorName: String): List<Book>
+    -searcDocByType(type: String): List<Book>
+    -searchDocByYear(year: int): List<Book>
+    -searchDocByKeyword(keyword: String): List<Book>
+    -searchAuthorByName(name: String): Author
+    -updateDocument(title: String, updatedDocument: Book): void
+    -deleteDocument(title: String): void
+}
+
+class Book {
+    -title: String
+    -authors: List<Author>
+    -publishingYear: int
+    -type: String
+    -keyWords: List<String>
+
+    +getTitle(): String
+    +getAuthors(): List<Author>
+    +getAuthorNames(): List<String>
+    +getPublishingYear(): int
+    +getType(): String
+    +addAuthor(author: Author): void
+    +setTitle(newTitle: String): void
+    +removeAuthor(author: Author): void
+    +setPublishingYear(newYear: int): void
+    +setType(newType: String): void
+    +getKeyWords(): List<String>
+    +setKeyWords(keyWords: List<String>): void
+}
+
+class Author {
+    -name: String
+    -documents: List<Book>
+
+    +getName(): String
+    +getDocuments(): List<Book>
+    +addDocument(document: Book): void
+    +removeDocument(document: Book): void
+}
+
+LibraryManager "1" --- "many" Book : manages
+LibraryManager "1" --- "many" Author : manages
+Book "many" - "many" Author
+
+@enduml
