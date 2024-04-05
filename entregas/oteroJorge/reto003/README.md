@@ -20,5 +20,3 @@ Primero voy a comprobar solo leyendo las clases lo que deben/pueden hacer.
 ## CAMBIOS IMPREVISTOS
 
 De momento vacio 
-
-
