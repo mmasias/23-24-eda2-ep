@@ -15,9 +15,6 @@ public class Autor {
     public String getNombre() {
         return nombre;
     }
-    public String toString(){
-        return nombre + " " + apellido;
-    }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
@@ -36,6 +33,13 @@ public class Autor {
     public void setId(int idAutor) {
         this.idAutor = idAutor;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "Autor{" +
+                "nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", idAutor=" + idAutor +
+                '}';
+    }
 }

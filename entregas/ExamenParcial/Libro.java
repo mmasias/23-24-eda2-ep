@@ -5,14 +5,14 @@ public  class Libro {
     private int añoDePublicacion;
     private Tipo tipo;
     private int idLibro;
-    private ArrayList<Autor> autores; 
+
 
     public Libro(String titulo, int añoDePublicacion, Tipo tipo, int idLibro) {
         this.titulo = titulo;
         this.añoDePublicacion = añoDePublicacion;
         this.tipo = tipo;
         this.idLibro = idLibro;
-        this.autores = new ArrayList<>();
+
     }
 
     public String getTitulo() {
@@ -58,8 +58,4 @@ public  class Libro {
         this.idLibro = idLibro;
     }
 
-
-    public void añadirAutor(Autor autor) {
-        autores.add(autor);
-    }
 }

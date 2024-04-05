@@ -11,9 +11,10 @@ public class Gestion {
         this.libros = new ArrayList<Libro>();
         this.autores = new ArrayList<Autor>();
         this.autorLibro = new ArrayList<AutorLibro>();
+        this.sc = new Scanner(System.in);
     }
 
-    public void agregar(){
+    public void agregar() {
         System.out.println("Ingrese el id del libro");
         int id = sc.nextInt();
         System.out.println("Ingrese el titulo del libro");
@@ -45,6 +46,9 @@ public class Gestion {
                 break;
         }
         Libro libro = new Libro(titulo, año, tipo, id);
+        añadirLibro(libro);
+    }
+    public void agregarAutor() {
         boolean agregar = true;
         do {
             System.out.println("Ingrese el nombre del autor");
@@ -55,8 +59,7 @@ public class Gestion {
             System.out.println("Ingrese el ID del autor");
             int idAutor = sc.nextInt();
             Autor autor = new Autor(nombre, apellido, idAutor);
-            ArrayList<Autor> autores = new ArrayList<Autor>();
-            autores.add(autor);
+            añadirAutor(autor);
             System.out.println("Desea agregar otro autor? (si-no)");
             sc = new Scanner(System.in);
             String respuesta = sc.nextLine();
@@ -66,15 +69,16 @@ public class Gestion {
                 agregar = true;
             }
         } while (agregar);
-        String palabra = "";
     }
+
 
     public void editar() {
         System.out.println("Ingrese el titulo del documento a editar");
-        Scanner sc = new Scanner(System.in);
         String titulo = sc.nextLine();
+        boolean encontrado = false;
+        boolean agregar = true;
         for (Libro libro : libros) {
-            if (libro.getTitulo().equals(titulo)) {
+            if (libro.getTitulo().equalsIgnoreCase(titulo)) {
                 System.out.println("Ingrese el nuevo titulo del libro");
                 String nuevoTitulo = sc.nextLine();
                 libro.setTitulo(nuevoTitulo);
@@ -105,7 +109,14 @@ public class Gestion {
                         break;
                 }
                 libro.setTipo(tipo);
-                boolean agregar = true;
+                encontrado = true;
+                break;
+            }
+        }
+        if (!encontrado) {
+            System.out.println("Libro no encontrado.");
+        }
+
                 do {
                     System.out.println("Ingrese el nombre del autor");
                     sc = new Scanner(System.in);
@@ -128,21 +139,21 @@ public class Gestion {
                 } while (agregar);
             }
 
-        }
-    }
-
     public void buscar() {
         System.out.println("Ingrese el titulo del libro a buscar");
-        Scanner sc = new Scanner(System.in);
+        sc = new Scanner(System.in);
         String titulo = sc.nextLine();
+        boolean encontrado = false;
         for (Libro libro : libros) {
-            if (libro.getTitulo().equals(titulo)) {
-                System.out.println("Titulo: " + libro.getTitulo());
-                System.out.println("Año de publicacion: " + libro.getAñoDePublicacion());
-                System.out.println("Tipo: " + libro.getTipo());
-                System.out.println("Autores: " +autores);
-
+            if (libro.getTitulo().equalsIgnoreCase(titulo)) {
+                System.out.println("Libro encontrado:");
+                System.out.println(libro);
+                encontrado = true;
+                break;
             }
+        }
+        if (!encontrado) {
+            System.out.println("Libro no encontrado.");
         }
     }
     public void eliminar() {
@@ -157,6 +168,9 @@ public class Gestion {
         }
     }
     public ArrayList<Autor> getAutoresPorId(int idLibro){
+        System.out.println(" Escribe el ID de un libro para saber su autor ");
+        sc = new Scanner(System.in);
+        idLibro = sc.nextInt();
         ArrayList<Autor> autores = new ArrayList<Autor>();
         for (AutorLibro autorLibro : autorLibro) {
             if (autorLibro.getIdLibro() == idLibro) {
@@ -171,7 +185,7 @@ public class Gestion {
         boolean salir = false;
         do {
             System.out.println("1. Agregar documento");
-            System.out.println("2. Modificar documento");
+            System.out.println("2. Agregar autor");
             System.out.println("3. Buscar documento");
             System.out.println("4. Buscar por autor");
             System.out.println("5. Crear relación autor-libro");
@@ -184,7 +198,7 @@ public class Gestion {
                     agregar();
                     break;
                 case 2:
-                    editar();
+                    agregarAutor();
                     break;
                 case 3:
                     buscar();
@@ -223,15 +237,8 @@ public class Gestion {
     public void añadirLibro(Libro libro){
         libros.add(libro);
     }
-    public void añadirAutor(Libro libro){
-        libros.add(libro);
-    }
     public void añadirAutor(Autor autor){
         autores.add(autor);
-    }
-    public void añadirAutorLibro(int idLibro, int idAutor){
-        AutorLibro autorLibro = new AutorLibro(idLibro, idAutor);
-        autorLibro.add(autorLibro);
     }
     public ArrayList<Libro> getLibrosPorId(int idAutor){
         ArrayList<Libro> libros = new ArrayList<Libro>();
@@ -273,7 +280,7 @@ public class Gestion {
         if(libro != null){
             Autor autor = buscarAutorPorID(idAutor);
             if (autor != null) {
-                libro.añadirAutor(autor);
+                agregarAutor();
             }
         }
     }
