@@ -18,6 +18,10 @@ public class Book {
         return id;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
     @Override
     public String toString() {
         return "> Book{" +

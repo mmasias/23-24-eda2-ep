@@ -19,14 +19,35 @@ public class LibraryManager {
     }
 
     private void listBooks() {
-        System.out.println("Books:");
+        System.out.println(">Available books:");
         if (books.isEmpty()) {
-            System.out.println("No books available");
+            System.out.println(">>No books available");
         } else {
             for (Book book : books) {
-                System.out.println(getAuthorsByBookId(book.getId()));
+                System.out.println(">>" + book.getTitle() + " by " + getAuthorsByBookId(book.getId()));
             }
         }
+    }
+
+    private void addExampleBooks(){
+        Book book1 = new Book(1, "The Lord of the Rings", 1954, "Fantasy");
+        Book book2 = new Book(2, "Harry Potter and the Philosopher's Stone", 1997, "Fantasy");
+        Book book3 = new Book(3, "1984", 1949, "Dystopian");
+        Book book4 = new Book(4, "Animal Farm", 1945, "Dystopian");
+        books.add(book1);
+        books.add(book2);
+        books.add(book3);
+        books.add(book4);
+        Author author1 = new Author(1, "J.R.R. Tolkien");
+        Author author2 = new Author(2, "J.K. Rowling");
+        Author author3 = new Author(3, "George Orwell");
+        authors.add(author1);
+        authors.add(author2);
+        authors.add(author3);
+        relations.add(new BookAuthor(1, 1));
+        relations.add(new BookAuthor(2, 2));
+        relations.add(new BookAuthor(3, 3));
+        relations.add(new BookAuthor(4, 3));
     }
 
     private void addBook() {
@@ -39,96 +60,64 @@ public class LibraryManager {
         Book book = new Book(books.size() + 1, title, publicationYear, type);
         books.add(book);
         System.out.println("Book added successfully");
+        addAuthorToBook(book);
     }
 
     private void addAuthorToBook(Book book) {
-        books.add(book);
-        System.out.println("Book added successfully, would you like to add an author to the book? (y/n)");
+        System.out.println("Would you like to add an author to the book? (y/n)");
         String response = scanner.nextLine();
-        if (response.equals("y")) {
-            addAuthorToBook(book);
+        if (response.equalsIgnoreCase("y")) {
+            addAuthor(book);
         }
     }
 
     private void addAuthor(Book book) {
-        boolean addingAuthors = true;
-        while (addingAuthors) {
-            System.out.println("Select an author to add to the book or type 'n' to add a new author:");
-            listAuthors();
-            String input = scanner.nextLine();
-            if ("n".equalsIgnoreCase(input)) {
-                addNewAuthor();
-            } else {
-                try {
-                    int authorId = Integer.parseInt(input);
-                    addRelation(book.getId(), authorId);
-                    System.out.println("Relation added successfully");
-                } catch (NumberFormatException e) {
-                    System.out.println("Invalid author id");
-                }
-            }
-            System.out.println("Would you like to add another author to the book? (y/n)");
-            if (!"y".equalsIgnoreCase(scanner.nextLine())) {
-                addingAuthors = !addingAuthors;
+        System.out.println("Select an author to add to the book or type 'n' to add a new author:");
+        listAuthors();
+        String input = scanner.nextLine();
+        if ("n".equalsIgnoreCase(input)) {
+            addNewAuthor(book);
+        } else {
+            try {
+                int authorId = Integer.parseInt(input);
+                addRelation(book.getId(), authorId);
+                System.out.println("Relation added successfully");
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid author id");
             }
         }
     }
 
-    private void addNewAuthor() {
+    private void addNewAuthor(Book book) {
         System.out.println("Enter the name of the author:");
         String name = scanner.nextLine();
         Author newAuthor = new Author(authors.size() + 1, name);
-        addAuthor(newAuthor);
+        authors.add(newAuthor);
         addRelation(book.getId(), newAuthor.getId());
         System.out.println("Relation added successfully");
-    }
-
-    private void addAuthor(Author author) {
-        authors.add(author);
     }
 
     private void addRelation(int bookId, int authorId) {
         relations.add(new BookAuthor(bookId, authorId));
     }
 
-    private List<Author> getAuthorsByBookId(int bookId) {
-        List<Author> authorsByBookId = new ArrayList<>();
+    private String getAuthorsByBookId(int bookId) {
+        StringBuilder authorsList = new StringBuilder();
         for (BookAuthor relation : relations) {
             if (relation.getBookId() == bookId) {
-                for (Author author : authors) {
-                    if (author.getId() == relation.getAuthorId()) {
-                        authorsByBookId.add(author);
-                    }
+                Author author = findAuthorById(relation.getAuthorId());
+                if (author != null) {
+                    authorsList.append(author.getName()).append(", ");
                 }
             }
         }
-        return authorsByBookId;
+        if (authorsList.length() > 0) {
+            authorsList.setLength(authorsList.length() - 2);
+        }
+        return authorsList.toString();
     }
 
-    private List<Book> getBooksByAuthorId(int authorId) {
-        List<Book> booksByAuthorId = new ArrayList<>();
-        for (BookAuthor relation : relations) {
-            if (relation.getAuthorId() == authorId) {
-                for (Book book : books) {
-                    if (book.getId() == relation.getBookId()) {
-                        booksByAuthorId.add(book);
-                    }
-                }
-            }
-        }
-        return booksByAuthorId;
-    }
-
-    private Book getBookById(int bookId) {
-        for (Book book : books) {
-            if (book.getId() == bookId) {
-                return book;
-            }
-        }
-        return null;
-    }
-    
-    private Author getAuthorById(int authorId) {
+    private Author findAuthorById(int authorId) {
         for (Author author : authors) {
             if (author.getId() == authorId) {
                 return author;
@@ -140,12 +129,68 @@ public class LibraryManager {
     private void listAuthors() {
         System.out.println("Authors:");
         if (authors.isEmpty()) {
-            System.out.println("No authors available");
+            System.out.println(">No authors available");
         } else {
             for (Author author : authors) {
-                System.out.println(author);
+                System.out.println(author.getId() + ". " + author.getName());
             }
         }
     }
-    
+
+    public void start(){
+        boolean running = true;
+        while (running) {
+            System.out.println("Select an option:");
+            System.out.println("1. List books");
+            System.out.println("2. Add book");
+            System.out.println("3. List authors");
+            System.out.println("4. Add example");
+            System.out.println("5. Find author by id");
+            System.out.println("6. Find book by id");
+            System.out.println("F. Exit");
+            String option = scanner.nextLine();
+            switch (option) {
+                case "1":
+                    listBooks();
+                    break;
+                case "2":
+                    addBook();
+                    break;
+                case "3":
+                    listAuthors();
+                    break;
+                case "4":
+                    addExampleBooks();
+                    break;
+                case "5":
+                    System.out.println("Enter the author id:");
+                    int authorId = Integer.parseInt(scanner.nextLine());
+                    Author author = findAuthorById(authorId);
+                    if (author != null) {
+                        System.out.println(author);
+                    } else {
+                        System.out.println("Author not found");
+                    }
+                    break;
+                case "6":
+                    System.out.println("Enter the book id:");
+                    int bookId = Integer.parseInt(scanner.nextLine());
+                    Book book = books.stream().filter(b -> b.getId() == bookId).findFirst().orElse(null);
+                    if (book != null) {
+                        System.out.println(book);
+                    } else {
+                        System.out.println("Book not found");
+                    }
+                    break;
+                case "F":
+                    running = false;
+                    break;
+                default:
+                    System.out.println("Invalid option");
+                    break;
+            }
+            System.out.println();
+        }
+        scanner.close();
+    }
 }
