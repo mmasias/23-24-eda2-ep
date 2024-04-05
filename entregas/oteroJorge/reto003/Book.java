@@ -1,7 +1,5 @@
 package entregas.oteroJorge.reto003;
 
-import java.util.ArrayList;
-
 public class Book {
 
     private int id;
