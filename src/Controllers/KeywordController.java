@@ -15,6 +15,7 @@ public class KeywordController {
   }
 
   public void handleKeywordOptions() {
+    view.displayKeywordsList(library.getKeywords());
     view.displayEntityOptions("Keyword");
     int option = view.getOption();
     switch (option) {
@@ -47,12 +48,12 @@ public class KeywordController {
   }
 
   private void editKeyword() {
-    int keywordId = view.promptForKeywordId();
-    Keyword keyword = library.getKeyword(keywordId);
+    int keywordIndex = view.promptForKeywordIndex();
+    Keyword keyword = library.getKeyword(keywordIndex);
     if (keyword != null) {
       String newKeyword = view.promptForKeyword();
       keyword.setKeyword(newKeyword);
-      library.updateKeyword(keywordId, keyword);
+      library.updateKeyword(keywordIndex, keyword);
       view.displayMessage("Keyword updated successfully.");
     } else {
       view.displayMessage("Keyword not found.");
@@ -60,14 +61,14 @@ public class KeywordController {
   }
 
   private void deleteKeyword() {
-    int keywordId = view.promptForKeywordId();
-    library.deleteKeyword(keywordId);
+    int keywordIndex = view.promptForKeywordIndex();
+    library.deleteKeyword(keywordIndex);
     view.displayMessage("Keyword deleted successfully.");
   }
 
   private void viewKeywordDetails() {
-    int keywordId = view.promptForKeywordId();
-    Keyword keyword = library.getKeyword(keywordId);
+    int keywordIndex = view.promptForKeywordIndex();
+    Keyword keyword = library.getKeyword(keywordIndex);
     if (keyword != null) {
       view.displayKeywordDetails(keyword);
     } else {

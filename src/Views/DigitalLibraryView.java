@@ -44,7 +44,6 @@ public class DigitalLibraryView {
         );
       }
     }
-    displayEntityOptions("Document");
   }
 
   public void displayAuthorsList(List<Author> authors) {
@@ -61,20 +60,20 @@ public class DigitalLibraryView {
         );
       }
     }
-    displayEntityOptions("Author");
   }
 
   public void displayKeywordsList(List<Keyword> keywords) {
     if (keywords.isEmpty()) {
-      System.out.println("No keywords available.");
+        System.out.println("No keywords available.");
     } else {
-      System.out.println("\nKeywords:");
-      for (Keyword keyword : keywords) {
-        System.out.printf("%d: %s\n", keyword.getId(), keyword.getKeyword());
-      }
+        System.out.println("\nKeywords:");
+        int index = 1;
+        for (Keyword keyword : keywords) {
+            System.out.printf("%d. %s\n", index++, keyword.getKeyword());
+        }
     }
-    displayEntityOptions("Keyword");
-  }
+}
+
 
   public void displayEntityOptions(String entityType) {
     System.out.println("\nOptions for " + entityType + ":");
@@ -100,11 +99,11 @@ public class DigitalLibraryView {
     return scanner.nextLine();
   }
 
-  public int promptForKeywordId() {
-    System.out.print("Enter keyword ID: ");
+  public int promptForKeywordIndex() {
+    System.out.print("Enter keyword number: ");
     while (!scanner.hasNextInt()) {
-      scanner.next(); // Consume the non-integer input
-      System.out.print("Please enter a valid number for keyword ID: ");
+      scanner.next();
+      System.out.print("Please enter a valid number for keyword number: ");
     }
     return scanner.nextInt();
   }

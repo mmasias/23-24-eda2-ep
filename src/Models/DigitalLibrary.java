@@ -76,25 +76,22 @@ public class DigitalLibrary {
     keywords.add(keyword);
   }
 
-  public Keyword getKeyword(int keywordId) {
-    return keywords
-      .stream()
-      .filter(keyword -> keyword.getId().equals(keywordId))
-      .findFirst()
-      .orElse(null);
+  public Keyword getKeyword(int keywordIndex) {
+    if (keywordIndex > 0 && keywordIndex <= keywords.size()) {
+      return keywords.get(keywordIndex - 1);
+    }
+    return null;
   }
 
-  public void updateKeyword(int keywordId, Keyword updatedKeyword) {
-    keywords =
-      keywords
-        .stream()
-        .map(keyword ->
-          keyword.getId().equals(keywordId) ? updatedKeyword : keyword
-        )
-        .collect(Collectors.toList());
+  public void updateKeyword(int keywordIndex, Keyword updatedKeyword) {
+    if (keywordIndex > 0 && keywordIndex <= keywords.size()) {
+      keywords.set(keywordIndex - 1, updatedKeyword);
+    }
   }
 
-  public void deleteKeyword(int keywordId) {
-    keywords.removeIf(keyword -> keyword.getId().equals(keywordId));
+  public void deleteKeyword(int keywordIndex) {
+    if (keywordIndex > 0 && keywordIndex <= keywords.size()) {
+      keywords.remove(keywordIndex - 1);
+    }
   }
 }
