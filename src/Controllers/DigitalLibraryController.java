@@ -13,6 +13,7 @@ public class DigitalLibraryController {
   private DigitalLibrary library;
   private DigitalLibraryView view;
   private KeywordController keywordController;
+  private AuthorController authorController;
 
   public DigitalLibraryController(
     DigitalLibrary library,
@@ -21,6 +22,7 @@ public class DigitalLibraryController {
     this.library = library;
     this.view = view;
     this.keywordController = new KeywordController(library, view);
+    this.authorController = new AuthorController(library, view);
   }
 
   public void start() {
@@ -34,8 +36,7 @@ public class DigitalLibraryController {
           handleDocumentOptions();
           break;
         case 2:
-          view.displayAuthorsList(library.getAuthors());
-          handleAuthorOptions();
+          authorController.handleAuthorOptions();
           break;
         case 3:
           keywordController.handleKeywordOptions();
@@ -70,7 +71,7 @@ public class DigitalLibraryController {
         return;
       default:
         view.displayInvalidOption();
-        handleDocumentOptions(); 
+        handleDocumentOptions();
         break;
     }
   }
@@ -134,67 +135,4 @@ public class DigitalLibraryController {
     }
   }
 
-  private void handleAuthorOptions() {
-    view.displayEntityOptions("Author");
-    int option = view.getOption();
-    switch (option) {
-      case 1:
-        addNewAuthor();
-        break;
-      case 2:
-        editAuthor();
-        break;
-      case 3:
-        deleteAuthor();
-        break;
-      case 4:
-        viewAuthorDetails();
-        break;
-      case 0:
-        break;
-      default:
-        view.displayInvalidOption();
-        handleAuthorOptions();
-        break;
-    }
-  }
-
-  private void addNewAuthor() {
-    String name = view.promptForAuthorName();
-    String affiliation = view.promptForAuthorAffiliation();
-    Author author = new Author(name, affiliation);
-    library.addAuthor(author);
-    view.displayMessage("Author added successfully.");
-  }
-
-  private void editAuthor() {
-    int authorId = view.promptForAuthorId();
-    Author author = library.getAuthor(authorId);
-    if (author != null) {
-      String name = view.promptForAuthorName();
-      String affiliation = view.promptForAuthorAffiliation();
-      author.setName(name);
-      author.setAffiliation(affiliation);
-      library.updateAuthor(authorId, author);
-      view.displayMessage("Author updated successfully.");
-    } else {
-      view.displayMessage("Author not found.");
-    }
-  }
-
-  private void deleteAuthor() {
-    int authorId = view.promptForAuthorId();
-    library.deleteAuthor(authorId);
-    view.displayMessage("Author deleted successfully.");
-  }
-
-  private void viewAuthorDetails() {
-    int authorId = view.promptForAuthorId();
-    Author author = library.getAuthor(authorId);
-    if (author != null) {
-      view.displayAuthorDetails(author);
-    } else {
-      view.displayMessage("Author not found.");
-    }
-  }
 }
