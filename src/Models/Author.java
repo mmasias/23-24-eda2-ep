@@ -1,11 +1,43 @@
-public class Author {
-    private Integer id;
-    private String name;
-    private String affiliation;
+package Models;
 
-    public Author(Integer id, String name, String affiliation) {
-        this.id = id;
-        this.name = name;
-        this.affiliation = affiliation;
-    }
+public class Author {
+
+  private Integer id;
+  private String name;
+  private String affiliation;
+
+  public Author(String name, String affiliation) {
+    this.name = name;
+    this.affiliation = affiliation;
+    this.id = generateId();
+  }
+
+  private Integer generateId() {
+    String uniqueString = name + System.nanoTime();
+    return uniqueString.hashCode();
+  }
+
+  public Integer getId() {
+    return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getAffiliation() {
+    return affiliation;
+  }
+
+  public void setAffiliation(String affiliation) {
+    this.affiliation = affiliation;
+  }
 }
