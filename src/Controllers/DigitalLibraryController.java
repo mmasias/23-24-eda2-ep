@@ -12,6 +12,7 @@ public class DigitalLibraryController {
 
   private DigitalLibrary library;
   private DigitalLibraryView view;
+  private KeywordController keywordController;
 
   public DigitalLibraryController(
     DigitalLibrary library,
@@ -19,6 +20,7 @@ public class DigitalLibraryController {
   ) {
     this.library = library;
     this.view = view;
+    this.keywordController = new KeywordController(library, view);
   }
 
   public void start() {
@@ -36,8 +38,7 @@ public class DigitalLibraryController {
           handleAuthorOptions();
           break;
         case 3:
-          view.displayKeywordsList(library.getKeywords());
-          handleKeywordOptions();
+          keywordController.handleKeywordOptions();
           break;
         case 0:
           exit = true;
@@ -194,67 +195,6 @@ public class DigitalLibraryController {
       view.displayAuthorDetails(author);
     } else {
       view.displayMessage("Author not found.");
-    }
-  }
-
-  private void handleKeywordOptions() {
-    view.displayEntityOptions("Keyword");
-    int option = view.getOption();
-    switch (option) {
-      case 1:
-        addNewKeyword();
-        break;
-      case 2:
-        editKeyword();
-        break;
-      case 3:
-        deleteKeyword();
-        break;
-      case 4:
-        viewKeywordDetails();
-        break;
-      case 0:
-        return;
-      default:
-        view.displayInvalidOption();
-        handleKeywordOptions();
-        break;
-    }
-  }
-
-  private void addNewKeyword() {
-    String keyword = view.promptForKeyword();
-    Keyword newKeyword = new Keyword(keyword);
-    library.addKeyword(newKeyword);
-    view.displayMessage("Keyword added successfully.");
-  }
-
-  private void editKeyword() {
-    int keywordId = view.promptForKeywordId();
-    Keyword keyword = library.getKeyword(keywordId);
-    if (keyword != null) {
-      String newKeyword = view.promptForKeyword();
-      keyword.setKeyword(newKeyword);
-      library.updateKeyword(keywordId, keyword);
-      view.displayMessage("Keyword updated successfully.");
-    } else {
-      view.displayMessage("Keyword not found.");
-    }
-  }
-
-  private void deleteKeyword() {
-    int keywordId = view.promptForKeywordId();
-    library.deleteKeyword(keywordId);
-    view.displayMessage("Keyword deleted successfully.");
-  }
-
-  private void viewKeywordDetails() {
-    int keywordId = view.promptForKeywordId();
-    Keyword keyword = library.getKeyword(keywordId);
-    if (keyword != null) {
-      view.displayKeywordDetails(keyword);
-    } else {
-      view.displayMessage("Keyword not found.");
     }
   }
 }
