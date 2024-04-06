@@ -17,7 +17,6 @@ public int getIdAutor() {
 public void setIdAutor(int idAutor) {
     this.idAutor = idAutor;
 }
-public void add(AutorLibro autorLibro) {
-    }
+
 }
 
