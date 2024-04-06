@@ -1,8 +1,12 @@
 public class Keyword {
+    private static int nextId = 1;
     private int keywordId;
     private String keyword;
 
-    public Keyword() {}
+    public Keyword( String keyword) {
+        this.keywordId = nextId++;
+        this.keyword = keyword;
+    }
 
     public Keyword(int keywordId, String keyword) {
         this.keywordId = keywordId;

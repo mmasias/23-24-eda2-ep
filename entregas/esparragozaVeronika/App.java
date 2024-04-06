@@ -1,5 +1,9 @@
 class App {
   public static void main(String[] args) {
-    new ManagementSystem().run();
+    Library model = new Library();
+    LibraryView view = new LibraryView();
+    LibraryController controller = new LibraryController(model, view);
+
+    controller.startApplication();
   }
 }

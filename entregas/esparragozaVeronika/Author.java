@@ -1,8 +1,12 @@
 public class Author {
+    private static int nextId = 1;
     private int authorId;
     private String authorName;
 
-    public Author() {}
+    public Author(String authorName) {
+        this.authorName = authorName;
+        this.authorId = nextId++;
+    }
 
     public Author(int authorId, String authorName) {
         this.authorId = authorId;
