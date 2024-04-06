@@ -1,7 +1,7 @@
 package typeDocument;
 
-import searches.AuthorManager;
-import searches.KeywordManager;
+import Author;
+import Keyword;
 
 import java.util.ArrayList;
 
@@ -14,7 +14,7 @@ public class Paper extends Document{
         this.authors = authors;
         this.keywords = keywords;
     }
-    public Paper(AuthorManager authors, KeywordManager keywords) {
+    public Paper(Author authors, Keyword keywords) {
         addTitle();
         addAuthor(authors);
         addYearOfPublication();

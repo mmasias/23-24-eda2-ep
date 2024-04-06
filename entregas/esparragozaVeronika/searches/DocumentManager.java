@@ -1,6 +1,5 @@
 package searches;
 
-import typeDocument.Article;
 import typeDocument.Document;
 
 import java.util.ArrayList;
@@ -9,10 +8,10 @@ import java.util.Scanner;
 public class DocumentManager {
     Scanner input = new Scanner(System.in);
     private final ArrayList<Document> documents;
-    private final AuthorManager authors;
-    private final KeywordManager keywords;
+    private final Author authors;
+    private final Keyword keywords;
 
-    public DocumentManager(ArrayList<Document> documents, AuthorManager authors, KeywordManager keywords){
+    public DocumentManager(ArrayList<Document> documents, Author authors, Keyword keywords){
         this.documents = documents;
         this.authors = authors;
         this.keywords = keywords;

@@ -1,7 +1,7 @@
 package typeDocument;
 
-import searches.AuthorManager;
-import searches.KeywordManager;
+import Author;
+import Keyword;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -34,7 +34,7 @@ public abstract class Document {
         System.out.print("-> ");
         this.yearOfPublication = Integer.parseInt(input.nextLine());
     }
-    protected void addAuthor(AuthorManager authors) {
+    protected void addAuthor(Author authors) {
         boolean isExistAuthor = true;
         System.out.println("Estos son los autores ya existentes, si encuentra el suyo ingrese el numero, sino ingrese el nombre del nuevo a guardar: ");
         authors.showAllAuthors();
@@ -60,7 +60,7 @@ public abstract class Document {
         }
         this.authorsId = chooseAuthors;
     }
-    protected void addKeyword(KeywordManager keywords) {
+    protected void addKeyword(Keyword keywords) {
         boolean isExistKeyword = true;
         System.out.println("Estas son las palabras clave ya existentes, si encuentra la suya ingrese el numero, sino ingrese la nueva palabra clave a guardar: ");
         keywords.showAllKeywords();

@@ -1,5 +1,3 @@
-import searches.AuthorManager;
-import searches.KeywordManager;
 import searches.DocumentManager;
 import typeDocument.*;
 import java.util.ArrayList;
@@ -8,8 +6,8 @@ import java.util.Scanner;
 public class ManagementSystem {
     Scanner input = new Scanner(System.in);
     private DocumentManager documentManager;
-    private final AuthorManager authors = new AuthorManager();
-    private final KeywordManager keywords = new KeywordManager();
+    private final Author authors = new Author();
+    private final Keyword keywords = new Keyword();
     private boolean isRunning;
 
     public void run(){
@@ -50,7 +48,7 @@ public class ManagementSystem {
                 break;
         }
     }
-    private void addDocument(AuthorManager authors){
+    private void addDocument(Author authors){
         System.out.println("Ingrese el tipo de documento que desea agregar (solo números): ");
         System.out.println("1. Artículo");
         System.out.println("2. Revista");
@@ -76,7 +74,7 @@ public class ManagementSystem {
                 break;
         }
     }
-    public void search(AuthorManager authors, KeywordManager keywords){
+    public void search(Author authors, Keyword keywords){
         System.out.println("Ingrese la característica por la que desea buscar (solo números): ");
         System.out.println("1. Título");
         System.out.println("2. Autor");
