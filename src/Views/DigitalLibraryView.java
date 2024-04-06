@@ -1,13 +1,12 @@
 package Views;
 
+import Enums.DocumentType;
 import Models.Author;
 import Models.Document;
 import Models.Keyword;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-import Enums.DocumentType;
 
 public class DigitalLibraryView {
 
@@ -27,7 +26,9 @@ public class DigitalLibraryView {
       scanner.next();
       System.out.print("Please enter a valid number: ");
     }
-    return scanner.nextInt();
+    int option = scanner.nextInt();
+    scanner.nextLine(); 
+    return option;
   }
 
   public void displayDocumentsList(List<Document> documents) {
@@ -50,11 +51,12 @@ public class DigitalLibraryView {
     if (authors.isEmpty()) {
       System.out.println("No authors available.");
     } else {
+      int index = 1;
       System.out.println("\nAuthors:");
       for (Author author : authors) {
         System.out.printf(
-          "%d: %s (%s)\n",
-          author.getId(),
+          "%d. %s (%s)\n",
+          index++,
           author.getName(),
           author.getAffiliation()
         );
@@ -64,16 +66,15 @@ public class DigitalLibraryView {
 
   public void displayKeywordsList(List<Keyword> keywords) {
     if (keywords.isEmpty()) {
-        System.out.println("No keywords available.");
+      System.out.println("No keywords available.");
     } else {
-        System.out.println("\nKeywords:");
-        int index = 1;
-        for (Keyword keyword : keywords) {
-            System.out.printf("%d. %s\n", index++, keyword.getKeyword());
-        }
+      System.out.println("\nKeywords:");
+      int index = 1;
+      for (Keyword keyword : keywords) {
+        System.out.printf("%d. %s\n", index++, keyword.getKeyword());
+      }
     }
-}
-
+  }
 
   public void displayEntityOptions(String entityType) {
     System.out.println("\nOptions for " + entityType + ":");
@@ -127,13 +128,15 @@ public class DigitalLibraryView {
     return scanner.nextLine();
   }
 
-  public int promptForAuthorId() {
-    System.out.print("Enter author's ID: ");
+  public int promptForAuthorIndex() {
+    System.out.print("Enter author's index: ");
     while (!scanner.hasNextInt()) {
       scanner.next();
       System.out.print("Please enter a valid number for author ID: ");
     }
-    return scanner.nextInt();
+    int index = scanner.nextInt();
+    scanner.nextLine();
+    return index;
   }
 
   public void displayAuthorDetails(Author author) {

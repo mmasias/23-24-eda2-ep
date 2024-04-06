@@ -14,7 +14,7 @@ public class Author {
 
   private Integer generateId() {
     String uniqueString = name + System.nanoTime();
-    return uniqueString.hashCode();
+    return Math.abs(uniqueString.hashCode());
   }
 
   public Integer getId() {

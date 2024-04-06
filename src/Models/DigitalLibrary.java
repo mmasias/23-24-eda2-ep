@@ -52,24 +52,23 @@ public class DigitalLibrary {
     authors.add(author);
   }
 
-  public Author getAuthor(int authorId) {
-    return authors
-      .stream()
-      .filter(author -> author.getId().equals(authorId))
-      .findFirst()
-      .orElse(null);
+  public Author getAuthor(int authorIndex) {
+    if (authorIndex > 0 && authorIndex <= authors.size()) {
+      return authors.get(authorIndex - 1);
+    }
+    return null;
   }
 
-  public void updateAuthor(int authorId, Author updatedAuthor) {
-    authors =
-      authors
-        .stream()
-        .map(author -> author.getId().equals(authorId) ? updatedAuthor : author)
-        .collect(Collectors.toList());
+  public void updateAuthor(int authorIndex, Author updatedAuthor) {
+    if (authorIndex > 0 && authorIndex <= authors.size()) {
+      authors.set(authorIndex - 1, updatedAuthor);
+    }
   }
 
-  public void deleteAuthor(int authorId) {
-    authors.removeIf(author -> author.getId().equals(authorId));
+  public void deleteAuthor(int authorIndex) {
+    if (authorIndex > 0 && authorIndex <= authors.size()) {
+      authors.remove(authorIndex - 1);
+    }
   }
 
   public void addKeyword(Keyword keyword) {

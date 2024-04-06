@@ -15,6 +15,7 @@ public class AuthorController {
     }
 
     public void handleAuthorOptions() {
+        view.displayAuthorsList(library.getAuthors());
         view.displayEntityOptions("Author");
         int option = view.getOption();
         switch (option) {
@@ -48,14 +49,14 @@ public class AuthorController {
     }
 
     private void editAuthor() {
-        int authorId = view.promptForAuthorId();
-        Author author = library.getAuthor(authorId);
+        int authorIndex = view.promptForAuthorIndex();
+        Author author = library.getAuthor(authorIndex);
         if (author != null) {
             String name = view.promptForAuthorName();
             String affiliation = view.promptForAuthorAffiliation();
             author.setName(name);
             author.setAffiliation(affiliation);
-            library.updateAuthor(authorId, author);
+            library.updateAuthor(authorIndex, author);
             view.displayMessage("Author updated successfully.");
         } else {
             view.displayMessage("Author not found.");
@@ -63,14 +64,14 @@ public class AuthorController {
     }
 
     private void deleteAuthor() {
-        int authorId = view.promptForAuthorId();
-        library.deleteAuthor(authorId);
+        int authorIndex = view.promptForAuthorIndex();
+        library.deleteAuthor(authorIndex);
         view.displayMessage("Author deleted successfully.");
     }
 
     private void viewAuthorDetails() {
-        int authorId = view.promptForAuthorId();
-        Author author = library.getAuthor(authorId);
+        int authorIndex = view.promptForAuthorIndex();
+        Author author = library.getAuthor(authorIndex);
         if (author != null) {
             view.displayAuthorDetails(author);
         } else {

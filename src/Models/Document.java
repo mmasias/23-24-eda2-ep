@@ -29,7 +29,7 @@ public class Document {
 
   private Integer generateId() {
     String uniqueString = title + System.nanoTime();
-    return uniqueString.hashCode();
+    return Math.abs(uniqueString.hashCode());
   }
 
   public Integer getId() {

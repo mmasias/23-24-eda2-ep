@@ -12,7 +12,7 @@ public class Keyword {
 
   private Integer generateId() {
     String uniqueString = keyword + System.nanoTime();
-    return uniqueString.hashCode();
+    return Math.abs(uniqueString.hashCode());
   }
 
   public Integer getId() {
