@@ -176,13 +176,116 @@ public class LibraryManager {
         bookTopics.add(new BookTopic(bookId, topicId));
     }
 
+    private String getAuthorsByBookId(int bookId) {
+        StringBuilder authors = new StringBuilder();
+        for (BookAuthor bookAuthor : bookAuthors) {
+            if (bookAuthor.getBookId() == bookId) {
+                for (Author author : this.authors) {
+                    if (author.getId() == bookAuthor.getAuthorId()) {
+                        authors.append(author.getName()).append(", ");
+                    }
+                }
+            }
+        }
+        return authors.toString().substring(0, authors.length() - 2);
+    }
+
+    private void searchAuthor(){
+        System.out.println("Enter author name:");
+        String name = scanner.nextLine();
+        for (Author author : authors) {
+            if (author.getName().equalsIgnoreCase(name)) {
+                System.out.println("Author found: " + author.getId());
+                return;
+            }
+        }
+    }
+
+    private void searchTopic(){
+        System.out.println("Enter topic name:");
+        String name = scanner.nextLine();
+        for (Topic topic : topics) {
+            if (topic.getName().equalsIgnoreCase(name)) {
+                System.out.println("Topic found: " + topic.getId());
+                return;
+            }
+        }
+    }
+
+    private void searchBook(){
+        System.out.println("Enter book title:");
+        String title = scanner.nextLine();
+        for (Book book : books) {
+            if (book.getTitle().equalsIgnoreCase(title)) {
+                System.out.println("Book found: " + book.getId());
+                return;
+            }
+        }
+    }
+
+    private void findBookByAuthor(){
+        System.out.println("Enter author id:");
+        int authorId = Integer.parseInt(scanner.nextLine());
+        for (BookAuthor bookAuthor : bookAuthors) {
+            if (bookAuthor.getAuthorId() == authorId) {
+                for (Book book : books) {
+                    if (book.getId() == bookAuthor.getBookId()) {
+                        System.out.println("Book found: " + book.getTitle());
+                    }
+                }
+            }
+        }
+    }
+
+    private void findBookByTopic(){
+        System.out.println("Enter topic id:");
+        int topicId = Integer.parseInt(scanner.nextLine());
+        for (BookTopic bookTopic : bookTopics) {
+            if (bookTopic.getTopicId() == topicId) {
+                for (Book book : books) {
+                    if (book.getId() == bookTopic.getBookId()) {
+                        System.out.println("Book found: " + book.getTitle());
+                    }
+                }
+            }
+        }
+    }
+
+    private void findAuthorByBook(){
+        System.out.println("Enter book id:");
+        int bookId = Integer.parseInt(scanner.nextLine());
+        for (BookAuthor bookAuthor : bookAuthors) {
+            if (bookAuthor.getBookId() == bookId) {
+                for (Author author : authors) {
+                    if (author.getId() == bookAuthor.getAuthorId()) {
+                        System.out.println("Author found: " + author.getName());
+                    }
+                }
+            }
+        }
+    }
+
+    private void findTopicByBook(){
+        System.out.println("Enter book id:");
+        int bookId = Integer.parseInt(scanner.nextLine());
+        for (BookTopic bookTopic : bookTopics) {
+            if (bookTopic.getBookId() == bookId) {
+                for (Topic topic : topics) {
+                    if (topic.getId() == bookTopic.getTopicId()) {
+                        System.out.println("Topic found: " + topic.getName());
+                    }
+                }
+            }
+        }
+    }
+
     private void searcher(){
         boolean searching = true;
         while (searching) {
             System.out.println("Select an option:");
-            System.out.println("1. Search by author id");
-            System.out.println("2. Search by topic id");
-            System.out.println("3. Search by book id");
+            System.out.println("1. Search author id");
+            System.out.println("2. Search topic id");
+            System.out.println("3. Search book id");
             System.out.println("4. Find book by author id");
             System.out.println("5. Find book by topic id");
             System.out.println("6. Find author by book id");
@@ -191,13 +294,13 @@ public class LibraryManager {
             String option = scanner.nextLine();
             switch (option) {
                 case "1":
-                    searchByAuthor();
+                    searchAuthor();
                     break;
                 case "2":
-                    searchByTopic();
+                    searchTopic();
                     break;
                 case "3":
-                    searchByTitle();
+                    searchBook();
                     break;
                 case "4":
                     findBookByAuthor();
@@ -263,5 +366,6 @@ public class LibraryManager {
             System.out.println();
         }
         scanner.close();
+        System.out.println("End of the program");
     }
 }
