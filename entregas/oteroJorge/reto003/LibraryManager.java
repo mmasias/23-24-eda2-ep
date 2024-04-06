@@ -176,29 +176,50 @@ public class LibraryManager {
         bookTopics.add(new BookTopic(bookId, topicId));
     }
 
-    private String getAuthorsByBookId(int bookId) {
-        StringBuilder authorsList = new StringBuilder();
-        for (BookAuthor relation : bookAuthors) {
-            if (relation.getBookId() == bookId) {
-                Author author = findAuthorById(relation.getAuthorId());
-                if (author != null) {
-                    authorsList.append(author.getName()).append(", ");
-                }
+    private void searcher(){
+        boolean searching = true;
+        while (searching) {
+            System.out.println("Select an option:");
+            System.out.println("1. Search by author id");
+            System.out.println("2. Search by topic id");
+            System.out.println("3. Search by book id");
+            System.out.println("4. Find book by author id");
+            System.out.println("5. Find book by topic id");
+            System.out.println("6. Find author by book id");
+            System.out.println("7. Find topic by book id");
+            System.out.println("F. Exit");
+            String option = scanner.nextLine();
+            switch (option) {
+                case "1":
+                    searchByAuthor();
+                    break;
+                case "2":
+                    searchByTopic();
+                    break;
+                case "3":
+                    searchByTitle();
+                    break;
+                case "4":
+                    findBookByAuthor();
+                    break;
+                case "5":
+                    findBookByTopic();
+                    break;
+                case "6":
+                    findAuthorByBook();
+                    break;
+                case "7":
+                    findTopicByBook();
+                    break;
+                case "F":
+                    searching = false;
+                    break;
+                default:
+                    System.out.println("Invalid option");
+                    break;
             }
+            System.out.println();
         }
-        if (authorsList.length() > 0) {
-            authorsList.setLength(authorsList.length() - 2);
-        }
-        return authorsList.toString();
-    }
-
-    private Author findAuthorById(int authorId) {
-        for (Author author : authors) {
-            if (author.getId() == authorId) {
-                return author;
-            }
-        }
-        return null;
     }
 
     public void start(){
@@ -210,9 +231,7 @@ public class LibraryManager {
             System.out.println("3. List authors");
             System.out.println("4. List topics");
             System.out.println("5. Add example");
-            System.out.println("5. Find author by id");
-            System.out.println("6. Find book by id");
-            System.out.println("7. Find topic by id");
+            System.out.println("6. Searcher");
             System.out.println("F. Exit");
             String option = scanner.nextLine();
             switch (option) {
@@ -232,10 +251,7 @@ public class LibraryManager {
                     addExampleBooks();
                     break;
                 case "6":
-
-                    break;
-                case "7":
-
+                    searcher();
                     break;
                 case "F":
                     running = false;
