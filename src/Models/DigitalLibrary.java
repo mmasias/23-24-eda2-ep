@@ -2,7 +2,6 @@ package Models;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class DigitalLibrary {
 
@@ -26,26 +25,43 @@ public class DigitalLibrary {
     documents.add(document);
   }
 
-  public Document getDocument(int documentId) {
-    return documents
-      .stream()
-      .filter(document -> document.getId() == documentId)
-      .findFirst()
-      .orElse(null);
+  public Document getDocument(int documentIndex) {
+    if (documentIndex >= 0 && documentIndex < documents.size()) {
+      return documents.get(documentIndex);
+    }
+    return null;
   }
 
-  public void updateDocument(int documentId, Document updatedDocument) {
-    documents =
-      documents
-        .stream()
-        .map(document ->
-          document.getId() == documentId ? updatedDocument : document
-        )
-        .collect(Collectors.toList());
+  public List<Document> getDocumentsByAuthor(int authorId) {
+    List<Document> documentsByAuthor = new ArrayList<>();
+    for (Document document : documents) {
+      if (document.getAuthors().contains(authorId)) {
+        documentsByAuthor.add(document);
+      }
+    }
+    return documentsByAuthor;
   }
 
-  public void deleteDocument(int documentId) {
-    documents.removeIf(document -> document.getId() == documentId);
+  public List<Document> getDocumentsByKeyword(int keywordId) {
+    List<Document> documentsByKeyword = new ArrayList<>();
+    for (Document document : documents) {
+      if (document.getKeywords().contains(keywordId)) {
+        documentsByKeyword.add(document);
+      }
+    }
+    return documentsByKeyword;
+  }
+
+  public void updateDocument(int documentIndex, Document updatedDocument) {
+    if (documentIndex >= 0 && documentIndex < documents.size()) {
+      documents.set(documentIndex, updatedDocument);
+    }
+  }
+
+  public void deleteDocument(int documentIndex) {
+    if (documentIndex >= 0 && documentIndex < documents.size()) {
+      documents.remove(documentIndex);
+    }
   }
 
   public void addAuthor(Author author) {

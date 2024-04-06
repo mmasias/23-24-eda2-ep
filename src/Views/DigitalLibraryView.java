@@ -5,8 +5,10 @@ import Models.Author;
 import Models.Document;
 import Models.Keyword;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class DigitalLibraryView {
 
@@ -27,7 +29,7 @@ public class DigitalLibraryView {
       System.out.print("Please enter a valid number: ");
     }
     int option = scanner.nextInt();
-    scanner.nextLine(); 
+    scanner.nextLine();
     return option;
   }
 
@@ -36,10 +38,11 @@ public class DigitalLibraryView {
       System.out.println("No documents available.");
     } else {
       System.out.println("\nDocuments:");
+      int index = 1;
       for (Document document : documents) {
         System.out.printf(
           "%d: %s (Year: %d)\n",
-          document.getId(),
+          index++,
           document.getTitle(),
           document.getPublicationYear()
         );
@@ -82,6 +85,9 @@ public class DigitalLibraryView {
     System.out.println("2. Edit an existing " + entityType);
     System.out.println("3. Delete an existing " + entityType);
     System.out.println("4. View details of an existing " + entityType);
+    if (entityType.equals("Document")) {
+      System.out.println("5. Search for documents by filter");
+    }
     System.out.println("0. Go back to main menu");
     System.out.print("Select an option: ");
   }
@@ -96,7 +102,6 @@ public class DigitalLibraryView {
 
   public String promptForKeyword() {
     System.out.print("Enter keyword: ");
-    scanner.nextLine(); // Consume any leftover newline character
     return scanner.nextLine();
   }
 
@@ -170,9 +175,9 @@ public class DigitalLibraryView {
     return DocumentType.values()[choice];
   }
 
-  public int promptForDocumentId() {
-    System.out.print("Enter document ID: ");
-    return getOption(); // Assumes that getOption() handles invalid inputs
+  public int promptForDocumentIndex() {
+    System.out.print("Enter document index: ");
+    return getOption();
   }
 
   public void displayDocumentDetails(Document document) {
@@ -181,7 +186,22 @@ public class DigitalLibraryView {
     System.out.println("Title: " + document.getTitle());
     System.out.println("Year: " + document.getPublicationYear());
     System.out.println("Type: " + document.getDocumentType());
-    // Display authors and keywords based on their IDs
+    System.out.println(
+      "Authors: " +
+      document
+        .getAuthors()
+        .stream()
+        .map(Object::toString)
+        .collect(Collectors.joining(", "))
+    );
+    System.out.println(
+      "Keywords: " +
+      document
+        .getKeywords()
+        .stream()
+        .map(Object::toString)
+        .collect(Collectors.joining(", "))
+    );
   }
 
   public List<Integer> promptForAuthors(List<Author> authors) {
@@ -189,10 +209,13 @@ public class DigitalLibraryView {
       System.out.println("No authors available. Please add authors first.");
       return new ArrayList<>();
     }
-    displayAuthorsList(authors);
+    this.displayAuthorsList(authors);
     System.out.println("Enter the index of authors (comma separated): ");
     String line = scanner.nextLine();
-    return parseIndexes(line, authors.size());
+    return parseIndexes(line, authors.size())
+      .stream()
+      .map(index -> authors.get(index - 1).getId())
+      .collect(Collectors.toList());
   }
 
   public List<Integer> promptForKeywords(List<Keyword> keywords) {
@@ -200,27 +223,21 @@ public class DigitalLibraryView {
       System.out.println("No keywords available. Please add keywords first.");
       return new ArrayList<>();
     }
-    displayKeywordsList(keywords);
+    this.displayKeywordsList(keywords);
     System.out.println("Enter the index of keywords (comma separated): ");
     String line = scanner.nextLine();
-    return parseIndexes(line, keywords.size());
+    return parseIndexes(line, keywords.size())
+      .stream()
+      .map(index -> keywords.get(index - 1).getId())
+      .collect(Collectors.toList());
   }
 
-  private List<Integer> parseIndexes(String input, int size) {
-    List<Integer> indexes = new ArrayList<>();
-    String[] parts = input.split(",");
-    for (String part : parts) {
-      try {
-        int index = Integer.parseInt(part.trim());
-        if (index >= 1 && index <= size) {
-          indexes.add(index - 1);
-        } else {
-          System.out.println("Invalid index: " + index + ". Skipping.");
-        }
-      } catch (NumberFormatException e) {
-        System.out.println("Invalid input: " + part + ". Skipping.");
-      }
-    }
-    return indexes;
+  private List<Integer> parseIndexes(String line, int maxSize) {
+    return Arrays
+      .stream(line.split(","))
+      .map(String::trim)
+      .filter(str -> str.matches("\\d+") && Integer.parseInt(str) <= maxSize)
+      .map(Integer::parseInt)
+      .collect(Collectors.toList());
   }
 }

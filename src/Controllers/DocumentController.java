@@ -7,6 +7,7 @@ import Models.Document;
 import Models.Keyword;
 import Views.DigitalLibraryView;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DocumentController {
 
@@ -19,6 +20,7 @@ public class DocumentController {
   }
 
   public void handleDocumentOptions() {
+    view.displayDocumentsList(library.getDocuments());
     view.displayEntityOptions("Document");
     int option = view.getOption();
     switch (option) {
@@ -34,8 +36,11 @@ public class DocumentController {
       case 4:
         viewDocumentDetails();
         break;
+      case 5:
+        advancedDocumentSearch();
+        break;
       case 0:
-        return; 
+        return;
       default:
         view.displayInvalidOption();
         handleDocumentOptions();
@@ -64,7 +69,7 @@ public class DocumentController {
   }
 
   private void editDocument() {
-    int documentId = view.promptForDocumentId();
+    int documentId = view.promptForDocumentIndex();
     Document document = library.getDocument(documentId);
     if (document != null) {
       String newTitle = view.promptForDocumentTitle();
@@ -87,18 +92,58 @@ public class DocumentController {
   }
 
   private void deleteDocument() {
-    int documentId = view.promptForDocumentId();
+    int documentId = view.promptForDocumentIndex();
     library.deleteDocument(documentId);
     view.displayMessage("Document deleted successfully.");
   }
 
   private void viewDocumentDetails() {
-    int documentId = view.promptForDocumentId();
+    int documentId = view.promptForDocumentIndex();
     Document document = library.getDocument(documentId);
     if (document != null) {
       view.displayDocumentDetails(document);
     } else {
       view.displayMessage("Document not found.");
     }
+  }
+
+  private void advancedDocumentSearch() {
+    System.out.println("Search documents by:");
+    System.out.println("1. Authors");
+    System.out.println("2. Keywords");
+    int searchOption = view.getOption();
+    switch (searchOption) {
+      case 1:
+        searchByAuthors();
+        break;
+      case 2:
+        searchByKeywords();
+        break;
+      default:
+        System.out.println("Invalid option. Please try again.");
+        advancedDocumentSearch();
+    }
+  }
+
+  private void searchByAuthors() {
+    List<Integer> authorIds = view.promptForAuthors(library.getAuthors());
+    List<Document> documents = authorIds
+      .stream()
+      .flatMap(authorId -> library.getDocumentsByAuthor(authorId).stream())
+      .distinct()
+      .collect(Collectors.toList());
+    view.displayDocumentsList(documents);
+  }
+
+  private void searchByKeywords() {
+    List<Integer> keywordIds = view.promptForKeywords(
+      library.getKeywords()
+    );
+    List<Document> documents = keywordIds
+      .stream()
+      .flatMap(keywordId -> library.getDocumentsByKeyword(keywordId).stream())
+      .distinct()
+      .collect(Collectors.toList());
+    view.displayDocumentsList(documents);
   }
 }
