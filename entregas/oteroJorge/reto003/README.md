@@ -16,6 +16,7 @@ Primero voy a comprobar solo leyendo las clases lo que deben/pueden hacer.
 1. Traducir el programa al inglés 
 2. Implementar la clase BookAuthor que se encarga de relacionar autores y libros para dar la correcta resposabilidad a cada clase
 3. Corregir Gestor para que funcione con los cambios 
+4. Crear e implementar las clase de **Topic** y **TopicBook**  
 
 ## CAMBIOS IMPREVISTOS
 
