@@ -10,6 +10,18 @@ public class DigitalLibrary {
   private List<Author> authors = new ArrayList<>();
   private List<Keyword> keywords = new ArrayList<>();
 
+  public List<Document> getDocuments() {
+    return documents;
+  }
+
+  public List<Author> getAuthors() {
+    return authors;
+  }
+
+  public List<Keyword> getKeywords() {
+    return keywords;
+  }
+
   public void addDocument(Document document) {
     documents.add(document);
   }
