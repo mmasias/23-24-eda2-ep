@@ -1,0 +1,13 @@
+@startuml DeleteDocument
+actor User
+
+usecase "Delete Document" as UC4
+
+User --> UC4
+
+note right of UC4
+  1. User searches for and selects the document to delete.
+  2. User confirms the deletion action.
+  3. System permanently removes the document from the library.
+end note
+@enduml

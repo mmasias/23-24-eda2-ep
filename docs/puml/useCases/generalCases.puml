@@ -1,0 +1,38 @@
+@startuml GeneralCases
+left to right direction
+actor User
+
+package "Digital Library System" {
+
+    package "Document Management" {
+        usecase "Create Document" as UC1
+        usecase "Read Document" as UC2
+        usecase "Update Document" as UC3
+        usecase "Delete Document" as UC4
+    }
+
+    package "Author Management" {
+        usecase "Add Author" as UC5
+        usecase "Edit Author" as UC6
+        usecase "List Authors" as UC7
+        usecase "Remove Author" as UC8
+    }
+
+    package "Keyword Management" {
+        usecase "Add Keyword" as UC9
+        usecase "Edit Keyword" as UC10
+        usecase "List Keywords" as UC11
+        usecase "Remove Keyword" as UC12
+    }
+
+    package "Document Operations" {
+        usecase "Search Documents" as UC13
+        usecase "Classify Documents" as UC14
+    }
+}
+
+User --> "Document Management"
+User --> "Author Management"
+User --> "Keyword Management"
+User --> "Document Operations"
+@enduml

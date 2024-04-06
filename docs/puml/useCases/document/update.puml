@@ -1,0 +1,14 @@
+@startuml UpdateDocument
+actor User
+
+usecase "Update Document" as UC3
+
+User --> UC3
+
+note right of UC3
+  1. User searches and selects a document to update.
+  2. Edits details of the document (title, authors,
+     publication year, keywords).
+  3. Saves the changes to update the document.
+end note
+@enduml
