@@ -1,0 +1,13 @@
+@startuml AddKeyword
+actor User
+
+usecase "Add Keyword" as UC9
+
+User --> UC9
+
+note right of UC9
+  1. User initiates the process to add a new keyword.
+  2. Enters the keyword details.
+  3. System saves the keyword for future document tagging.
+end note
+@enduml

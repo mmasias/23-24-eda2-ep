@@ -1,0 +1,13 @@
+@startuml ListKeywords
+actor User
+
+usecase "List Keywords" as UC11
+
+User --> UC11
+
+note right of UC11
+  1. User requests to view a list of all keywords in the system.
+  2. System displays the keywords, with options to filter or sort
+     based on criteria like frequency of use.
+end note
+@enduml

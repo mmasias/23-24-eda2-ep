@@ -1,0 +1,14 @@
+@startuml RemoveAuthor
+actor User  
+
+usecase "Remove Author" as UC8
+
+User --> UC8
+
+note right of UC8
+  1. User searches for and selects an author to remove.
+  2. User confirms the removal action.
+  3. System permanently removes the author from the library,
+     and handles associated documents appropriately.
+end note
+@enduml

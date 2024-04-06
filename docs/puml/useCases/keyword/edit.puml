@@ -1,0 +1,13 @@
+@startuml EditKeyword
+actor User
+
+usecase "Edit Keyword" as UC10
+
+User --> UC10
+
+note right of UC10
+  1. User selects a keyword to edit from the list or by searching.
+  2. Updates the keyword's details.
+  3. System saves the changes to the keyword.
+end note
+@enduml

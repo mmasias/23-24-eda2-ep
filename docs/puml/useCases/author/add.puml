@@ -1,0 +1,13 @@
+@startuml AddAuthor
+actor User
+
+usecase "Add Author" as UC5
+
+User --> UC5
+
+note right of UC5
+  1. User initiates the addition of a new author.
+  2. Enters author's details including name and affiliation.
+  3. System saves the author to the digital library.
+end note
+@enduml

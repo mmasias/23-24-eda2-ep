@@ -1,0 +1,14 @@
+@startuml EditAuthor
+actor User
+
+usecase "Edit Author" as UC6
+
+User --> UC6
+
+note right of UC6
+  1. User searches for an author by name or other criteria.
+  2. Selects an author from the search results.
+  3. Updates the author's details (name, affiliation).
+  4. System saves the updated author details.
+end note
+@enduml
