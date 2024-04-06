@@ -1,5 +1,6 @@
 package entregas.oteroJorge.reto003;
 
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -8,13 +9,17 @@ public class LibraryManager {
 
     private List<Book> books;
     private List<Author> authors;
-    private List<BookAuthor> relations;
+    private List<BookAuthor> bookAuthors;
+    private List<Topic> topics;
+    private List<BookTopic> bookTopics;
     private Scanner scanner;
 
     public LibraryManager() {
         this.books = new ArrayList<>();
         this.authors = new ArrayList<>();
-        this.relations = new ArrayList<>();
+        this.bookAuthors = new ArrayList<>();
+        this.topics = new ArrayList<>();
+        this.bookTopics = new ArrayList<>();
         this.scanner = new Scanner(System.in);
     }
 
@@ -28,6 +33,30 @@ public class LibraryManager {
             }
         }
     }
+
+    private void listAuthors() {
+        System.out.println("Authors:");
+        if (authors.isEmpty()) {
+            System.out.println(">No authors available");
+        } else {
+            for (Author author : authors) {
+                System.out.println(author.getId() + ". " + author.getName());
+            }
+        }
+    }
+
+    private void listTopics() {
+        System.out.println("Topics:");
+        if (topics.isEmpty()) {
+            System.out.println(">No topics available");
+        } else {
+            for (Topic topic : topics) {
+                System.out.println(topic.getId() + ". " + topic.getName());
+            }
+        }
+    }
+
+
 
     private void addExampleBooks(){
         Book book1 = new Book(1, "The Lord of the Rings", 1954, "Fantasy");
@@ -44,10 +73,20 @@ public class LibraryManager {
         authors.add(author1);
         authors.add(author2);
         authors.add(author3);
-        relations.add(new BookAuthor(1, 1));
-        relations.add(new BookAuthor(2, 2));
-        relations.add(new BookAuthor(3, 3));
-        relations.add(new BookAuthor(4, 3));
+        bookAuthors.add(new BookAuthor(1, 1));
+        bookAuthors.add(new BookAuthor(2, 2));
+        bookAuthors.add(new BookAuthor(3, 3));
+        bookAuthors.add(new BookAuthor(4, 3));
+        Topic topic1 = new Topic(1, "Fantasy");
+        Topic topic2 = new Topic(2, "Dystopian");
+        Topic topic3 = new Topic(3, "Science Fiction");
+        topics.add(topic1);
+        topics.add(topic2);
+        topics.add(topic3);
+        bookTopics.add(new BookTopic(1, 1));
+        bookTopics.add(new BookTopic(2, 1));
+        bookTopics.add(new BookTopic(3, 2));
+
     }
 
     private void addBook() {
@@ -98,12 +137,12 @@ public class LibraryManager {
     }
 
     private void addRelation(int bookId, int authorId) {
-        relations.add(new BookAuthor(bookId, authorId));
+        bookAuthors.add(new BookAuthor(bookId, authorId));
     }
 
     private String getAuthorsByBookId(int bookId) {
         StringBuilder authorsList = new StringBuilder();
-        for (BookAuthor relation : relations) {
+        for (BookAuthor relation : bookAuthors) {
             if (relation.getBookId() == bookId) {
                 Author author = findAuthorById(relation.getAuthorId());
                 if (author != null) {
@@ -126,17 +165,6 @@ public class LibraryManager {
         return null;
     }
 
-    private void listAuthors() {
-        System.out.println("Authors:");
-        if (authors.isEmpty()) {
-            System.out.println(">No authors available");
-        } else {
-            for (Author author : authors) {
-                System.out.println(author.getId() + ". " + author.getName());
-            }
-        }
-    }
-
     public void start(){
         boolean running = true;
         while (running) {
@@ -144,9 +172,11 @@ public class LibraryManager {
             System.out.println("1. List books");
             System.out.println("2. Add book");
             System.out.println("3. List authors");
-            System.out.println("4. Add example");
+            System.out.println("4. List topics");
+            System.out.println("5. Add example");
             System.out.println("5. Find author by id");
             System.out.println("6. Find book by id");
+            System.out.println("7. Find topic by id");
             System.out.println("F. Exit");
             String option = scanner.nextLine();
             switch (option) {
@@ -160,27 +190,16 @@ public class LibraryManager {
                     listAuthors();
                     break;
                 case "4":
-                    addExampleBooks();
+                    listTopics();
                     break;
                 case "5":
-                    System.out.println("Enter the author id:");
-                    int authorId = Integer.parseInt(scanner.nextLine());
-                    Author author = findAuthorById(authorId);
-                    if (author != null) {
-                        System.out.println(author);
-                    } else {
-                        System.out.println("Author not found");
-                    }
+                    addExampleBooks();
                     break;
                 case "6":
-                    System.out.println("Enter the book id:");
-                    int bookId = Integer.parseInt(scanner.nextLine());
-                    Book book = books.stream().filter(b -> b.getId() == bookId).findFirst().orElse(null);
-                    if (book != null) {
-                        System.out.println(book);
-                    } else {
-                        System.out.println("Book not found");
-                    }
+
+                    break;
+                case "7":
+
                     break;
                 case "F":
                     running = false;
