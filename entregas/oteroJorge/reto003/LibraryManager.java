@@ -1,6 +1,5 @@
 package entregas.oteroJorge.reto003;
 
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -56,8 +55,6 @@ public class LibraryManager {
         }
     }
 
-
-
     private void addExampleBooks(){
         Book book1 = new Book(1, "The Lord of the Rings", 1954, "Fantasy");
         Book book2 = new Book(2, "Harry Potter and the Philosopher's Stone", 1997, "Fantasy");
@@ -100,6 +97,7 @@ public class LibraryManager {
         books.add(book);
         System.out.println("Book added successfully");
         addAuthorToBook(book);
+        addTopicToBook(book);
     }
 
     private void addAuthorToBook(Book book) {
@@ -107,6 +105,14 @@ public class LibraryManager {
         String response = scanner.nextLine();
         if (response.equalsIgnoreCase("y")) {
             addAuthor(book);
+        }
+    }
+
+    private void addTopicToBook(Book book) {
+        System.out.println("Would you like to add a topic to the book? (y/n)");
+        String response = scanner.nextLine();
+        if (response.equalsIgnoreCase("y")) {
+            addTopic(book);
         }
     }
 
@@ -119,10 +125,27 @@ public class LibraryManager {
         } else {
             try {
                 int authorId = Integer.parseInt(input);
-                addRelation(book.getId(), authorId);
+                addAuthorRelation(book.getId(), authorId);
                 System.out.println("Relation added successfully");
             } catch (NumberFormatException e) {
                 System.out.println("Invalid author id");
+            }
+        }
+    }
+
+    private void addTopic(Book book) {
+        System.out.println("Select a topic to add to the book or type 'n' to add a new topic:");
+        listTopics();
+        String input = scanner.nextLine();
+        if ("n".equalsIgnoreCase(input)) {
+            addNewTopic(book);
+        } else {
+            try {
+                int topicId = Integer.parseInt(input);
+                addTopicRelation(book.getId(), topicId);
+                System.out.println("Relation added successfully");
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid topic id");
             }
         }
     }
@@ -132,12 +155,25 @@ public class LibraryManager {
         String name = scanner.nextLine();
         Author newAuthor = new Author(authors.size() + 1, name);
         authors.add(newAuthor);
-        addRelation(book.getId(), newAuthor.getId());
+        addAuthorRelation(book.getId(), newAuthor.getId());
         System.out.println("Relation added successfully");
     }
 
-    private void addRelation(int bookId, int authorId) {
+    private void addNewTopic(Book book) {
+        System.out.println("Enter the name of the topic:");
+        String name = scanner.nextLine();
+        Topic newTopic = new Topic(topics.size() + 1, name);
+        topics.add(newTopic);
+        addTopicRelation(book.getId(), newTopic.getId());
+        System.out.println("Relation added successfully");
+    }
+
+    private void addAuthorRelation(int bookId, int authorId) {
         bookAuthors.add(new BookAuthor(bookId, authorId));
+    }
+
+    private void addTopicRelation(int bookId, int topicId) {
+        bookTopics.add(new BookTopic(bookId, topicId));
     }
 
     private String getAuthorsByBookId(int bookId) {
@@ -169,8 +205,8 @@ public class LibraryManager {
         boolean running = true;
         while (running) {
             System.out.println("Select an option:");
-            System.out.println("1. List books");
-            System.out.println("2. Add book");
+            System.out.println("1. Add book");
+            System.out.println("2. List books");
             System.out.println("3. List authors");
             System.out.println("4. List topics");
             System.out.println("5. Add example");
@@ -181,10 +217,10 @@ public class LibraryManager {
             String option = scanner.nextLine();
             switch (option) {
                 case "1":
-                    listBooks();
+                    addBook();
                     break;
                 case "2":
-                    addBook();
+                    listBooks();
                     break;
                 case "3":
                     listAuthors();
