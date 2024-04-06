@@ -131,7 +131,8 @@ public class Main {
             System.out.println("2. Listar relaciones autor-texto");
             System.out.println("3. Buscar textos por ID de autor");
             System.out.println("4. Buscar autores por ID de texto");
-            System.out.println("5. Volver al menú principal");
+            System.out.println("5. Eliminar relación autor-texto");
+            System.out.println("6. Volver al menú principal");
             System.out.print("Selecciona una opción: ");
             int opcion = sc.nextInt();
             sc.nextLine();
@@ -161,12 +162,17 @@ public class Main {
                     gestion.listarAutoresPorTextoId(id_texto);
                     break;
                 case 5:
+                    System.out.println("Introduce el ID del autor:");
+                    int IdAutor = sc.nextInt();
+                    System.out.println("Introduce el ID del texto:");
+                    int IdTexto = sc.nextInt();
+                    gestion.eliminarRelacion(IdTexto, IdAutor);
+                    break;
+                case 6:
                     return; 
                 default:
                     System.out.println("Opción no válida. Por favor, intenta de nuevo.");
             }
         }
     }
-    
-    
 }

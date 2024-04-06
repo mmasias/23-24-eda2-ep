@@ -189,5 +189,13 @@ public class Gestion {
         }
     }
 
-    
+    public void eliminarRelacion(int idTexto, int idAutor) {
+        boolean eliminado = autoresTextos.removeIf(relacion -> relacion.getId_texto() == idTexto && relacion.getId_autor() == idAutor);
+        if (eliminado) {
+            System.out.println("La relación ha sido eliminada correctamente.");
+        } else {
+            System.out.println("No se encontró la relación especificada.");
+        }
+    }
+
 }
