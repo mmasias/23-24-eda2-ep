@@ -1,5 +1,3 @@
-import java.util.List;
-import java.util.stream.Collectors;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,22 +8,21 @@ class Busqueda {
         this.libros = new ArrayList<>(libros);
     }
 
-    public List<Libro> buscarPorAutor(String autor) {
+    public List<Libro> buscarPorAutor(String nombreAutor) {
         List<Libro> resultado = new ArrayList<>();
         for (int i = 0; i < libros.size(); i++) {
             Libro libro = libros.get(i);
             for (int j = 0; j < libro.getAutores().size(); j++) {
-                if (libro.getAutores().get(j).equalsIgnoreCase(autor)) {
+                if (libro.getAutores().get(j).getName().equalsIgnoreCase(nombreAutor)) {
                     resultado.add(libro);
-                    break; // Sal del bucle interno si se encuentra el autor
+                    break;
                 }
             }
         }
         return resultado;
     }
 
-
-    public List<Libro> buscarPorAño(int anio) {
+    public List<Libro> buscarPorAnio(int anio) {
         List<Libro> resultado = new ArrayList<>();
         for (int i = 0; i < libros.size(); i++) {
             if (libros.get(i).getAñoPublicacion() == anio) {
@@ -54,6 +51,4 @@ class Busqueda {
         }
         return resultado;
     }
-
 }
-
