@@ -136,13 +136,16 @@ public class Library {
 
 
     private void printDocumentListing() {
+        if(authorList.isEmpty()) {
+            System.out.println("No hay autores en el sistema");
+        }else {
         for (Document document : documentList) {
             System.out.println("Id: " + document.getId());
             System.out.println("Titulo: " + document.getTittle());
             System.out.println("Año de publicacion: " + document.getPublicationYear());
             System.out.println("Tipo de documento: " + document.getTypeDocument());
             
-            
+        }
         }
     }
     private void printAuthorListing() {
@@ -171,7 +174,7 @@ public class Library {
     
     private void editDocument() {
 
-        System.out.println("¿Que documento quieres editar, introduce el id del documento?");
+        System.out.println("¿Que documento quieres editar?, introduce el id del documento");
         Scanner userInput = new Scanner(System.in);
         int id = userInput.nextInt();
         boolean validOption = true;
@@ -187,7 +190,6 @@ public class Library {
                     String newTittle = userInput.nextLine();
                     documentList.get(0).setTittle(newTittle);
                 } else if (option == 2) {
-                    ArrayList<Author> authorList = new ArrayList<Author>();
                     System.out.println("¿Cuántos autores tiene el documento? ");
                     int numberAuthors = userInput.nextInt();
                     userInput.nextLine();
@@ -197,10 +199,18 @@ public class Library {
                         String name = userInput.nextLine();
                         System.out.println("Apellido del autor: ");
                         String surname = userInput.nextLine();
-                        Author author = new Author(name, surname);
+                        Author author = new Author(name, surname, authorList.size()+1);
                         authorList.add(author);
+                        addRelationDocumentAuthor(documentList.get(0).getId(), author.getId());
                     }
-                    documentList.get(0).setAuthor(authorList);
+                    List<DocumentAuthor> relationsToRemove = new ArrayList<>();
+                    for (DocumentAuthor relation : relationDocumentAuthors) {
+                        if (relation.getDocumentId() == id) {
+                            relationsToRemove.add(relation);
+                        }
+                    }
+                    relationDocumentAuthors.removeAll(relationsToRemove);
+                    
                 } else if (option == 3) {
                     System.out.println("Año de publicacion: ");
                     int age = userInput.nextInt();
@@ -231,19 +241,24 @@ public class Library {
                     } while (validTypeOfDocument = false);
                     documentList.get(0).setTypeDocument(typeDocument);
                 } else if (option == 5) {
-                    ArrayList<String> keyWords = new ArrayList<String>();
                     System.out.println("¿Cuántos palabras clave tiene el documento? ");
                     int numberKeyWords = userInput.nextInt();
                     userInput.nextLine();
 
                     for (int i = 0; i < numberKeyWords; i++) {
-                        System.out.println("Palabras Clave: ");
+                        System.out.println("Palabra clave: ");
                         String keyword = userInput.nextLine();
-                        keyWords.add(keyword);
-
+                        KeyWords keyWord = new KeyWords(keyword, keyWordsList.size()+1);
+                        keyWordsList.add(keyWord);
+                        addRelationDocumentKeyWords(documentList.get(0).getId(), keyWord.getId());
                     }
-                    documentList.get(0).setKeyWords(keyWords);
-                } else if (option == 6) {
+                    List<DocumentKeyWords> relationsToRemove = new ArrayList<>();
+                    for (DocumentKeyWords relation : relationDocumentKeyWords) {
+                        if (relation.getDocumentId() == id) {
+                            relationsToRemove.add(relation);
+                        }
+                    }
+                    relationDocumentKeyWords.removeAll(relationsToRemove);
 
                 } else {
                     System.out.println("Opcion no valida");

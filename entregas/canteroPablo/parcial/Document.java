@@ -27,6 +27,14 @@ public class Document {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'setTittle'");
     }
+    public void setPublicationYear(int age) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setPublicationYear'");
+    }
+    public void setTypeDocument(String typeDocument2) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setTypeDocument'");
+    }
 
     
 
