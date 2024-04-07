@@ -93,46 +93,46 @@ public class BibliotecaDigital {
         return autoresDelLibro;
     }
 
-    public List<Book> getBooksByAuthorId(int authorId) {
-        List<Book> booksByAuthor = new ArrayList<>();
-        for (BookAuthor relation : relations) {
-            if (relation.getAuthorId() == authorId) {
-                Book book = findBookById(relation.getBookId());
+    public List<Libro> getLirosByAutorId(int autorId) {
+        List<Libro> librosByAutor = new ArrayList<>();
+        for (AutorLibro relacion : relaciones) {
+            if (relacion.getAutorId() == autorId) {
+                Libro libro = findLibroById(relation.getBookId());
                 if (book != null) {
-                    booksByAuthor.add(book);
+                    librosByAutor.add(book);
                 }
             }
         }
-        return booksByAuthor;
+        return librosByAutor;
     }
 
-    public Book findBookById(int bookId) {
-        for (Book book : books) {
-            if (book.getId() == bookId) {
-                return book;
+    public Libro findLibroById(int libroId) {
+        for (Libro libro : libros) {
+            if (libro.getId() == libroId) {
+                return libro;
             }
         }
         return null;
     }
 
-    public Author findAuthorById(int authorId) {
-        for (Author author : authors) {
-            if (author.getId() == authorId) {
-                return author;
+    public Autor findAutorById(int autorId) {
+        for (Autor autor : autors) {
+            if (autor.getId() == autorId) {
+                return autor;
             }
         }
         return null;
     }
 
-    public void listAuthors() {
-        if (authors.isEmpty()) {
+    public void listAutors() {
+        if (autors.isEmpty()) {
             System.out.println("No hay autores disponibles.");
             return;
         }
 
         System.out.println("Lista de autores:");
-        for (Author author : authors) {
-            System.out.println(author);
+        for (Autor autor : autors) {
+            System.out.println(autor);
         }
     }
 }
@@ -140,7 +140,7 @@ public class BibliotecaDigital {
 
 public class Main {
     public static void main(String[] args) {
-        LibraryManager libraryManager = new LibraryManager();
-        libraryManager.startLibraryManager();
+        BibliotecaDigital bibliotecaDigital = new BibliotecaDigital();
+        bibliotecaDigital.startBibliotecaDigital();
     }
 }
