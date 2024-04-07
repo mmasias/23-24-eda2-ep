@@ -203,13 +203,7 @@ public class Library {
                         authorList.add(author);
                         addRelationDocumentAuthor(documentList.get(0).getId(), author.getId());
                     }
-                    List<DocumentAuthor> relationsToRemove = new ArrayList<>();
-                    for (DocumentAuthor relation : relationDocumentAuthors) {
-                        if (relation.getDocumentId() == id) {
-                            relationsToRemove.add(relation);
-                        }
-                    }
-                    relationDocumentAuthors.removeAll(relationsToRemove);
+                    removeRelationsDocumentAuthors(id);
                     
                 } else if (option == 3) {
                     System.out.println("Año de publicacion: ");
@@ -273,41 +267,67 @@ public class Library {
 
     }
 
-    public void deleteDocument() {
-        System.out.println("¿Que documento quieres eliminar?");
+    private void removeRelationsDocumentAuthors(int documentId) {
+        List<DocumentAuthor> relationsToRemove = new ArrayList<>();
+        for (DocumentAuthor relation : relationDocumentAuthors) {
+            if (relation.getDocumentId() == documentId) {
+                relationsToRemove.add(relation);
+            }
+        }
+        relationDocumentAuthors.removeAll(relationsToRemove);
+    }
+
+    private void deleteDocument() {
+        System.out.println("¿Que documento quieres eliminar?, dime el id del documento");
         Scanner userInput = new Scanner(System.in);
-        String tittle = userInput.nextLine();
-        if (documentList.contains(tittle)) {
-            documentList.remove(tittle);
+        int id = userInput.nextInt();
+        if (documentList.contains(id)) {
+            documentList.remove(id);
         } else {
             System.out.println("El documento no existe");
         }
+        removeRelationsDocumentAuthors(id);
+
+    }
+    private void deleteAuthor() {
+        System.out.println("¿Que autor quieres eliminar?, dime el id del autor");
+        Scanner userInput = new Scanner(System.in);
+        int id = userInput.nextInt();
+        if (authorList.contains(id)) {
+            authorList.remove(id);
+        } else {
+            System.out.println("El autor no existe");
+        }
+        removeRelationsDocumentAuthors(id);
+        
     }
 
+
     public void searchDocument() {
-        System.out.println("¿Que documento quieres buscar?");
+        System.out.println("¿Que documento quieres buscar?, dime el id del documento");
         Scanner userInput = new Scanner(System.in);
-        String tittle = userInput.nextLine();
-        if (documentList.contains(tittle)) {
-            printDocumentListing();
-        } else {
+        int id = userInput.nextInt();
+        boolean validDocument = false;
+        for (Document document : documentList) {
+            if (document.getId() == id) {
+                printDocumentListing();
+                validDocument = true;
+            }
+        }
+        if (validDocument == false) {
             System.out.println("El documento no existe");
         }
     }
 
     public void searchDocumentByAuthor() {
-        System.out.println("¿Que autor quieres buscar?");
+        System.out.println("¿Que autor quieres buscar?, dime el id del autor");
         Scanner userInput = new Scanner(System.in);
-        String name = userInput.nextLine();
-        String surname = userInput.nextLine();
+        int id = userInput.nextInt();
         boolean validAuthor = false;
-        for (Document document : documentList) {
-            for (Author author : document.getAuthor()) {
-                if (author.getName().equals(name) && author.getSurname().equals(surname)) {
-                    printDocumentListing();
-                    System.out.println();
-                    validAuthor = true;
-                }
+        for (Author author : authorList) {
+            if (author.getId() == id) {
+                printDocumentListing();
+                validAuthor = true;
             }
         }
         if (validAuthor == false) {
@@ -371,17 +391,17 @@ public class Library {
     }
 
     public void searchDocumentByKeyWords() {
-        System.out.println("¿Que palabra clave quieres buscar?");
+        System.out.println("¿Que palabra clave quieres buscar?, dime el id de la palabra clave");
         Scanner userInput = new Scanner(System.in);
-        String keyword = userInput.nextLine();
-        boolean validKeyword = false;
-        for (Document document : documentList) {
-            if (document.getKeyWords().contains(keyword)) {
+        int id = userInput.nextInt();
+        boolean validKeyWord = false;
+        for (KeyWords keyWord : keyWordsList) {
+            if (keyWord.getId() == id) {
                 printDocumentListing();
-                validKeyword = true;
+                validKeyWord = true;
             }
         }
-        if (validKeyword == false) {
+        if (validKeyWord == false) {
             System.out.println("La palabra clave no existe");
         }
     }
