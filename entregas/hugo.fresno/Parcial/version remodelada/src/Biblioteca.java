@@ -6,6 +6,9 @@ public class Biblioteca {
     private Busqueda busqueda;
     private List<Autor> autores;
 
+    private static int nextAutorId = 1;
+
+
 
     public Biblioteca() {
         this.gestionLibro = new GestionLibro();
@@ -19,14 +22,17 @@ public class Biblioteca {
 
     }
 
-    public void agregarAutor(Autor autor) {
-        Autor autorExistente = buscarAutorPorNombre(autor.getName());
+    public void agregarAutor(String nombre) {
+        Autor autorExistente = buscarAutorPorNombre(nombre);
         if (autorExistente == null) {
-            autores.add(autor);
+            autorExistente = new Autor(getNextAutorId(), nombre);
+            autores.add(autorExistente);
+            System.out.println("Autor agregado exitosamente con ID: " + autorExistente.getId());
         } else {
-            System.out.println("Un autor con ese nombre ya existe.");
+            System.out.println("Un autor con ese nombre ya existe. ID: " + autorExistente.getId());
         }
     }
+
 
     public Autor buscarAutorPorNombre(String nombre) {
         for (Autor autor : autores) {
@@ -35,6 +41,10 @@ public class Biblioteca {
             }
         }
         return null;
+    }
+
+    public int getNextAutorId() {
+        return nextAutorId++;
     }
 
     public void addAuthorToBook(int bookId, Autor nuevoAutor) {
