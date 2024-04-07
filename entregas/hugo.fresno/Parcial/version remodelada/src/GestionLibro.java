@@ -27,6 +27,22 @@ public class GestionLibro {
         return false;
     }
 
+    public void editarLibro(int idLibro, String nuevoTitulo, List<Autor> nuevosAutores, Integer nuevoAnio, TipoLibro nuevoTipo, List<String> nuevasPalabrasClave) {
+        for (Libro libro : libros) {
+            if (libro.getId() == idLibro) {
+                if (nuevoTitulo != null && !nuevoTitulo.isEmpty()) libro.setTitulo(nuevoTitulo);
+                if (nuevosAutores != null) libro.setAutores(nuevosAutores);
+                if (nuevoAnio != null) libro.setAñoPublicacion(nuevoAnio);
+                if (nuevoTipo != null) libro.setTipoLibro(nuevoTipo);
+                if (nuevasPalabrasClave != null) libro.setPalabrasClave(nuevasPalabrasClave);
+                System.out.println("Libro actualizado exitosamente.");
+                return;
+            }
+        }
+        System.out.println("Libro no encontrado.");
+    }
+
+
 
     public Libro buscarLibroPorId(int id) {
         for (Libro libro : libros) {
@@ -71,7 +87,7 @@ public class GestionLibro {
                 nombresAutores.add(autor.getName());
             }
             System.out.println("\nTitulo: " + libro.getTitulo());
-            System.out.println("Id: "+libro.getId());
+            System.out.println("Id Libro: "+libro.getId());
             System.out.println("Tipo: " + libro.getTipoLibro());
             System.out.println("Autor(es): " + String.join(", ", nombresAutores));
             System.out.println("Año de Publicación: " + libro.getAñoPublicacion());
@@ -79,6 +95,7 @@ public class GestionLibro {
             System.out.println("-----------------------------------");
         }
     }
+
     public void mostrarLibrosId() {
         if (libros.isEmpty()) {
             System.out.println("No hay libros en la biblioteca.");

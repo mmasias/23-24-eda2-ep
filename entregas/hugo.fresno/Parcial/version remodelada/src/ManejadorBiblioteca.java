@@ -10,10 +10,10 @@ public class ManejadorBiblioteca {
 
     public static List<Autor> solicitarAutores() {
         List<Autor> autores = new ArrayList<>();
-        System.out.println("Ingrese el nombre del autor. Ingrese 'fin' para terminar:");
+        System.out.println("Ingrese el nombre del autor. Ingrese 'f' para terminar:");
         while (true) {
             String nombre = scanner.nextLine().trim();
-            if ("fin".equalsIgnoreCase(nombre)) {
+            if ("f".equalsIgnoreCase(nombre)) {
                 break;
             }
             Autor autorExistente = biblioteca.buscarAutorPorNombre(nombre);
@@ -28,6 +28,29 @@ public class ManejadorBiblioteca {
         return autores;
     }
 
+    public static void editarLibro() {
+        System.out.print("Ingrese el ID del libro a editar: ");
+        int idLibro = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.print("Ingrese el nuevo título del libro (deje en blanco si no desea cambiarlo): ");
+        String nuevoTitulo = scanner.nextLine();
+
+
+
+        System.out.print("Ingrese el nuevo año de publicación (0 para no cambiar): ");
+        int nuevoAnio = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.print("Ingrese el nuevo tipo de documento (LIBRO, REVISTA, ARTICULO, TESIS)-(deje en blanco si no desea cambiarlo): ");
+        String tipo = scanner.nextLine().toUpperCase();
+        TipoLibro nuevoTipo = tipo.isEmpty() ? null : TipoLibro.valueOf(tipo);
+
+
+        biblioteca.getGestionLibro().editarLibro(idLibro, nuevoTitulo.isEmpty() ? null : nuevoTitulo, null, nuevoAnio == 0 ? null : nuevoAnio, nuevoTipo, null);
+    }
+
+
 
     public static void ejecutar() {
 
@@ -37,7 +60,8 @@ public class ManejadorBiblioteca {
             System.out.println("1. Añadir libro");
             System.out.println("2. Añadir autor a un libro por ID");
             System.out.println("3. Listar todos los libros");
-            System.out.println("4. Salir");
+            System.out.println("4. Editar libro");
+            System.out.println("5. Salir");
             System.out.print("Seleccione una opción: ");
 
             int opcion = scanner.nextInt();
@@ -52,7 +76,7 @@ public class ManejadorBiblioteca {
 
                     System.out.print("Ingrese el año de publicación: ");
                     int año = scanner.nextInt();
-                    scanner.nextLine(); // Limpiar buffer
+                    scanner.nextLine();
 
                     System.out.print("Ingrese el tipo de documento (LIBRO, REVISTA, ARTICULO, TESIS): ");
                     String tipo = scanner.nextLine().toUpperCase();
@@ -101,6 +125,10 @@ public class ManejadorBiblioteca {
                     break;
 
                 case 4:
+                    editarLibro();
+                    break;
+
+                case 5:
                     System.out.println("Saliendo del programa...");
                     scanner.close();
                     return;

@@ -47,6 +47,10 @@ public class Biblioteca {
         return nextAutorId++;
     }
 
+    public GestionLibro getGestionLibro() {
+        return this.gestionLibro;
+    }
+
     public void addAuthorToBook(int bookId, Autor nuevoAutor) {
         Libro libro = gestionLibro.buscarLibroPorId(bookId);
         if (libro != null) {
