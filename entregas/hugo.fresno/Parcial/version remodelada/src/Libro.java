@@ -1,18 +1,29 @@
 import java.util.List;
 
 public class Libro {
+
+    private int id;
     private String titulo;
-    private List<String> autores;
+    private List<Autor> autores;
     private int añoPublicacion;
     private TipoLibro tipoLibro;
     private List<String> palabrasClave;
 
-    public Libro(String titulo, List<String> autores, int añoPublicacion, TipoLibro tipoLibro, List<String> palabrasClave) {
+    public Libro(int id, String titulo, List<Autor> autores, int añoPublicacion, TipoLibro tipoLibro, List<String> palabrasClave) {
+        this.id = id;
         this.titulo = titulo;
         this.autores = autores;
         this.añoPublicacion = añoPublicacion;
         this.tipoLibro = tipoLibro;
         this.palabrasClave = palabrasClave;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitulo() {
@@ -23,11 +34,11 @@ public class Libro {
         this.titulo = titulo;
     }
 
-    public List<String> getAutores() {
+    public List<Autor> getAutores() {
         return autores;
     }
 
-    public void setAutores(List<String> autores) {
+    public void setAutores(List<Autor> autores) {
         this.autores = autores;
     }
 

@@ -15,16 +15,40 @@ public class Biblioteca {
         this.busqueda = new Busqueda(gestionLibro.getLibros());
     }
 
+    public void addAuthorToBook(int bookId, Autor nuevoAutor) {
+        Libro libro = gestionLibro.findBookById(bookId);
+        if (libro != null) {
+            if (libro.getAutores().isEmpty()) {
+                libro.getAutores().add(nuevoAutor);
+                System.out.println("Autor añadido con éxito al libro.");
+            } else {
+                System.out.println("Este libro ya tiene autor(es). No se pueden añadir más autores.");
+            }
+        } else {
+            System.out.println("No se encontró el libro con el ID proporcionado.");
+        }
+    }
+
     public void mostrarLibros() {
         gestionLibro.mostrarLibros();
     }
 
-    public List<Libro> buscarPorAutor(String autor) {
-        return busqueda.buscarPorAutor(autor);
+    public List<Libro> buscarPorAutor(String nombreAutor) {
+        List<Libro> librosEncontrados = new ArrayList<>();
+        for (int i = 0; i < gestionLibro.getLibros().size(); i++) {
+            Libro libro = gestionLibro.getLibros().get(i);
+            for (int j = 0; j < libro.getAutores().size(); j++) {
+                if (libro.getAutores().get(j).getName().equalsIgnoreCase(nombreAutor)) {
+                    librosEncontrados.add(libro);
+                    break;
+                }
+            }
+        }
+        return librosEncontrados;
     }
 
-    public List<Libro> buscarPorAnio(int anio) {
-        return busqueda.buscarPorAño(anio);
+    public List<Libro> buscarPorAño(int año) {
+        return busqueda.buscarPorAño(año);
     }
 
     public List<Libro> buscarPorPalabraClave(String palabraClave) {
@@ -44,10 +68,17 @@ public class Biblioteca {
         if (resultados.isEmpty()) {
             System.out.println("No se encontraron resultados.");
         } else {
-            for (Libro libro : resultados) {
-                System.out.println(libro.getTitulo() + " - " + String.join(", ", libro.getAutores()));
+            for (int i = 0; i < resultados.size(); i++) {
+                Libro libro = resultados.get(i);
+                List<String> nombresAutores = new ArrayList<>();
+                for (int j = 0; j < libro.getAutores().size(); j++) {
+                    nombresAutores.add(libro.getAutores().get(j).getName());
+                }
+                System.out.println(libro.getTitulo() + " - " + String.join(", ", nombresAutores));
             }
         }
     }
+
+
 
 }
