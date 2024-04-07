@@ -1,3 +1,3 @@
-# Carpeta de entregas
+# Carpeta de entrega del parcial
 
-Carpeta **única** para entregas. Incluir su entrega (todos los artefactos que considere oportunos), dentro de una carpeta apellidoNombre
+Esta carpeta contiene el código del Reto 003 revisado y modificado según el modelo proporcionado por el profesor.
