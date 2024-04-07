@@ -86,7 +86,7 @@ private void assignAuthorToBook(){
         System.out.println((i + 1) + ". " + authors.get(i).getname());
     }
     int authorIndex = scanner.nextInt();
-    BookAuthor relation = new BookAuthor(books.get(bookIndex - 1), authors.get(authorIndex - 1));
+    BookAuthor relation = new BookAuthor((bookIndex - 1),(authorIndex - 1));
     relations.add(relation);
     System.out.println("Autor asignado con exito");
 
