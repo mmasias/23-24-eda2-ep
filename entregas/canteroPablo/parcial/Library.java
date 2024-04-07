@@ -23,9 +23,11 @@ public class Library {
 
     private void addDocument() {
         System.out.println("Nombre del documento: ");
+        userInput.nextLine();
         String tittle = userInput.nextLine();
         System.out.println("Año de publicacion: ");
         int age = userInput.nextInt();
+        userInput.nextLine();
         boolean validTypeOfDocument = true;
         String typeDocument = "";
         do {
@@ -48,7 +50,7 @@ public class Library {
 
             }
 
-        } while (validTypeOfDocument = false);
+        } while (!validTypeOfDocument);
         Document newDocument = new Document(documentList.size()+1, tittle, age, typeDocument);
         documentList.add(newDocument);
         System.out.println("Documento añadido correctamente, el id del documento es: " + newDocument.getId());
@@ -92,6 +94,7 @@ public class Library {
     
 
     }
+
     private void addKeyword() {
         boolean continueAdding = true;
         do{
@@ -137,7 +140,7 @@ public class Library {
 
     private void printDocumentListing() {
         if(authorList.isEmpty()) {
-            System.out.println("No hay autores en el sistema");
+            System.out.println("No hay documentos en el sistema");
         }else {
         for (Document document : documentList) {
             System.out.println("Id: " + document.getId());
@@ -148,6 +151,24 @@ public class Library {
         }
         }
     }
+    private void printDocumentEspecific(int id){
+        if(authorList.isEmpty()) {
+            System.out.println("No hay documentos en el sistema");
+        }else {
+        for (Document document : documentList) {
+            if(document.getId() == id){
+            System.out.println("Id: " + document.getId());
+            System.out.println("Titulo: " + document.getTittle());
+            System.out.println("Año de publicacion: " + document.getPublicationYear());
+            System.out.println("Tipo de documento: " + document.getTypeDocument());
+            }
+        }
+        }
+        
+
+
+    }
+
     private void printAuthorListing() {
         if(authorList.isEmpty()) {
             System.out.println("No hay autores en el sistema");
@@ -160,6 +181,19 @@ public class Library {
         }
         }
     }
+    private void printAuthorEspecific(int id) {
+        if(authorList.isEmpty()) {
+            System.out.println("No hay autores en el sistema");
+        }else {
+        for (Author author : authorList) {
+            if(author.getId() == id){
+            System.out.println("Id: " + author.getId());
+            System.out.println("Nombre: " + author.getName());
+            System.out.println("Apellido: " + author.getSurname());
+            }
+        }
+        }
+    }
     private void printKeyWordsListing() {
         if(keyWordsList.isEmpty()) {
             System.out.println("No hay palabras clave en el sistema");
@@ -168,6 +202,18 @@ public class Library {
             System.out.println("Id: " + keyWord.getId());
             System.out.println("Palabra clave: " + keyWord.getKeyWord());
             
+        }
+        }
+    }
+    private void printKeyWordsEspecific(int id) {
+        if(keyWordsList.isEmpty()) {
+            System.out.println("No hay palabras clave en el sistema");
+        }else {
+        for (KeyWords keyWord : keyWordsList) {
+            if(keyWord.getId() == id){
+            System.out.println("Id: " + keyWord.getId());
+            System.out.println("Palabra clave: " + keyWord.getKeyWord());
+            }
         }
         }
     }
@@ -310,7 +356,7 @@ public class Library {
         boolean validDocument = false;
         for (Document document : documentList) {
             if (document.getId() == id) {
-                printDocumentListing();
+                printDocumentEspecific(id);;
                 validDocument = true;
             }
         }
@@ -319,14 +365,14 @@ public class Library {
         }
     }
 
-    public void searchDocumentByAuthor() {
+    public void searchByAuthor() {
         System.out.println("¿Que autor quieres buscar?, dime el id del autor");
         Scanner userInput = new Scanner(System.in);
         int id = userInput.nextInt();
         boolean validAuthor = false;
         for (Author author : authorList) {
             if (author.getId() == id) {
-                printDocumentListing();
+                printAuthorEspecific(id);
                 validAuthor = true;
             }
         }
@@ -397,7 +443,7 @@ public class Library {
         boolean validKeyWord = false;
         for (KeyWords keyWord : keyWordsList) {
             if (keyWord.getId() == id) {
-                printDocumentListing();
+                printKeyWordsEspecific(id);
                 validKeyWord = true;
             }
         }
@@ -405,49 +451,133 @@ public class Library {
             System.out.println("La palabra clave no existe");
         }
     }
+    private void printRelationsDocumentAuthors() {
+        for (DocumentAuthor relation : relationDocumentAuthors) {
+            int documentId = relation.getDocumentId();
+            int authorId = relation.getAuthorId();
+            
+            String documentTitle = "";
+            for (Document document : documentList) {
+                if (document.getId() == documentId) {
+                    documentTitle = document.getTittle();
+                    break;
+                }
+            }
+            
+            String authorName = "";
+            for (Author author : authorList) {
+                if (author.getId() == authorId) {
+                    authorName = author.getName() + " " + author.getSurname();
+                    break;
+                }
+            }
+            
+            System.out.println("Documento: " + documentTitle + ", Autor: " + authorName);
+        }
+    }
+    private void printCompleteDocumentList() {
+        for (Document document : documentList) {
+            System.out.println("Id: " + document.getId());
+            System.out.println("Titulo: " + document.getTittle());
+            System.out.println("Año de publicacion: " + document.getPublicationYear());
+            System.out.println("Tipo de documento: " + document.getTypeDocument());
+            System.out.println("Autores: ");
+            for (DocumentAuthor relation : relationDocumentAuthors) {
+                if (relation.getDocumentId() == document.getId()) {
+                    for (Author author : authorList) {
+                        if (author.getId() == relation.getAuthorId()) {
+                            System.out.println("Nombre: " + author.getName() + " Apellido: " + author.getSurname());
+                        }
+                    }
+                }
+            }
+            System.out.println("Palabras clave: ");
+            for (DocumentKeyWords relation : relationDocumentKeyWords) {
+                if (relation.getDocumentId() == document.getId()) {
+                    for (KeyWords keyWord : keyWordsList) {
+                        if (keyWord.getId() == relation.getKeyWordId()) {
+                            System.out.println("Palabra clave: " + keyWord.getKeyWord());
+                        }
+                    }
+                }
+            }
+        }
+    }
     
 
     public void menu() {
-        boolean continuar = true;
+        boolean continueMenu = true;
         do {
+            System.out.println("Menu");
             System.out.println("1- Añadir documento");
-            System.out.println("2- Editar documento");
-            System.out.println("3- Eliminar documento");
-            System.out.println("4- Buscar documento");
-            System.out.println("5- Buscar documento por autor");
-            System.out.println("6- Buscar documento por año de publicacion");
-            System.out.println("7- Buscar documento por tipo de documento");
-            System.out.println("8- Buscar documento por palabras clave");
-            System.out.println("9- Listar documentos");
-            System.out.println("10- Salir");
-            Scanner userInput = new Scanner(System.in);
+            System.out.println("2- Añadir/asociar autor");
+            System.out.println("3- Añadir/asociar palabra clave");
+            System.out.println("4- Editar documento");
+            System.out.println("5- Eliminar documento");
+            System.out.println("6- Eliminar autor");
+            System.out.println("7- Buscar documento");
+            System.out.println("8- Buscar autor");
+            System.out.println("9- Buscar documento por palabra clave");
+            System.out.println("10- Listar documentos");
+            System.out.println("11- Listar autores");
+            System.out.println("12- Listar palabras clave");
+            System.out.println("13- Listar relaciones documento-autores");
+            System.out.println("14- Listar lista completa de documentos");
+            System.out.println("15- Salir");
             int option = userInput.nextInt();
-            if (option == 1) {
-                addDocument();
-            } else if (option == 2) {
-                editDocument();
-            } else if (option == 3) {
-                deleteDocument();
-            } else if (option == 4) {
-                searchDocument();
-            } else if (option == 5) {
-                searchDocumentByAuthor();
-            } else if (option == 6) {
-                searchDocumentByAge();
-            } else if (option == 7) {
-                searchDocumentByTypeOfDocument();
-            } else if (option == 8) {
-                searchDocumentByKeyWords();
-            } else if (option == 9) {
-                printDocumentListing();
-            } else if (option == 10) {
-                continuar = false;
-
-            } else {
-                System.out.println("Opcion no valida");
+            switch (option) {
+                case 1:
+                    addDocument();
+                    break;
+                case 2:
+                    addAuthor();
+                    break;
+                case 3:
+                    addKeyword();
+                    break;
+                case 4:
+                    editDocument();
+                    break;
+                case 5:
+                    deleteDocument();
+                    break;
+                case 6:
+                    deleteAuthor();
+                    break;
+                case 7:
+                    searchDocument();
+                    break;
+                case 8:
+                    searchByAuthor();
+                    break;
+                case 9:
+                    searchDocumentByKeyWords();
+                    break;
+                case 10:
+                    printDocumentListing();
+                    break;
+                case 11:
+                    printAuthorListing();
+                    break;
+                case 12:
+                    printKeyWordsListing();
+                    break;
+                case 13:
+                    printRelationsDocumentAuthors();
+                    break;
+                case 14:
+                    printCompleteDocumentList();
+                    break;
+                case 15:
+                    System.out.println("Saliendo...");
+                    continueMenu = false;
+                    break;
+                default:
+                    System.out.println("Opcion no valida");
+                    break;
             }
-        } while (continuar == true);
-        System.out.println("Adios");
-
+        } while (continueMenu);
     }
+        
+        
 }
