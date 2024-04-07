@@ -47,7 +47,10 @@ public class Main {
             System.out.println("2. Listar textos");
             System.out.println("3. Buscar texto por título");
             System.out.println("4. Eliminar texto");
-            System.out.println("5. Volver al menú principal");
+            System.out.println("5. Añadir palabra clave a texto");
+            System.out.println("6. Buscar texto por palabra clave");
+            System.out.println("7. Eliminar palabra clave de texto");
+            System.out.println("8. Volver al menú principal");
             System.out.print("Selecciona una opción: ");
             int opcion = sc.nextInt();
             sc.nextLine();
@@ -75,6 +78,27 @@ public class Main {
                     gestion.eliminarTexto(idTexto);
                     break;
                 case 5:
+                    System.out.println("Introduce el ID del texto:");
+                    int IDTexto = sc.nextInt();
+                    sc.nextLine();
+                    System.out.println("Introduce la palabra clave a añadir:");
+                    String palabraClave = sc.nextLine();
+                    gestion.añadirPalabraClaveATexto(IDTexto, palabraClave);
+                    break;
+                case 6:
+                    System.out.println("Introduce la palabra clave a buscar:");
+                    String palabraBusqueda = sc.nextLine();
+                    gestion.buscarTextosPorPalabraClave(palabraBusqueda);
+                    break;
+                case 7:
+                    System.out.println("Introduce el ID del texto:");
+                    int TextoID = sc.nextInt();
+                    sc.nextLine(); 
+                    System.out.println("Introduce la palabra clave a eliminar:");
+                    String PalabraClave = sc.nextLine();
+                    gestion.eliminarPalabraClaveDeTexto(TextoID, PalabraClave);
+                    break;
+                case 8:
                     return;
                 default:
                     System.out.println("Opción no válida. Por favor, intenta de nuevo.");

@@ -49,7 +49,7 @@ public class Gestion {
         sc.nextLine();
         System.out.println("Introduce el tipo del texto:LIBRO|REVISTA|ARTICULO|PAPER");
         String tipo = sc.nextLine();
-        textos.add(new Texto( titulo, año_publicacion, id, tipo));
+        textos.add(new Texto( titulo, año_publicacion, id, tipo, new ArrayList<String>()));
     }
 
     public void añadirTexto(Texto texto) {
@@ -197,5 +197,43 @@ public class Gestion {
             System.out.println("No se encontró la relación especificada.");
         }
     }
+
+    public void añadirPalabraClaveATexto(int idTexto, String palabraClave) {
+        Texto texto = buscarTextoPorId(idTexto);
+        if (texto != null) {
+            texto.añadirPalabraClave(palabraClave);
+            System.out.println("Palabra clave añadida exitosamente al texto.");
+        } else {
+            System.out.println("Texto no encontrado.");
+        }
+    }
+    
+    public void buscarTextosPorPalabraClave(String palabraClave) {
+        boolean encontrado = false;
+        for (Texto texto : textos) {
+            if (texto.getPalabras_clave().contains(palabraClave)) {
+                System.out.println("Texto encontrado: " + texto.getTitulo() + " (ID: " + texto.getId() + ")");
+                encontrado = true;
+            }
+        }
+        if (!encontrado) {
+            System.out.println("No se encontraron textos con la palabra clave proporcionada.");
+        }
+    }
+    
+    public void eliminarPalabraClaveDeTexto(int idTexto, String palabraClave) {
+        Texto texto = buscarTextoPorId(idTexto);
+        if (texto != null) {
+            if (texto.getPalabras_clave().contains(palabraClave)) {
+                texto.eliminarPalabraClave(palabraClave);
+                System.out.println("Palabra clave eliminada exitosamente.");
+            } else {
+                System.out.println("La palabra clave no se encontró en el texto especificado.");
+            }
+        } else {
+            System.out.println("Texto no encontrado.");
+        }
+    }
+    
 
 }

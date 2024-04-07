@@ -1,15 +1,19 @@
 package puenteDaniel;
 
+import java.util.ArrayList;
+
 public class Texto {
     private String titulo;
     private int año_publicacion, id;
     private String tipo;
+    private ArrayList<String> palabras_clave;
 
-    public Texto(String titulo, int año_publicacion, int id, String tipo) {
+    public Texto(String titulo, int año_publicacion, int id, String tipo, ArrayList<String> palabras_clave) {
         this.titulo = titulo;
         this.año_publicacion = año_publicacion;
         this.id = id;
         this.tipo = tipo;
+        this.palabras_clave = new ArrayList<String>();
     
     }
 
@@ -43,6 +47,18 @@ public class Texto {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public void añadirPalabraClave(String palabra){
+        palabras_clave.add(palabra);
+    }
+
+    public void eliminarPalabraClave(String palabra){
+        palabras_clave.remove(palabra);
+    }
+
+    public ArrayList<String> getPalabras_clave() {
+        return palabras_clave;
     }
 
     @Override
