@@ -61,7 +61,8 @@ public class ManejadorBiblioteca {
             System.out.println("2. Añadir autor a un libro por ID");
             System.out.println("3. Listar todos los libros");
             System.out.println("4. Editar libro");
-            System.out.println("5. Salir");
+            System.out.println("5. Eliminar libro");
+            System.out.println("6. Salir");
             System.out.print("Seleccione una opción: ");
 
             int opcion = scanner.nextInt();
@@ -101,22 +102,30 @@ public class ManejadorBiblioteca {
 
 
                 case 2:
-                    System.out.print("Ingrese el ID del libro al cual desea añadir un autor: ");
-                    int bookId = scanner.nextInt();
-                    scanner.nextLine();
+                    if (!(biblioteca.getGestionLibro().getLibros().isEmpty())) {
 
-                    System.out.print("Ingrese el nombre del autor a añadir: ");
-                    String nombreAutor = scanner.nextLine();
+                        biblioteca.mostrarLibrosId();
 
-                    Autor autor = biblioteca.buscarAutorPorNombre(nombreAutor);
-                    if (autor == null) {
 
-                        autor = new Autor(biblioteca.getNextAutorId(), nombreAutor);
-                        biblioteca.agregarAutor(String.valueOf(autor));
-                        System.out.println("Nuevo autor agregado: " + nombreAutor);
+                        System.out.print("Ingrese el ID del libro al cual desea añadir un autor: ");
+                        int bookId = scanner.nextInt();
+                        scanner.nextLine();
+
+                        System.out.print("Ingrese el nombre del autor a añadir: ");
+                        String nombreAutor = scanner.nextLine();
+
+                        Autor autor = biblioteca.buscarAutorPorNombre(nombreAutor);
+                        if (autor == null) {
+
+                            autor = new Autor(biblioteca.getNextAutorId(), nombreAutor);
+                            biblioteca.agregarAutor(String.valueOf(autor));
+                            System.out.println("Nuevo autor agregado: " + nombreAutor);
+                        }
+
+                        biblioteca.addAuthorToBook(bookId, autor);
+                    }else {
+                        System.out.println("No hay libros en la biblioteca.");
                     }
-
-                    biblioteca.addAuthorToBook(bookId, autor);
                     break;
 
 
@@ -125,10 +134,37 @@ public class ManejadorBiblioteca {
                     break;
 
                 case 4:
-                    editarLibro();
+                    if (!(biblioteca.getGestionLibro().getLibros().isEmpty())) {
+                        biblioteca.mostrarLibrosId();
+
+                        editarLibro();
+
+                    }else {
+                        System.out.println("No hay libros en la biblioteca.");
+                    }
                     break;
 
                 case 5:
+                    if (biblioteca.getGestionLibro().getLibros().isEmpty()) {
+                        System.out.println("No hay libros en la biblioteca.");
+                    } else {
+                        biblioteca.mostrarLibrosId();
+
+                        System.out.print("Ingrese el ID del libro a eliminar: ");
+                        int idLibro = scanner.nextInt();
+                        scanner.nextLine();
+
+                        if (idLibro > 0) {
+                            boolean eliminado = biblioteca.getGestionLibro().eliminarLibroPorId(idLibro);
+                            if (eliminado) {
+                                System.out.println("Libro eliminado exitosamente.");
+                            }
+                        }
+                    }
+                    break;
+
+
+                case 6:
                     System.out.println("Saliendo del programa...");
                     scanner.close();
                     return;

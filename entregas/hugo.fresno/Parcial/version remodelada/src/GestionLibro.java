@@ -17,9 +17,20 @@ public class GestionLibro {
     }
 
 
+    //Buena implementacion de eliminar si los titulos no se repiten
     public boolean eliminarLibro(String titulo) {
         for (int i = 0; i < libros.size(); i++) {
             if (libros.get(i).getTitulo().equalsIgnoreCase(titulo)) {
+                libros.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean eliminarLibroPorId(int id) {
+        for (int i = 0; i < libros.size(); i++) {
+            if (libros.get(i).getId() == id) {
                 libros.remove(i);
                 return true;
             }
