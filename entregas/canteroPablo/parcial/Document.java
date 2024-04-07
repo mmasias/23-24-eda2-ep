@@ -23,7 +23,11 @@ public class Document {
     public String getTypeDocument() {
         return typeDocument;
     }
-    
+    public void setTittle(String newTittle) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setTittle'");
+    }
+
     
 
 

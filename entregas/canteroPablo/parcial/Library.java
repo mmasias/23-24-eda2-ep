@@ -79,7 +79,7 @@ public class Library {
             System.out.println("Id del documento: ");
             int documentId = userInput.nextInt();
             DocumentAuthor newRelation = new DocumentAuthor(documentId, authorId);
-            relationDocumentAuthors.add(newRelation);
+            addRelationDocumentAuthor(documentId, authorId);
             System.out.println("Autor asociado correctamente");
         } else if (option == 3) {
             System.out.println("Saliendo...");
@@ -92,54 +92,90 @@ public class Library {
     
 
     }
-        {
-        ArrayList<String> keyWords = new ArrayList<String>();
-        System.out.println("¿Cuántos palabras clave tiene el documento? ");
-        int numberKeyWords = userInput.nextInt();
+    private void addKeyword() {
+        boolean continueAdding = true;
+        do{
+        System.out.println("Quieres añadir una palabra clave o asociar una con un libro mediante su id? (1-Añadir, 2-Asociar, 3-Salir)");
+        int option = userInput.nextInt();
+        if (option == 1) {
+            System.out.println("¿Cuántos palabras clave desea añadir al sistema? ");
+        int numberKeyWords= userInput.nextInt();
         userInput.nextLine();
-
         for (int i = 0; i < numberKeyWords; i++) {
-            System.out.println("Palabras Clave: ");
+            System.out.println("Palabra Clave: ");
             String keyword = userInput.nextLine();
-            keyWords.add(keyword);
-
+            KeyWords newKeyword = new KeyWords(keyword, keyWordsList.size()+1);
+            keyWordsList.add(newKeyword);
+            System.out.println("Palabra clave añadida correctamente, el id de la palabra clave es: " + newKeyword.getId());
         }
-        Document document = new Document(tittle, authorList, age, typeDocument, keyWords);
-        documentList.add(document);
-        System.out.println("Documento añadido correctamente");
+        } else if (option == 2) {
+            System.out.println("Id de la palabra clave: ");
+            int keyWordId = userInput.nextInt();
+            System.out.println("Id del documento: ");
+            int documentId = userInput.nextInt();
+            DocumentKeyWords newRelation = new DocumentKeyWords(documentId, keyWordId);
+            addRelationDocumentKeyWords(documentId, keyWordId);
+            System.out.println("Palabra clave asociada correctamente");
+        } else if (option == 3) {
+            System.out.println("Saliendo...");
+            continueAdding = false;
+        }else {
+            System.out.println("Opcion no valida");
+        }
+        }while(continueAdding );
+        
+    
 
+    }
+    private void addRelationDocumentAuthor(int documentId, int authorId) {
+        relationDocumentAuthors.add(new DocumentAuthor(documentId, authorId));
+    }
+    private void addRelationDocumentKeyWords(int documentId, int keyWordId) {
+        relationDocumentKeyWords.add(new DocumentKeyWords(documentId, keyWordId));
     }
 
 
-    public void printDocumentListing() {
-        if (documentList.isEmpty()) {
-            System.out.println("No hay documentos en la lista.");
-        } else {
-            System.out.println("Lista de documentos:");
-            for (Document document : documentList) {
-                System.out.println("Título: " + document.getTittle());
-                System.out.println("Autores:");
-                for (Author author : document.getAuthor()) {
-                    System.out.println("- " + author.getName() + " " + author.getSurname());
-                }
-                System.out.println("Año de publicación: " + document.getPublicationYear());
-                System.out.println("Tipo de documento: " + document.getTypeDocument());
-                System.out.println("Palabras clave:");
-                for (String keyword : document.getKeyWords()) {
-                    System.out.println("- " + keyword);
-                }
-                System.out.println();
-            }
+    private void printDocumentListing() {
+        for (Document document : documentList) {
+            System.out.println("Id: " + document.getId());
+            System.out.println("Titulo: " + document.getTittle());
+            System.out.println("Año de publicacion: " + document.getPublicationYear());
+            System.out.println("Tipo de documento: " + document.getTypeDocument());
+            
+            
         }
     }
+    private void printAuthorListing() {
+        if(authorList.isEmpty()) {
+            System.out.println("No hay autores en el sistema");
+        }else {
+        for (Author author : authorList) {
+            System.out.println("Id: " + author.getId());
+            System.out.println("Nombre: " + author.getName());
+            System.out.println("Apellido: " + author.getSurname());
+            
+        }
+        }
+    }
+    private void printKeyWordsListing() {
+        if(keyWordsList.isEmpty()) {
+            System.out.println("No hay palabras clave en el sistema");
+        }else {
+        for (KeyWords keyWord : keyWordsList) {
+            System.out.println("Id: " + keyWord.getId());
+            System.out.println("Palabra clave: " + keyWord.getKeyWord());
+            
+        }
+        }
+    }
+    
+    private void editDocument() {
 
-    public void editDocument() {
-
-        System.out.println("¿Que documento quieres editar?");
+        System.out.println("¿Que documento quieres editar, introduce el id del documento?");
         Scanner userInput = new Scanner(System.in);
-        String tittle = userInput.nextLine();
+        int id = userInput.nextInt();
         boolean validOption = true;
-        if (documentList.get(0).getTittle().equals(tittle)) {
+        if (documentList.get(0).getId() == id|| relationDocumentAuthors.get(0).getDocumentId() == id || relationDocumentKeyWords.get(0).getDocumentId() == id){
 
             do {
                 System.out.println("Que quieres editar");
@@ -334,6 +370,7 @@ public class Library {
             System.out.println("La palabra clave no existe");
         }
     }
+    
 
     public void menu() {
         boolean continuar = true;
