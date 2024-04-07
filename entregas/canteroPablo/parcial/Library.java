@@ -56,21 +56,43 @@ public class Library {
 
     }
     private void addAuthor() {
-
-        System.out.println("¿Cuántos autores tiene el documento? ");
+        boolean continueAdding = true;
+        do{
+        System.out.println("Quieres añadir un autor o asociar un autor con un libro mediante su id? (1-Añadir, 2-Asociar, 3-Salir)");
+        int option = userInput.nextInt();
+        if (option == 1) {
+            System.out.println("¿Cuántos autores desea añadir al sistema? ");
         int numberAuthors = userInput.nextInt();
         userInput.nextLine();
-
         for (int i = 0; i < numberAuthors; i++) {
             System.out.println("Nombre del autor: ");
             String name = userInput.nextLine();
             System.out.println("Apellido del autor: ");
             String surname = userInput.nextLine();
-            Author author = new Author(name, surname);
-            authorList.add(author);
+            Author newAuthor = new Author(name, surname,authorList.size()+1);
+            authorList.add(newAuthor);
+            System.out.println("Autor añadido correctamente, el id del autor es: " + newAuthor.getId());
         }
-    }
+        } else if (option == 2) {
+            System.out.println("Id del autor: ");
+            int authorId = userInput.nextInt();
+            System.out.println("Id del documento: ");
+            int documentId = userInput.nextInt();
+            DocumentAuthor newRelation = new DocumentAuthor(documentId, authorId);
+            relationDocumentAuthors.add(newRelation);
+            System.out.println("Autor asociado correctamente");
+        } else if (option == 3) {
+            System.out.println("Saliendo...");
+            continueAdding = false;
+        }else {
+            System.out.println("Opcion no valida");
+        }
+        }while(continueAdding );
         
+    
+
+    }
+        {
         ArrayList<String> keyWords = new ArrayList<String>();
         System.out.println("¿Cuántos palabras clave tiene el documento? ");
         int numberKeyWords = userInput.nextInt();
@@ -87,6 +109,7 @@ public class Library {
         System.out.println("Documento añadido correctamente");
 
     }
+
 
     public void printDocumentListing() {
         if (documentList.isEmpty()) {

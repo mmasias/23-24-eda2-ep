@@ -14,6 +14,16 @@ public class Document {
     public int getId() {
         return id;
     }
+    public String getTittle() {
+        return tittle;
+    }
+    public int getPublicationYear() {
+        return publicationYear;
+    }
+    public String getTypeDocument() {
+        return typeDocument;
+    }
+    
     
 
 
