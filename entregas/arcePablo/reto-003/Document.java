@@ -6,14 +6,14 @@ import Types.KeyWordTypes;
 
 public class Document {
     private String title;
-    private String author;
+    private Author author;
     private ArrayList<KeyWordTypes> keyWords;
     private Date datePublished;
     private Enum<DocType> type;
 
     public Document() {
         title = "";
-        author = "";
+        author = new Author("Unknown");
         keyWords = new ArrayList<>();
         datePublished = new Date(0);
         type = DocType.OTRO;
@@ -21,7 +21,7 @@ public class Document {
     
     public Document(String title, String author, ArrayList<KeyWordTypes> keyWords, Date datePublished, Enum<DocType> type) {
         this.title = title;
-        this.author = author;
+        this.author = new Author(author);
         this.keyWords = keyWords;
         this.datePublished = datePublished;
         this.type = type;
@@ -35,11 +35,11 @@ public class Document {
         this.title = title;
     }
     
-    public String getAuthor() {
+    public Author getAuthor() {
         return author;
     }
     
-    public void setAuthor(String author) {
+    public void setAuthor(Author author) {
         this.author = author;
     }
     

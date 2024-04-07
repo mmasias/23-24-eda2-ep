@@ -16,7 +16,11 @@ public class DocumentGenerator {
         document.setTitle(titles[random.nextInt(titles.length)]);
 
         // Generar autor aleatorio
-        String[] authors = {"John Doe", "Jane Smith", "Alice Johnson"};
+        Author[] authors = {
+            new Author("John Doe"),
+            new Author("Jane Smith"),
+            new Author("Alice Johnson")
+        };
         document.setAuthor(authors[random.nextInt(authors.length)]);
 
         // Generar palabras clave aleatorias

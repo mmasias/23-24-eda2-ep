@@ -34,7 +34,7 @@ public class Searchbar {
             if (containsAnyKeyword(document.getKeyWords()) &&
                 (searchedTitle.isEmpty() || document.getTitle().equals(searchedTitle)) &&
                 (searchedDate == null || document.getDatePublished().equals(searchedDate)) &&
-                (searchedAuthor.isEmpty() || document.getAuthor().equals(searchedAuthor)) &&
+                (searchedAuthor.isEmpty() || document.getAuthor().getName().equals(searchedAuthor)) &&
                 (searchedDocType == null || document.getType().equals(searchedDocType))) {
                 filteredDocuments.add(document);
             }

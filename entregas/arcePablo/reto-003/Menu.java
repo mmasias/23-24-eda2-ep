@@ -25,12 +25,12 @@ public void listDocuments(ArrayList<Document> documents) {
 
         for (Document document : documents) {
             String title = document.getTitle();
-            String author = document.getAuthor();
+            Author author = document.getAuthor();
             Date datePublished = document.getDatePublished();
             ArrayList<KeyWordTypes> keywords = document.getKeyWords();
 
             String formattedTitle = formatCell(title, 40);
-            String formattedAuthor = formatCell(author, 10);
+            String formattedAuthor = formatCell(author.getName(), 10);
             String formattedDate = new java.text.SimpleDateFormat("dd/MM/yyyy").format(datePublished);
             String formattedKeywords = formatKeywords(keywords);
 
