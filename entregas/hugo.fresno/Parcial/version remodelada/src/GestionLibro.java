@@ -33,9 +33,9 @@ public class GestionLibro {
         return null;
     }
 
-    public void editarLibro(String tituloOriginal, Libro libroModificado) {
+    public void editarLibro(int idLibro, Libro libroModificado) {
         for (int i = 0; i < libros.size(); i++) {
-            if (libros.get(i).getTitulo().equalsIgnoreCase(tituloOriginal)) {
+            if (libros.get(i).getId() == idLibro) {
                 libros.set(i, libroModificado);
                 return;
             }
@@ -53,13 +53,16 @@ public class GestionLibro {
         }
 
         for (Libro libro : libros) {
+            List<String> nombresAutores = new ArrayList<>();
+            for (Autor autor : libro.getAutores()) {
+                nombresAutores.add(autor.getName());
+            }
             System.out.println("\nTitulo: " + libro.getTitulo());
             System.out.println("Tipo: " + libro.getTipoLibro());
-            System.out.println("Autor(es): " + String.join(", ", libro.getAutores()));
+            System.out.println("Autor(es): " + String.join(", ", nombresAutores));
             System.out.println("Año de Publicación: " + libro.getAñoPublicacion());
             System.out.println("Palabras Clave: " + String.join(", ", libro.getPalabrasClave()));
             System.out.println("-----------------------------------");
         }
     }
-
 }
