@@ -92,13 +92,59 @@ private void assignAuthorToBook(){
 
 }
 
+private List<Author> getAuthorsByBookId(int bookId){
+    List<Author> searchedAuthors = new ArrayList<>();
+    for(BookAuthor relation : relations){
+        if(relation.getbookid() == bookId){
+            searchedAuthors.add(findAuthorById(relation.getauthorid()));
+        }
+    }
+    return searchedAuthors;
+}
+
+private List<Book> getBooksByAuthorId(int authorId){
+    List<Book> searchedbooks = new ArrayList<>();
+    for(BookAuthor relation : relations){
+        if(relation.getauthorid() == authorId){
+            searchedbooks.add(this.books.get(relation.getbookid()));
+        }
+    }
+    return searchedbooks;
+}
+
+private Book findBookById(int id){
+    for(Book book : books){
+        if(book.getid() == id){
+            return book;
+        }
+    }
+    return null;
+}
+
+private Author findAuthorById(int id){
+    for(Author author : authors){
+        if(author.getid() == id){
+            return author;
+        }
+    }
+    return null;
+}
+
 private void listBooks(){
+    if (books.isEmpty()){
+        System.out.println("No hay libros en la biblioteca");
+        return;
+    }
     for(Book book : books){
         System.out.println(book);
     }
 }
 
 private void listAuthors(){
+    if (authors.isEmpty()){
+        System.out.println("No hay autores en la biblioteca");
+        return;
+    }
     for(Author author : authors){
         System.out.println(author);
     }
