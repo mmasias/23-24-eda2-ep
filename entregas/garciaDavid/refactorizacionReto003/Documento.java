@@ -5,14 +5,12 @@ public  class Documento {
     private String titulo;
     private int añoDePublicacion;
     private Tipo tipo;
-    private ArrayList<String> palabrasClave;
 
     public Documento(String titulo, int anoDePublicacion, Tipo tipo, int id ) {
         this.titulo = titulo;
         this.añoDePublicacion = anoDePublicacion;
         this.id=id;
         this.tipo = tipo;
-        this.palabrasClave = new ArrayList<String>();
     }
 
     public String getTitulo() {
@@ -37,23 +35,6 @@ public  class Documento {
 
     public void setTipo(Tipo tipo) {
         this.tipo = tipo;
-    }
-
-    public ArrayList<String> getPalabrasClave() {
-        return palabrasClave;
-    }
-
-    public void setPalabrasClave(ArrayList<String> palabrasClave) {
-        this.palabrasClave = palabrasClave;
-    }
-
-   
-    public  void añadirPalabraClave(String palabraClave){
-        this.palabrasClave.add(palabraClave);
-    }
-
-    public void eliminarPalabraClave(String palabraClave){
-        this.palabrasClave.remove(palabraClave);
     }
 
     public int getId() {

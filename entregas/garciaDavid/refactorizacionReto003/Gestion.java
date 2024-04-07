@@ -75,24 +75,50 @@ public class Gestion {
         System.out.println("Ingresa el apellido del autor");
         String apellido = scanner.nextLine();
         Autor autor = new Autor(id, nombre, apellido);
-        autores.add(autor); 
+        autores.add(autor);
     }
 
     private void agregarAutor(Autor autor) {
         autores.add(autor);
     }
 
-    private void agregarRelacion(int documentoId, int autorId) {
-        AutorDocumento autorDoc = new AutorDocumento(documentoId, autorId);
-        autorDocumentos.add(autorDoc);
+    private void agregarRelacion() {
+        System.out.println("Ingrese el ID del autor:");
+        int autorId = scanner.nextInt();
+        scanner.nextLine();
+
+        Autor autor = buscarAutorPorId(autorId);
+        if (autor == null) {
+            System.out.println("Autor no encontrado.Cree el autor primero.");
+            return;
+        }
+
+        System.out.println("Ingrese el ID del documento:");
+        int documentoId = scanner.nextInt();
+        scanner.nextLine();
 
         Documento documento = buscarDocPorId(documentoId);
-        if (documento != null) {
-            Autor autor = buscarAutorPorId(autorId);
-            if (autor != null) {
-                agregarAutor(autor);
+        if (documento == null) {
+            System.out.println("Documento no encontrado.Cree el documento primero.");
+            return;
+        }
+
+        if (!existeRelacionAutorDocumento(documentoId, autorId)) {
+            AutorDocumento autorDocumento = new AutorDocumento(documentoId, autorId);
+            autorDocumentos.add(autorDocumento);
+            System.out.println("Relación entre autor y documento exitosa");
+        } else {
+            System.out.println("Ya existe una relación entre este autor y este documento.");
+        }
+    }
+
+    private boolean existeRelacionAutorDocumento(int documentoId, int autorId) {
+        for (AutorDocumento ad : autorDocumentos) {
+            if (ad.getDocumentoId() == documentoId && ad.getAutorId() == autorId) {
+                return true;
             }
         }
+        return false;
     }
 
     private List<Autor> obtenerAutorPorDocumentoId(int documentoId) {
@@ -107,7 +133,7 @@ public class Gestion {
         }
         return aut;
     }
-    
+
     private List<Documento> obtenerDocumentoPorAutorId(int autorId) {
         List<Documento> doc = new ArrayList<>();
         for (AutorDocumento autorDoc : autorDocumentos) {
@@ -120,7 +146,6 @@ public class Gestion {
         }
         return doc;
     }
-
 
     private Documento buscarDocPorId(int id) {
         for (int i = 0; i < documentos.size(); i++) {
@@ -153,16 +178,16 @@ public class Gestion {
     public void menu() {
         boolean salir = false;
         do {
-            System.out.println("");
+            System.out.println("\n");
             System.out.println("1. Agregar documento");
             System.out.println("2. Listar documento");
             System.out.println("3. Agregar autor");
             System.out.println("4. Listar autor");
-            System.out.println("5. Relación libro-autor");
+            System.out.println("5. Relación documento-autor");
             System.out.println("6. Buscar el autor por documento ID");
             System.out.println("7. Buscar el documento por el ID de autor");
             System.out.println("8. Salir");
-            System.out.println("");
+            System.out.println("-Seleccione una opción: ");
             Scanner sc = new Scanner(System.in);
             int opcion = sc.nextInt();
             switch (opcion) {
@@ -175,7 +200,7 @@ public class Gestion {
                 case 3:
                     System.out.println("Ingresa el id del autor");
                     int id = scanner.nextInt();
-                    scanner.nextLine(); 
+                    scanner.nextLine();
                     System.out.println("Ingresa el nombre del autor");
                     String nombre = scanner.nextLine();
                     System.out.println("Ingresa el apellido del autor");
@@ -187,11 +212,7 @@ public class Gestion {
                     listarAutores();
                     break;
                 case 5:
-                    System.out.println("Dime el Id del documento");
-                    int bookId = scanner.nextInt();
-                    System.out.println("Dime id del autor");
-                    int autorId = scanner.nextInt();
-                    agregarRelacion(bookId, autorId);
+                    agregarRelacion();
                     break;
                 case 6:
                     System.out.println("Ingrese el Id del documento");
