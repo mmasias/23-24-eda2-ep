@@ -23,18 +23,16 @@ public class Document {
     public String getTypeDocument() {
         return typeDocument;
     }
-    public void setTittle(String newTittle) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setTittle'");
+    public void setTittle(String tittle) {
+        this.tittle = tittle;
     }
-    public void setPublicationYear(int age) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setPublicationYear'");
+    public void setPublicationYear(int publicationYear) {
+        this.publicationYear = publicationYear;
     }
-    public void setTypeDocument(String typeDocument2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setTypeDocument'");
+    public void setTypeDocument(String typeDocument) {
+        this.typeDocument = typeDocument;
     }
+    
 
     
 

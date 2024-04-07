@@ -139,7 +139,7 @@ public class Library {
 
 
     private void printDocumentListing() {
-        if(authorList.isEmpty()) {
+        if(documentList.isEmpty()) {
             System.out.println("No hay documentos en el sistema");
         }else {
         for (Document document : documentList) {
@@ -152,7 +152,7 @@ public class Library {
         }
     }
     private void printDocumentEspecific(int id){
-        if(authorList.isEmpty()) {
+        if(documentList.isEmpty()) {
             System.out.println("No hay documentos en el sistema");
         }else {
         for (Document document : documentList) {
