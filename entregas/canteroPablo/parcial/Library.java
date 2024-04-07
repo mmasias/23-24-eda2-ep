@@ -86,7 +86,7 @@ public class Library {
                 for (Author author : document.getAuthor()) {
                     System.out.println("- " + author.getName() + " " + author.getSurname());
                 }
-                System.out.println("Año de publicación: " + document.getAge());
+                System.out.println("Año de publicación: " + document.getPublicationYear());
                 System.out.println("Tipo de documento: " + document.getTypeDocument());
                 System.out.println("Palabras clave:");
                 for (String keyword : document.getKeyWords()) {
@@ -132,7 +132,7 @@ public class Library {
                 } else if (option == 3) {
                     System.out.println("Año de publicacion: ");
                     int age = userInput.nextInt();
-                    documentList.get(0).setAge(age);
+                    documentList.get(0).setPublicationYear(age);
                 } else if (option == 4) {
                     boolean validTypeOfDocument = true;
                     String typeDocument = "";
@@ -234,7 +234,7 @@ public class Library {
         int age = userInput.nextInt();
         boolean validAge = false;
         for (Document document : documentList) {
-            if (document.getAge() == age) {
+            if (document.getPublicationYear() == age) {
                 printDocumentListing();
                 validAge = true;
             }
