@@ -7,23 +7,22 @@ public class Biblioteca {
 
     public Biblioteca() {
         this.gestionLibro = new GestionLibro();
+        // Se actualiza la busqueda solo cuando es necesario, no cada vez que se agrega un libro
         this.busqueda = new Busqueda(gestionLibro.getLibros());
     }
 
     public void agregarLibro(Libro libro) {
         gestionLibro.agregarLibro(libro);
-        this.busqueda = new Busqueda(gestionLibro.getLibros());
+        // Actualizar la búsqueda no es necesario cada vez que se agrega un libro,
+        // si Busqueda toma la lista de libros directamente de GestionLibro cada vez que busca
     }
 
     public void addAuthorToBook(int bookId, Autor nuevoAutor) {
-        Libro libro = gestionLibro.findBookById(bookId);
+        Libro libro = gestionLibro.buscarLibroPorId(bookId);
         if (libro != null) {
-            if (libro.getAutores().isEmpty()) {
-                libro.getAutores().add(nuevoAutor);
-                System.out.println("Autor añadido con éxito al libro.");
-            } else {
-                System.out.println("Este libro ya tiene autor(es). No se pueden añadir más autores.");
-            }
+            // En lugar de verificar si el libro ya tiene autores, podrías permitir múltiples autores
+            libro.getAutores().add(nuevoAutor);
+            System.out.println("Autor añadido con éxito al libro.");
         } else {
             System.out.println("No se encontró el libro con el ID proporcionado.");
         }
@@ -33,22 +32,13 @@ public class Biblioteca {
         gestionLibro.mostrarLibros();
     }
 
+    // El método buscarPorAutor ahora se simplifica usando la clase Busqueda
     public List<Libro> buscarPorAutor(String nombreAutor) {
-        List<Libro> librosEncontrados = new ArrayList<>();
-        for (int i = 0; i < gestionLibro.getLibros().size(); i++) {
-            Libro libro = gestionLibro.getLibros().get(i);
-            for (int j = 0; j < libro.getAutores().size(); j++) {
-                if (libro.getAutores().get(j).getName().equalsIgnoreCase(nombreAutor)) {
-                    librosEncontrados.add(libro);
-                    break;
-                }
-            }
-        }
-        return librosEncontrados;
+        return busqueda.buscarPorAutor(nombreAutor);
     }
 
-    public List<Libro> buscarPorAño(int año) {
-        return busqueda.buscarPorAño(año);
+    public List<Libro> buscarPorAnio(int anio) {
+        return busqueda.buscarPorAnio(anio);
     }
 
     public List<Libro> buscarPorPalabraClave(String palabraClave) {
@@ -60,7 +50,6 @@ public class Biblioteca {
     }
 
     public Libro buscarLibroPorTitulo(String titulo) {
-
         return gestionLibro.buscarLibroPorTitulo(titulo);
     }
 
@@ -68,17 +57,13 @@ public class Biblioteca {
         if (resultados.isEmpty()) {
             System.out.println("No se encontraron resultados.");
         } else {
-            for (int i = 0; i < resultados.size(); i++) {
-                Libro libro = resultados.get(i);
+            for (Libro libro : resultados) {
                 List<String> nombresAutores = new ArrayList<>();
-                for (int j = 0; j < libro.getAutores().size(); j++) {
-                    nombresAutores.add(libro.getAutores().get(j).getName());
+                for (Autor autor : libro.getAutores()) {
+                    nombresAutores.add(autor.getName());
                 }
                 System.out.println(libro.getTitulo() + " - " + String.join(", ", nombresAutores));
             }
         }
     }
-
-
-
 }

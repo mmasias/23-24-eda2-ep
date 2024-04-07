@@ -24,6 +24,16 @@ public class GestionLibro {
         return false;
     }
 
+
+    public Libro buscarLibroPorId(int id) {
+        for (Libro libro : libros) {
+            if (libro.getId() == id) {
+                return libro;
+            }
+        }
+        return null; 
+    }
+
     public Libro buscarLibroPorTitulo(String titulo) {
         for (int i = 0; i < libros.size(); i++) {
             if (libros.get(i).getTitulo().equalsIgnoreCase(titulo)) {
