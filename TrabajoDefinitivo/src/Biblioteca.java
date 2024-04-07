@@ -19,14 +19,14 @@ public class Biblioteca {
         boolean gestionando = true;
         while (gestionando) {
             System.out.println("Elige una opción:");
-            System.out.println("1. Gestionar Documentos");
+            System.out.println("1. Gestionar Biblioteca");
             System.out.println("2. Buscar Documentos");
             System.out.println("3. Salir del gestor");
             int eleccion = scanner.nextInt();
             scanner.nextLine();
             switch (eleccion) {
                 case 1:
-                    gestionarDocumentos();
+                    gestionarBiblioteca();
                     break;
                 case 2:
                     buscarDocumentos();
@@ -41,16 +41,17 @@ public class Biblioteca {
         }
     }
 
-    private void gestionarDocumentos() {
+    private void gestionarBiblioteca() {
         boolean crud = true;
         while (crud) {
-            System.out.println("---------------------------C.U.D-----------------------------");
-            System.out.println("1. Añadir documento");
-            System.out.println("2. Editar documento");
-            System.out.println("3. Eliminar documento");
+            System.out.println("---------------------------Gestion de Biblioteca---------------------------");
+            System.out.println("1. Añadir Documento");
+            System.out.println("2. Editar Documento");
+            System.out.println("3. Eliminar Documento");
             System.out.println("4. Volver");
-            System.out.println("-------------------------------------------------------------");
+            System.out.println("----------------------------------------------------------------------------");
             int eleccion = scanner.nextInt();
+            scanner.nextLine();
             switch (eleccion) {
                 case 1:
                     crearDocumento();
@@ -62,46 +63,44 @@ public class Biblioteca {
                     borrarDocumento();
                     break;
                 case 4:
-                    crud=false;
+                    crud = false;
                     break;
+                default:
+                    System.out.println("Opción no válida.");
             }
         }
     }
 
     private void crearDocumento() {
         System.out.println("--------------------Creacion de Documento--------------------");
-        System.out.println("Introdusca titulo del documento");
+        System.out.println("Introduce título del documento:");
         String tituloDelDoc = scanner.nextLine();
 
-        System.out.println("Introducir Nombre del autor o autores divididos por comas");
-        System.out.println("(dejar el blanco caso sea autor desconocido");
+        System.out.println("Introduce Nombre del autor o autores (separados por comas):");
         String nombreAutor = scanner.nextLine();
         ArrayList<String> autoresDelDoc = new ArrayList<>(Arrays.asList(nombreAutor.split("\\s*,\\s*")));
-
-        if(nombreAutor.isEmpty()){
+        if(autoresDelDoc.isEmpty()) {
             autoresDelDoc.add("Autor Desconocido");
-        } else {
-            autoresDelDoc.add(nombreAutor);
         }
 
-
-        System.out.println("Introdusca el año del documento");
-        Year anoDelDoc = Year.of(scanner.nextInt());
+        System.out.println("Introduce el año del documento:");
+        int anoDelDoc = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.println("Introdusca el tipo de documento");
+        System.out.println("Introduce el tipo de documento:");
         String tipoDeDoc = scanner.nextLine();
 
-        System.out.println("Introdusca palabras clave del documento divididas por comas");
+        System.out.println("Introduce palabras clave del documento (separadas por comas):");
         String palabrasClave = scanner.nextLine();
         ArrayList<String> palabrasClaveDelDoc = new ArrayList<>(Arrays.asList(palabrasClave.split("\\s*,\\s*")));
+
         System.out.println("Documento Creado!");
-        anadirDocumento(new Documento(tituloDelDoc, autoresDelDoc, anoDelDoc, tipoDeDoc, palabrasClaveDelDoc));
+        anadirDocumento(new Documento(tituloDelDoc, autoresDelDoc, Year.of(anoDelDoc), tipoDeDoc, palabrasClaveDelDoc));
     }
 
     private void editarDocumento() {
         System.out.println("---------------------Edicion de Documento--------------------");
-        System.out.println("Introduzca el título del documento a editar:");
+        System.out.println("Introduce el título del documento a editar:");
         String docAEditar = scanner.nextLine();
 
         Documento documento = buscarPorTitulo(docAEditar);
@@ -112,7 +111,7 @@ public class Biblioteca {
             System.out.println("Documento seleccionado: ");
             documento.imprimirDetalleDocumento();
             System.out.println("¿Qué deseas modificar? ");
-            System.out.println("1. Titulo");
+            System.out.println("1. Título");
             System.out.println("2. Autores");
             System.out.println("3. Año de publicación");
             System.out.println("4. Tipo de documento");
@@ -129,7 +128,7 @@ public class Biblioteca {
                     documento.setTitulo(nuevoTitulo);
                     break;
                 case 2:
-                    System.out.println("Introduce los nuevos autores (separadas por comas):");
+                    System.out.println("Introduce los nuevos autores (separados por comas):");
                     String nuevosAutores = scanner.nextLine();
                     ArrayList<String> autores = new ArrayList<>(Arrays.asList(nuevosAutores.split("\\s*,\\s*")));
                     documento.setAutores(autores);
@@ -158,20 +157,19 @@ public class Biblioteca {
 
     private void borrarDocumento(){
         System.out.println("------------------Eliminacion de Documento-------------------");
-        System.out.println("Introdusca titulo del documento a eliminar");
+        System.out.println("Introduce título del documento a eliminar:");
         String docABorrar = scanner.nextLine();
         borrarDocumento(docABorrar);
     }
 
-    public void buscarDocumentos() {
-        Scanner scanner = new Scanner(System.in);
+    private void buscarDocumentos() {
         System.out.println("------------------Busqueda de Documento----------------------");
-        System.out.println("1. Buscar por titulo");
+        System.out.println("1. Buscar por título");
         System.out.println("2. Buscar por autor");
         System.out.println("3. Buscar por tipo de documento");
-        System.out.println("4. Buscar por año de publicacion");
+        System.out.println("4. Buscar por año de publicación");
         System.out.println("5. Buscar por palabras clave");
-        System.out.println("6. Mostrar todo");
+        System.out.println("6. Mostrar todos");
         System.out.println("-------------------------------------------------------------");
         int opcion = scanner.nextInt();
         scanner.nextLine();
@@ -224,9 +222,9 @@ public class Biblioteca {
 
     private void mostrarDocumentosEncontrados(ArrayList<Documento> documentos) {
         if (documentos.isEmpty()) {
-            System.out.println("No se ha encontrado ningun documento que cumpla con el criterio de busqueda.");
+            System.out.println("No se ha encontrado ningún documento que cumpla con el criterio de búsqueda.");
         } else {
-            System.out.println("Documentos encontrados:"+documentos.size());
+            System.out.println("Documentos encontrados:" + documentos.size());
             for (Documento documento : documentos) {
                 documento.imprimirDetalleDocumento();
             }
@@ -239,10 +237,11 @@ public class Biblioteca {
     }
 
     public void borrarDocumento(String titulo){
-        if(buscarPorTitulo(titulo)==null){
+        Documento documento = buscarPorTitulo(titulo);
+        if (documento == null){
             System.out.println("No existe tal documento en la biblioteca");
         } else {
-            documentos.removeIf(documento -> documento.getTitulo().equalsIgnoreCase(titulo));
+            documentos.remove(documento);
             System.out.println("Documento borrado");
         }
     }
@@ -280,7 +279,7 @@ public class Biblioteca {
     public ArrayList<Documento> buscarPorAno(int year){
         ArrayList<Documento> docs = new ArrayList<>();
         for (Documento doc : documentos){
-            if (doc.getPublicacion().getValue()==year){
+            if (doc.getPublicacion().getValue() == year){
                 docs.add(doc);
             }
         }
@@ -300,6 +299,6 @@ public class Biblioteca {
     }
 
     public ArrayList<Documento> todoDocumentos() {
-        return documentos;
+        return new ArrayList<>(documentos);
     }
 }
