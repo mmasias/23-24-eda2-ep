@@ -1,7 +1,7 @@
-public class DocumentKeyWord {
+public class DocumentKeyWords {
     private int documentId;
     private int keyWordId;
-    public DocumentKeyWord(int documentId, int keyWordId) {
+    public DocumentKeyWords(int documentId, int keyWordId) {
         this.documentId = documentId;
         this.keyWordId = keyWordId;
     }
@@ -11,5 +11,5 @@ public class DocumentKeyWord {
     public int getKeyWordId() {
         return keyWordId;
     }
-    
+
 }

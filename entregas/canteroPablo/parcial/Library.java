@@ -1,38 +1,29 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.List;
 
 public class Library {
-    private ArrayList<Document> documentList;
+    private List<Document> documentList;
+    private List<Author> authorList;
+    private List<KeyWords> keyWordsList;
+    private List<DocumentAuthor> relationDocumentAuthors;
+    private List<DocumentKeyWords> relationDocumentKeyWords;
+    private Scanner userInput;
 
     public Library() {
-        documentList = new ArrayList<>();
+        documentList = new ArrayList<Document>();
+        authorList = new ArrayList<Author>();
+        keyWordsList = new ArrayList<KeyWords>();
+        relationDocumentAuthors = new ArrayList<DocumentAuthor>();
+        relationDocumentKeyWords = new ArrayList<DocumentKeyWords>();
+        this.userInput = new Scanner(System.in);
     }
 
-    public ArrayList<Document> getDocumentList() {
-        return documentList;
-    }
 
-    public void setDocumentList(ArrayList<Document> documentList) {
-        this.documentList = documentList;
-    }
 
-    public void addDocument() {
+    private void addDocument() {
         System.out.println("Nombre del documento: ");
-        Scanner userInput = new Scanner(System.in);
         String tittle = userInput.nextLine();
-        ArrayList<Author> authorList = new ArrayList<Author>();
-        System.out.println("¿Cuántos autores tiene el documento? ");
-        int numberAuthors = userInput.nextInt();
-        userInput.nextLine();
-
-        for (int i = 0; i < numberAuthors; i++) {
-            System.out.println("Nombre del autor: ");
-            String name = userInput.nextLine();
-            System.out.println("Apellido del autor: ");
-            String surname = userInput.nextLine();
-            Author author = new Author(name, surname);
-            authorList.add(author);
-        }
         System.out.println("Año de publicacion: ");
         int age = userInput.nextInt();
         boolean validTypeOfDocument = true;
@@ -58,6 +49,28 @@ public class Library {
             }
 
         } while (validTypeOfDocument = false);
+        Document newDocument = new Document(documentList.size()+1, tittle, age, typeDocument);
+        documentList.add(newDocument);
+        System.out.println("Documento añadido correctamente, el id del documento es: " + newDocument.getId());
+
+
+    }
+    private void addAuthor() {
+
+        System.out.println("¿Cuántos autores tiene el documento? ");
+        int numberAuthors = userInput.nextInt();
+        userInput.nextLine();
+
+        for (int i = 0; i < numberAuthors; i++) {
+            System.out.println("Nombre del autor: ");
+            String name = userInput.nextLine();
+            System.out.println("Apellido del autor: ");
+            String surname = userInput.nextLine();
+            Author author = new Author(name, surname);
+            authorList.add(author);
+        }
+    }
+        
         ArrayList<String> keyWords = new ArrayList<String>();
         System.out.println("¿Cuántos palabras clave tiene el documento? ");
         int numberKeyWords = userInput.nextInt();
