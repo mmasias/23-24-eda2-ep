@@ -19,6 +19,24 @@ public class Biblioteca {
 
     }
 
+    public void agregarAutor(Autor autor) {
+        Autor autorExistente = buscarAutorPorNombre(autor.getName());
+        if (autorExistente == null) {
+            autores.add(autor);
+        } else {
+            System.out.println("Un autor con ese nombre ya existe.");
+        }
+    }
+
+    public Autor buscarAutorPorNombre(String nombre) {
+        for (Autor autor : autores) {
+            if (autor.getName().equalsIgnoreCase(nombre)) {
+                return autor;
+            }
+        }
+        return null;
+    }
+
     public void addAuthorToBook(int bookId, Autor nuevoAutor) {
         Libro libro = gestionLibro.buscarLibroPorId(bookId);
         if (libro != null) {
@@ -40,6 +58,9 @@ public class Biblioteca {
 
     public void mostrarLibros() {
         gestionLibro.mostrarLibros();
+    }
+    public void mostrarLibrosId() {
+        gestionLibro.mostrarLibrosId();
     }
 
     public List<Libro> buscarPorAutor(String nombreAutor) {

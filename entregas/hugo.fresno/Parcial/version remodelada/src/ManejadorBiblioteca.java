@@ -10,21 +10,38 @@ public class ManejadorBiblioteca {
 
     public static List<Autor> solicitarAutores() {
         List<Autor> autores = new ArrayList<>();
-        System.out.print("Ingrese los IDs de los autores (para varios, sepárelos por coma): ");
-        String autorIdsStr = scanner.nextLine();
-        String[] autorIds = autorIdsStr.split("\\s*,\\s*");
-
-        for (String idStr : autorIds) {
+        System.out.println("Ingrese el nombre del autor y su ID (ejemplo: AutorNombre,ID). Ingrese 'fin' para terminar:");
+        while (true) {
+            String input = scanner.nextLine().trim();
+            if ("fin".equalsIgnoreCase(input)) {
+                break; // Termina el bucle cuando el usuario escribe "fin"
+            }
+            String[] partes = input.split(",");
+            if (partes.length != 2) {
+                System.out.println("Formato inválido. Por favor, ingrese el nombre del autor y su ID de la forma 'AutorNombre,ID':");
+                continue;
+            }
             try {
-                int autorId = Integer.parseInt(idStr.trim());
-                Autor autor = biblioteca.buscarAutorPorId(autorId);
-                if (autor != null) {
-                    autores.add(autor);
+                String nombre = partes[0].trim();
+                int id = Integer.parseInt(partes[1].trim());
+                // Verificar si el autor ya existe por ID o nombre para evitar duplicados
+                Autor autorExistente = biblioteca.buscarAutorPorId(id);
+                if (autorExistente == null) {
+                    autorExistente = biblioteca.buscarAutorPorNombre(nombre);
+                    if (autorExistente == null) {
+                        Autor nuevoAutor = new Autor(id, nombre); // Crear el autor con el ID y nombre proporcionados
+                        biblioteca.agregarAutor(nuevoAutor); // Asume que este método acepta objetos Autor
+                        autores.add(nuevoAutor);
+                    } else {
+                        System.out.println("Ya existe un autor con este nombre. Se usará el autor existente.");
+                        autores.add(autorExistente);
+                    }
                 } else {
-                    System.out.println("Autor con ID " + autorId + " no encontrado.");
+                    System.out.println("Ya existe un autor con este ID. Se usará el autor existente.");
+                    autores.add(autorExistente);
                 }
             } catch (NumberFormatException e) {
-                System.out.println("ID inválido: " + idStr);
+                System.out.println("ID inválido. Por favor, ingrese un número válido para el ID.");
             }
         }
         return autores;
@@ -78,6 +95,8 @@ public class ManejadorBiblioteca {
 
 
                 case 2:
+
+                    biblioteca.mostrarLibrosId();
                     System.out.print("Ingrese el ID del libro al cual desea añadir un autor: ");
                     int bookId = scanner.nextInt();
                     scanner.nextLine();

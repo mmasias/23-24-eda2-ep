@@ -71,11 +71,29 @@ public class GestionLibro {
                 nombresAutores.add(autor.getName());
             }
             System.out.println("\nTitulo: " + libro.getTitulo());
+            System.out.println("Id: "+libro.getId());
             System.out.println("Tipo: " + libro.getTipoLibro());
             System.out.println("Autor(es): " + String.join(", ", nombresAutores));
             System.out.println("Año de Publicación: " + libro.getAñoPublicacion());
             System.out.println("Palabras Clave: " + String.join(", ", libro.getPalabrasClave()));
             System.out.println("-----------------------------------");
+        }
+    }
+    public void mostrarLibrosId() {
+        if (libros.isEmpty()) {
+            System.out.println("No hay libros en la biblioteca.");
+            return;
+        }
+
+        for (Libro libro : libros) {
+            List<String> nombresAutores = new ArrayList<>();
+            for (Autor autor : libro.getAutores()) {
+                nombresAutores.add(autor.getName());
+            }
+            System.out.println("\nTitulo: " + libro.getTitulo());
+            System.out.println("Id: "+libro.getId());
+            System.out.println();
+
         }
     }
 }
