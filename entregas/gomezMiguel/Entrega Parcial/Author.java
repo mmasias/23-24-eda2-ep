@@ -22,4 +22,9 @@ public class Author {
     public void setid(int id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "Autor: " + name + "  ID: " + id;
+    }
 }
