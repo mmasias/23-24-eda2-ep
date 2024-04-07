@@ -10,10 +10,10 @@ public class LibraryView {
     }
 
     public void displayMenu() {
-        System.out.println("----- Biblioteca -----");
+        System.out.println("----------------- Biblioteca -----------------");
         System.out.println("1. Agregar documento");
         System.out.println("2. Eliminar documento");
-        System.out.println("3. Buscar por título");
+        System.out.println("3. Buscar por caracteristica");
         System.out.println("4. Ver documentos");
         System.out.println("5. Salir");
         System.out.print("Seleccione una opción: ");
@@ -33,6 +33,17 @@ public class LibraryView {
         return new Document(title, authors, publicationYear, documentType, keywords);
     }
 
+    public int promptDocumentSearch() {
+        System.out.println("Ingrese la opcion por la que desea buscar: ");
+        System.out.println("1. Titulo");
+        System.out.println("2. Año de publicacion");
+        System.out.println("3. Autor");
+        System.out.println("4. Tipo de documento");
+        System.out.println("5. Palabras clave");
+
+        return scanner.nextInt();
+    }
+
     protected String promptTitle() {
         System.out.print("Ingrese el título del documento: ");
         String title = scanner.nextLine();
@@ -40,12 +51,12 @@ public class LibraryView {
         return title;
     }
 
-    private int promptPublicationYear() {
+    protected int promptPublicationYear() {
         System.out.print("Ingrese el año de publicación: ");
         return scanner.nextInt();
     }
 
-    private List<Author> promptAuthors() {
+    protected List<Author> promptAuthors() {
         List<Author> authors = new ArrayList<>();
         System.out.print("Ingrese el número de autores: ");
         int numAuthors = scanner.nextInt();
@@ -58,12 +69,14 @@ public class LibraryView {
         return authors;
     }
 
-    private String promptDocumentType() {
+    protected String promptDocumentType() {
         System.out.print("Ingrese el tipo de documento: ");
-        return scanner.nextLine();
+        String type = scanner.nextLine();
+        scanner.nextLine();
+        return type;
     }
 
-    private List<Keyword> promptKeywords() {
+    protected List<Keyword> promptKeywords() {
         List<Keyword> keywords = new ArrayList<>();
         System.out.print("Ingrese el número de palabras clave: ");
         int numKeywords = scanner.nextInt();
@@ -78,15 +91,13 @@ public class LibraryView {
 
     public void displayDocuments(List<Document> documents) {
         System.out.println("Documentos encontrados:");
-        for (Document document : documents) {
-            System.out.println(document);
-        }
+        displayAllDocuments(documents);
     }
 
     public Document promptDocumentSelection(List<Document> documents) {
         System.out.println("Seleccione un documento:");
         for (int i = 0; i < documents.size(); i++) {
-            System.out.println((i + 1) + ". " + documents.get(i));
+            System.out.println((i + 1) + ". " + documents.get(i).getTitle());
         }
         int choice = scanner.nextInt();
         return documents.get(choice - 1);
@@ -99,17 +110,18 @@ public class LibraryView {
     public void displayAllDocuments(List<Document> documents) {
         System.out.println("Documentos guardados en la biblioteca:");
         for (Document document : documents) {
-            System.out.println("Título: " + document.getTitle());
-            System.out.println("Autores:");
+            System.out.print("--> Titulo: " + document.getTitle());
+            System.out.print(" - Autores:[ ");
             for (Author author : document.getAuthors()) {
-                System.out.println("- " + author.getAuthorName());
+                System.out.print(author.getAuthorName() + " . ");
             }
-            System.out.println("Año de publicación: " + document.getPublicationYear());
-            System.out.println("Tipo de documento: " + document.getDocumentType());
-            System.out.println("Palabras clave:");
+            System.out.print("] - Año de publicación: " + document.getPublicationYear());
+            System.out.print(" - Tipo de documento: " + document.getDocumentType());
+            System.out.print(" - Palabras clave:[ ");
             for (Keyword keyword : document.getKeywords()) {
-                System.out.println("- " + keyword.getKeyword());
+                System.out.print(keyword.getKeyword() + " . ");
             }
+            System.out.print("]");
             System.out.println();
         }
     }
