@@ -2,6 +2,10 @@
 
 Este proyecto es parte de la asignatura "Estructura de Datos y Algoritmos II" y tiene como objetivo el desarrollo de un sistema de gestión de una biblioteca utilizando Java.
 
+El avance de este proyecto se puede comprobar a través de los commits realizados en este repositorio.
+Desde el commit **`905862b`** hasta el **`d13ad45`** se puede ver el desarrollo del reto003.
+Desde el commit **`ffeed32`** hasta el último, se puede ver el desarrollo del examen parcial.
+
 ## Descripción del Proyecto
 
 El sistema de gestión de bibliotecas permite realizar las siguientes funciones principales:
