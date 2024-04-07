@@ -75,4 +75,33 @@ private void addAuthor(){
     System.out.println("Autor agregado con exito");
 }
 
+private void assignAuthorToBook(){
+    System.out.println("Seleccione el libro: ");
+    for(int i = 0; i < books.size(); i++){
+        System.out.println((i + 1) + ". " + books.get(i).gettitle());
+    }
+    int bookIndex = scanner.nextInt();
+    System.out.println("Seleccione el autor: ");
+    for(int i = 0; i < authors.size(); i++){
+        System.out.println((i + 1) + ". " + authors.get(i).getname());
+    }
+    int authorIndex = scanner.nextInt();
+    BookAuthor relation = new BookAuthor(books.get(bookIndex - 1), authors.get(authorIndex - 1));
+    relations.add(relation);
+    System.out.println("Autor asignado con exito");
+
+}
+
+private void listBooks(){
+    for(Book book : books){
+        System.out.println(book);
+    }
+}
+
+private void listAuthors(){
+    for(Author author : authors){
+        System.out.println(author);
+    }
+}
+
 }
