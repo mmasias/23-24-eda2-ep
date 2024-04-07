@@ -22,10 +22,10 @@ class Busqueda {
         return resultado;
     }
 
-    public List<Libro> buscarPorAnio(int anio) {
+    public List<Libro> buscarPorAño(int año) {
         List<Libro> resultado = new ArrayList<>();
         for (int i = 0; i < libros.size(); i++) {
-            if (libros.get(i).getAñoPublicacion() == anio) {
+            if (libros.get(i).getAñoPublicacion() == año) {
                 resultado.add(libros.get(i));
             }
         }

@@ -4,23 +4,24 @@ import java.util.List;
 public class Biblioteca {
     private GestionLibro gestionLibro;
     private Busqueda busqueda;
+    private List<Autor> autores;
+
 
     public Biblioteca() {
         this.gestionLibro = new GestionLibro();
-        // Se actualiza la busqueda solo cuando es necesario, no cada vez que se agrega un libro
         this.busqueda = new Busqueda(gestionLibro.getLibros());
+        this.autores = new ArrayList<>();
+
     }
 
     public void agregarLibro(Libro libro) {
         gestionLibro.agregarLibro(libro);
-        // Actualizar la búsqueda no es necesario cada vez que se agrega un libro,
-        // si Busqueda toma la lista de libros directamente de GestionLibro cada vez que busca
+
     }
 
     public void addAuthorToBook(int bookId, Autor nuevoAutor) {
         Libro libro = gestionLibro.buscarLibroPorId(bookId);
         if (libro != null) {
-            // En lugar de verificar si el libro ya tiene autores, podrías permitir múltiples autores
             libro.getAutores().add(nuevoAutor);
             System.out.println("Autor añadido con éxito al libro.");
         } else {
@@ -28,17 +29,25 @@ public class Biblioteca {
         }
     }
 
+    public Autor buscarAutorPorId(int autorId) {
+        for (Autor autor : autores) {
+            if (autor.getId() == autorId) {
+                return autor;
+            }
+        }
+        return null;
+    }
+
     public void mostrarLibros() {
         gestionLibro.mostrarLibros();
     }
 
-    // El método buscarPorAutor ahora se simplifica usando la clase Busqueda
     public List<Libro> buscarPorAutor(String nombreAutor) {
         return busqueda.buscarPorAutor(nombreAutor);
     }
 
-    public List<Libro> buscarPorAnio(int anio) {
-        return busqueda.buscarPorAnio(anio);
+    public List<Libro> buscarPorAño(int año) {
+        return busqueda.buscarPorAño(año);
     }
 
     public List<Libro> buscarPorPalabraClave(String palabraClave) {

@@ -3,6 +3,7 @@ import java.util.List;
 
 public class GestionLibro {
     private List<Libro> libros;
+    private static int nextId = 1;
 
     public GestionLibro() {
         this.libros = new ArrayList<>();
@@ -10,9 +11,11 @@ public class GestionLibro {
 
     public void agregarLibro(Libro libro) {
         if (libro != null && libro.getTitulo() != null && !libro.getTitulo().trim().isEmpty()) {
+            libro.setId(nextId++);
             libros.add(libro);
         }
     }
+
 
     public boolean eliminarLibro(String titulo) {
         for (int i = 0; i < libros.size(); i++) {
@@ -31,7 +34,7 @@ public class GestionLibro {
                 return libro;
             }
         }
-        return null; 
+        return null;
     }
 
     public Libro buscarLibroPorTitulo(String titulo) {

@@ -9,8 +9,7 @@ public class Libro {
     private TipoLibro tipoLibro;
     private List<String> palabrasClave;
 
-    public Libro(int id, String titulo, List<Autor> autores, int añoPublicacion, TipoLibro tipoLibro, List<String> palabrasClave) {
-        this.id = id;
+    public Libro(String titulo, List<Autor> autores, int añoPublicacion, TipoLibro tipoLibro, List<String> palabrasClave) {
         this.titulo = titulo;
         this.autores = autores;
         this.añoPublicacion = añoPublicacion;
