@@ -239,6 +239,7 @@ public class Library {
                     System.out.println("¿Cuántos autores tiene el documento? ");
                     int numberAuthors = userInput.nextInt();
                     userInput.nextLine();
+                    removeRelationsDocumentAuthors(id);
 
                     for (int i = 0; i < numberAuthors; i++) {
                         System.out.println("Nombre del autor: ");
@@ -249,7 +250,6 @@ public class Library {
                         authorList.add(author);
                         addRelationDocumentAuthor(documentList.get(0).getId(), author.getId());
                     }
-                    removeRelationsDocumentAuthors(id);
                     
                 } else if (option == 3) {
                     System.out.println("Año de publicacion: ");
@@ -284,14 +284,6 @@ public class Library {
                     System.out.println("¿Cuántos palabras clave tiene el documento? ");
                     int numberKeyWords = userInput.nextInt();
                     userInput.nextLine();
-
-                    for (int i = 0; i < numberKeyWords; i++) {
-                        System.out.println("Palabra clave: ");
-                        String keyword = userInput.nextLine();
-                        KeyWords keyWord = new KeyWords(keyword, keyWordsList.size()+1);
-                        keyWordsList.add(keyWord);
-                        addRelationDocumentKeyWords(documentList.get(0).getId(), keyWord.getId());
-                    }
                     List<DocumentKeyWords> relationsToRemove = new ArrayList<>();
                     for (DocumentKeyWords relation : relationDocumentKeyWords) {
                         if (relation.getDocumentId() == id) {
@@ -300,6 +292,15 @@ public class Library {
                     }
                     relationDocumentKeyWords.removeAll(relationsToRemove);
 
+
+                    for (int i = 0; i < numberKeyWords; i++) {
+                        System.out.println("Palabra clave: ");
+                        String keyword = userInput.nextLine();
+                        KeyWords keyWord = new KeyWords(keyword, keyWordsList.size()+1);
+                        keyWordsList.add(keyWord);
+                        addRelationDocumentKeyWords(documentList.get(0).getId(), keyWord.getId());
+                    }
+                   
                 } else {
                     System.out.println("Opcion no valida");
                     validOption = false;
