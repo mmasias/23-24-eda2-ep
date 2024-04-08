@@ -1,6 +1,8 @@
 package v003;
 
+import javax.swing.text.Document;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -31,6 +33,7 @@ public class LibraryManager {
             System.out.println("2. Listar libros");
             System.out.println("3. Listar autores");
             System.out.println("4. Listar palabras clave");
+            System.out.println("5. Buscar");
             System.out.println("9. Salir");
             String choice = scanner.nextLine();
 
@@ -47,7 +50,10 @@ public class LibraryManager {
                 case "4":
                     listKeyWords();
                     break;
-                case "9":
+                case "5":
+                    searchBooks();
+                    break;
+                case "-1":
                     System.out.println("Saliendo del gestor de biblioteca...");
                     isWorking = !isWorking;
                     break;
@@ -183,6 +189,7 @@ public class LibraryManager {
     private void addKeyWordRelation(int bookId, int keywordId) {
         keywordrelations.add(new BookKeyWord(bookId, keywordId));
     }
+
     private List<KeyWord> getKeyWordsByBookId(int bookId) {
         List<KeyWord> result = new ArrayList<>();
         for (BookKeyWord relation : keywordrelations) {
@@ -230,6 +237,7 @@ public class LibraryManager {
             }
         }
     }
+
     private void listKeyWords() {
         if (keywords.isEmpty()) {
             System.out.println("> No hay palabras clave disponibles.");
@@ -249,5 +257,123 @@ public class LibraryManager {
         return null;
     }
 
-}
+    private void searchBooks() {
+        System.out.println("Elige el criterio de búsqueda:");
+        System.out.println("1. Título");
+        System.out.println("2. Año de publicación");
+        System.out.println("3. Autor");
+        System.out.println("4. Tipo de documento");
+        System.out.println("5. Palabras clave");
 
+        String choice = scanner.nextLine();
+
+        switch (choice) {
+            case "1":
+                searchByTitle();
+                break;
+            case "2":
+                searchByPublicationYear();
+                break;
+            case "3":
+                searchByAuthor();
+                break;
+            case "4":
+                searchByType();
+                break;
+            case "5":
+                searchByKeyWords();
+                break;
+            default:
+                System.out.println("Opción no válida.");
+        }
+    }
+
+    private void searchByTitle() {
+        System.out.println("Introduce el título del libro que deseas buscar:");
+        String title = scanner.nextLine();
+        LinkedList<Book> foundBooks = new LinkedList<>();
+
+        for (Book book : books) {
+            if (book.getTitle().equalsIgnoreCase(title)) {
+                foundBooks.add(book);
+            }
+        }
+
+        displaySearchResults(foundBooks);
+    }
+
+    private void searchByPublicationYear() {
+        System.out.println("Introduce el año de publicación:");
+        int year = scanner.nextInt();
+        scanner.nextLine();
+
+        LinkedList<Book> foundBooks = new LinkedList<>();
+        for (Book book : books) {
+            if (book.getPublicationYear() == year) {
+                foundBooks.add(book);
+            }
+        }
+
+        displaySearchResults(foundBooks);
+    }
+
+    private void searchByAuthor() {
+        System.out.println("Introduce el nombre del autor:");
+        String authorName = scanner.nextLine();
+
+        LinkedList<Book> foundBooks = new LinkedList<>();
+        for (Author author : authors) {
+            if (author.getName().equalsIgnoreCase(authorName)) {
+                foundBooks.addAll(getBooksByAuthorId(author.getId()));
+            }
+        }
+
+        displaySearchResults(foundBooks);
+    }
+
+    private void searchByType() {
+        System.out.println("Introduce el tipo de documento:");
+        String type = scanner.nextLine();
+
+        LinkedList<Book> foundBooks = new LinkedList<>();
+        for (Book book : books) {
+            if (book.getType().equalsIgnoreCase(type)) {
+                foundBooks.add(book);
+            }
+        }
+
+        displaySearchResults(foundBooks);
+    }
+
+    private void searchByKeyWords() {
+        System.out.println("Introduce la palabra clave:");
+        String keyword = scanner.nextLine();
+
+        LinkedList<Book> foundBooks = new LinkedList<>();
+        for (KeyWord keyWord : keywords) {
+            if (keyWord.getName().equalsIgnoreCase(keyword)) {
+                for (BookKeyWord relation : keywordrelations) {
+                    if (relation.getKeyWordId() == keyWord.getId()) {
+                        foundBooks.add(findBookById(relation.getBookId()));
+                    }
+                }
+            }
+        }
+
+        displaySearchResults(foundBooks);
+    }
+
+    private void displaySearchResults(LinkedList<Book> foundBooks) {
+        if (foundBooks.isEmpty()) {
+            System.out.println("No se encontraron libros que coincidan con la búsqueda.");
+        } else {
+            System.out.println("Libros encontrados:");
+            for (Book book : foundBooks) {
+                System.out.println(book);
+                System.out.println(getAuthorsByBookId(book.getId()));
+                System.out.println(getKeyWordsByBookId(book.getId()));
+            }
+        }
+    }
+
+}

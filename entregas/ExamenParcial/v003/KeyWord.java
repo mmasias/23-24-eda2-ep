@@ -4,7 +4,7 @@ public class KeyWord {
     private int id;
     private String name;
 
-    public KeyWord(int id, String name){
+    public KeyWord(int id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -13,7 +13,7 @@ public class KeyWord {
         return id;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
@@ -22,10 +22,6 @@ public class KeyWord {
         return "> KeyWord{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                '}'; 
+                '}';
     }
 }
-
-    
-
-   

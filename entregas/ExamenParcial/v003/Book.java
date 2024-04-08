@@ -17,13 +17,25 @@ public class Book {
         return id;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public int getPublicationYear() {
+        return publicationYear;
+    }
+
+    public String getType() {
+        return type;
+    }
+
     @Override
     public String toString() {
         return "> Book{" +
-               "id=" + id +
-               ", title='" + title + '\'' +
-               ", publicationYear=" + publicationYear +
-               ", type='" + type + '\'' +
-               '}';
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", publicationYear=" + publicationYear +
+                ", type='" + type + '\'' +
+                '}';
     }
 }
