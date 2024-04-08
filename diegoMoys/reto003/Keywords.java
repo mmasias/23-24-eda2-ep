@@ -1,14 +1,20 @@
 import java.util.Objects;
 
 public class Keywords {
+    private int id;
     private String keyword;
 
-    public Keywords(String keyword) {
+    public Keywords(int id, String keyword) {
+        this.id = id;
         this.keyword = keyword;
     }
 
     public String getKeyword() {
         return keyword;
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Override
