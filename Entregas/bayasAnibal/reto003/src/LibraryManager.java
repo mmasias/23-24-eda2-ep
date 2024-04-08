@@ -25,7 +25,8 @@ public class LibraryManager {
             System.out.println("4. Listar autores");
             System.out.println("5. Listar autores de un documento");
             System.out.println("6. Listar documentos de un autor");
-            System.out.println("7. Salir");
+            System.out.println("7. Hacer relacion");
+            System.out.println("8. Salir");
             int opcion = sc.nextInt();
             switch (opcion) {
                 case 1:
@@ -35,17 +36,23 @@ public class LibraryManager {
                     listBook();
                     break;
                 case 3:
-                    addAuthor();
+                    System.out.println("Ingrese el nombre del autor");
+                    String name = sc.nextLine();
+                    System.out.println("Ingrese el ID del autor");
+                    int id = sc.nextInt();
+                    existAuthorCode(id);
+                    existBookCode(id);
+                    addAuthor(new Author(id, name));
                     break;
                 case 4:
                     listAuthors();
                     break;
                 case 5:
                     System.out.println("Ingrese el ID del documento");
-                    int id = sc.nextInt();
-                    Book book = findBookById(id);
+                    int id2 = sc.nextInt();
+                    Book book = findBookById(id2);
                     if (book != null) {
-                        List<Author> authors = getAuthorsByBookId(id);
+                        List<Author> authors = getAuthorsByBookId(id2);
                         for (Author author : authors) {
                             System.out.println(author);
                         }
@@ -67,6 +74,8 @@ public class LibraryManager {
                     }
                     break;
                 case 7:
+
+                case 8:
                     salir = true;
                     break;
                 default:
@@ -174,7 +183,6 @@ public class LibraryManager {
             }
         }
         return null;
-
     }
 
     private Author findAuthorById(int authorId) {
@@ -193,6 +201,22 @@ public class LibraryManager {
         }
     }
 
+    private void existAuthorCode(int codigo){
+        for(Author autor:this.authors){
+            if(autor.getId()==codigo){
+                System.out.println("El autor ya existe");
+                return;
+            }
+        }
+    }
+    private void existBookCode(int codigo){
+        for(Book documento:this.books){
+            if(documento.getId()==codigo){
+                System.out.println("El documento ya existe");
+                return;
+            }
+        }
+    }
 
   /*
 
