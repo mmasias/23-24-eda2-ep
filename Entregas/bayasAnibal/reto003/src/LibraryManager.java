@@ -16,19 +16,68 @@ public class LibraryManager {
         this.sc = new Scanner(System.in);
     }
 
-    public void startLibraryManager() {
-
+    public void menu() {
+        boolean salir = false;
+        do {
+            System.out.println("1. Agregar documento");
+            System.out.println("2. Listar documentos");
+            System.out.println("3. Agregar autor");
+            System.out.println("4. Listar autores");
+            System.out.println("5. Listar autores de un documento");
+            System.out.println("6. Listar documentos de un autor");
+            System.out.println("7. Salir");
+            int opcion = sc.nextInt();
+            switch (opcion) {
+                case 1:
+                    addBook();
+                    break;
+                case 2:
+                    listBook();
+                    break;
+                case 3:
+                    addAuthor();
+                    break;
+                case 4:
+                    listAuthors();
+                    break;
+                case 5:
+                    System.out.println("Ingrese el ID del documento");
+                    int id = sc.nextInt();
+                    Book book = findBookById(id);
+                    if (book != null) {
+                        List<Author> authors = getAuthorsByBookId(id);
+                        for (Author author : authors) {
+                            System.out.println(author);
+                        }
+                    } else {
+                        System.out.println("No se encontro el documento");
+                    }
+                    break;
+                case 6:
+                    System.out.println("Ingrese el ID del autor");
+                    int authorId = sc.nextInt();
+                    Author author = findAuthorById(authorId);
+                    if (author != null) {
+                        List<Book> books = getBooksByAuthorId(authorId);
+                        for (Book b : books) {
+                            System.out.println(b);
+                        }
+                    } else {
+                        System.out.println("No se encontro el autor");
+                    }
+                    break;
+                case 7:
+                    salir = true;
+                    break;
+                default:
+                    break;
+            }
+        } while (!salir);
     }
 
     private void listBook() {
         for (Book book : books) {
             System.out.println(book);
-        }
-    }
-
-    private void listAuthor() {
-        for (Author author : authors) {
-            System.out.println(author);
         }
     }
 
@@ -139,36 +188,13 @@ public class LibraryManager {
     }
 
     private void listAuthors() {
-
+        for(Author autor:this.authors){
+            System.out.println(autor.toString());
+        }
     }
 
 
-   /* public void agregar() {
-        Book documento = new Book(titulo, año, autores, tipo);
-        String palabra = "";
-        do {
-            System.out.println("Introduzca palabras clave (fin-para terminar)");
-            palabra = sc.nextLine();
-            if (!palabra.equals("fin")) {
-                documento.añadirPalabraClave(palabra);
-            }
-
-
-        } while (!palabra.equals("fin"));
-        books.add(documento);
-
-
-        for (Author autor : authors) {
-            if (indiceAutores.containsKey(autor.getNombre())) {
-                ArrayList<Book> documentoAutor = indiceAutores.get(autor.getNombre());
-                documentoAutor.add(documento);
-                indiceAutores.replace(autor.getNombre() + documentoAutor);
-            } else {
-                ArrayList<Book> documentoAutor = new ArrayList<>();
-                documentoAutor.add(documento);
-                indiceAutores.put(autor.getNombre() + documentoAutor);
-            }
-        }
+  /*
 
         ArrayList<String> misPalabras = documento.getPalabrasClave();
         for (String word : misPalabras) {
@@ -252,49 +278,6 @@ public class LibraryManager {
 
     }
 
-    public void buscar() {
-        System.out.println("Ingrese el titulo del documento a buscar");
-        Scanner sc = new Scanner(System.in);
-        String titulo = sc.nextLine();
-        for (Book documento : books) {
-            if (documento.getYear().equals(titulo)) {
-                System.out.println("Titulo: " + documento.getYear());
-                System.out.println("Año de publicacion: " + documento.getPublicationYear());
-                System.out.println("Tipo: " + documento.getTipo());
-                System.out.println("Autores: ");
-                for (Author autor : documento.getAutores()) {
-                    System.out.println(autor.getNombre());
-                }
-                System.out.println("Palabras clave: ");
-                for (String palabra : documento.getPalabrasClave()) {
-                    System.out.println(palabra);
-                }
-            }
-        }
-    }
-
-    public void buscarPorAutor() {
-        System.out.println("Ingrese el nombre del autor a buscar");
-        Scanner sc = new Scanner(System.in);
-        String nombre = sc.nextLine();
-        for (Book documento : books) {
-            for (Author autor : documento.getAutores()) {
-                if (autor.getNombre().equals(nombre)) {
-                    System.out.println("Titulo: " + documento.getYear());
-                    System.out.println("Año de publicacion: " + documento.getPublicationYear());
-                    System.out.println("Tipo: " + documento.getTipo());
-                    System.out.println("Autores: ");
-                    for (Author autor2 : documento.getAutores()) {
-                        System.out.println(autor2.getNombre());
-                    }
-                    System.out.println("Palabras clave: ");
-                    for (String palabra : documento.getPalabrasClave()) {
-                        System.out.println(palabra);
-                    }
-                }
-            }
-        }
-    }
 
     public void buscarPorPalabrasClave() {
         System.out.println("Ingrese la palabra clave a buscar");
@@ -315,19 +298,6 @@ public class LibraryManager {
                         System.out.println(palabra2);
                     }
                 }
-            }
-        }
-    }
-
-
-    public void eliminar() {
-        System.out.println("Ingrese el titulo del documento a eliminar");
-        Scanner sc = new Scanner(System.in);
-        String titulo = sc.nextLine();
-        for (Book documento : books) {
-            if (documento.getYear().equals(titulo)) {
-                books.remove(documento);
-                break;
             }
         }
     }
