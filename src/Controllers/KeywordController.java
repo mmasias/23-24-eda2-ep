@@ -40,6 +40,10 @@ public class KeywordController {
     }
   }
 
+  public Keyword getKeywordById(int id) {
+    return library.getKeywordById(id);
+  }
+
   private void addNewKeyword() {
     String keyword = view.promptForKeyword();
     Keyword newKeyword = new Keyword(keyword);

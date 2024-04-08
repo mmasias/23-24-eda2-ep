@@ -6,8 +6,10 @@ import Models.DigitalLibrary;
 import Models.Document;
 import Models.Keyword;
 import Views.DigitalLibraryView;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class DocumentController {
 
@@ -19,13 +21,16 @@ public class DocumentController {
     this.view = view;
   }
 
-  public void handleDocumentOptions() {
+  public void handleDocumentOptions(
+    AuthorController authorController,
+    KeywordController keywordController
+  ) {
     view.displayDocumentsList(library.getDocuments());
     view.displayEntityOptions("Document");
     int option = view.getOption();
     switch (option) {
       case 1:
-        addNewDocument();
+        addNewDocument(authorController, keywordController);
         break;
       case 2:
         editDocument();
@@ -43,16 +48,43 @@ public class DocumentController {
         return;
       default:
         view.displayInvalidOption();
-        handleDocumentOptions();
+        handleDocumentOptions(authorController, keywordController);
         break;
     }
   }
 
-  private void addNewDocument() {
+  private void addNewDocument(
+    AuthorController authorController,
+    KeywordController keywordController
+  ) {
     String title = view.promptForDocumentTitle();
     int year = view.promptForDocumentYear();
-    List<Author> authorChoices = library.getAuthors();
-    List<Integer> authorIds = view.promptForAuthors(authorChoices);
+    List<Integer> authorIds = new ArrayList<Integer>();
+    int authorChoice = 0;
+    do {
+      List<Author> authorChoices = library.getAuthors();
+      view.displayAuthorsList(authorChoices);
+      authorChoice = view.promptForNewOrExistingAuthor();
+      switch (authorChoice) {
+        case 1:
+          authorIds.add(authorController.addNewAuthor());
+          break;
+        case 2:
+          authorIds =
+            Stream
+              .concat(
+                authorIds.stream(),
+                view.promptForAuthors(authorChoices).stream()
+              )
+              .toList();
+          break;
+        case 3:
+          break;
+        default:
+          view.displayInvalidOption();
+          break;
+      }
+    } while (authorChoice != 3);
     List<Keyword> keywordChoices = library.getKeywords();
     List<Integer> keywordIds = view.promptForKeywords(keywordChoices);
     DocumentType documentType = view.promptForDocumentType();
@@ -101,7 +133,11 @@ public class DocumentController {
     int documentId = view.promptForDocumentIndex();
     Document document = library.getDocument(documentId);
     if (document != null) {
-      view.displayDocumentDetails(document);
+      view.displayDocumentDetails(
+        document,
+        library.getAuthors(),
+        library.getKeywords()
+      );
     } else {
       view.displayMessage("Document not found.");
     }
@@ -136,9 +172,7 @@ public class DocumentController {
   }
 
   private void searchByKeywords() {
-    List<Integer> keywordIds = view.promptForKeywords(
-      library.getKeywords()
-    );
+    List<Integer> keywordIds = view.promptForKeywords(library.getKeywords());
     List<Document> documents = keywordIds
       .stream()
       .flatMap(keywordId -> library.getDocumentsByKeyword(keywordId).stream())

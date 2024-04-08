@@ -75,6 +75,14 @@ public class DigitalLibrary {
     return null;
   }
 
+  public Author getAuthorById(int authorId) {
+    return authors
+      .stream()
+      .filter(author -> author.getId() == authorId)
+      .findFirst()
+      .orElse(null);
+  }
+
   public void updateAuthor(int authorIndex, Author updatedAuthor) {
     if (authorIndex > 0 && authorIndex <= authors.size()) {
       authors.set(authorIndex - 1, updatedAuthor);
@@ -96,6 +104,14 @@ public class DigitalLibrary {
       return keywords.get(keywordIndex - 1);
     }
     return null;
+  }
+
+  public Keyword getKeywordById(int keywordId) {
+    return keywords
+      .stream()
+      .filter(keyword -> keyword.getId() == keywordId)
+      .findFirst()
+      .orElse(null);
   }
 
   public void updateKeyword(int keywordIndex, Keyword updatedKeyword) {

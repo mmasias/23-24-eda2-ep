@@ -48,6 +48,7 @@ public class DigitalLibraryView {
         );
       }
     }
+    System.out.println("--------------------------------");
   }
 
   public void displayAuthorsList(List<Author> authors) {
@@ -65,6 +66,7 @@ public class DigitalLibraryView {
         );
       }
     }
+    System.out.println("--------------------------------");
   }
 
   public void displayKeywordsList(List<Keyword> keywords) {
@@ -77,6 +79,7 @@ public class DigitalLibraryView {
         System.out.printf("%d. %s\n", index++, keyword.getKeyword());
       }
     }
+    System.out.println("--------------------------------");
   }
 
   public void displayEntityOptions(String entityType) {
@@ -180,28 +183,41 @@ public class DigitalLibraryView {
     return getOption();
   }
 
-  public void displayDocumentDetails(Document document) {
+  public void displayDocumentDetails(
+    Document document,
+    List<Author> authorList,
+    List<Keyword> keywordList
+  ) {
     System.out.println("\nDocument Details:");
     System.out.println("ID: " + document.getId());
     System.out.println("Title: " + document.getTitle());
     System.out.println("Year: " + document.getPublicationYear());
     System.out.println("Type: " + document.getDocumentType());
+
+    // Displaying authors
+    System.out.print("Authors: ");
+    String authors = authorList
+      .stream()
+      .filter(author -> document.getAuthors().contains(author.getId()))
+      .map(author -> author.getName())
+      .collect(Collectors.joining(", "));
+    System.out.println(authors.isEmpty() ? "No authors listed" : authors);
+
+    // Displaying keywords
+    System.out.print("Keywords: ");
+    String keywords = keywordList
+      .stream()
+      .filter(keyword -> document.getKeywords().contains(keyword.getId()))
+      .map(Keyword::getKeyword)
+      .collect(Collectors.joining(", "));
+    System.out.println(keywords.isEmpty() ? "No keywords listed" : keywords);
+  }
+
+  public Integer promptForNewOrExistingAuthor() {
     System.out.println(
-      "Authors: " +
-      document
-        .getAuthors()
-        .stream()
-        .map(Object::toString)
-        .collect(Collectors.joining(", "))
+      "1. Add new author\n2. Choose from existing authors\n3. Continue"
     );
-    System.out.println(
-      "Keywords: " +
-      document
-        .getKeywords()
-        .stream()
-        .map(Object::toString)
-        .collect(Collectors.joining(", "))
-    );
+    return getOption();
   }
 
   public List<Integer> promptForAuthors(List<Author> authors) {

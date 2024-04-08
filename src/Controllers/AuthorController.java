@@ -40,12 +40,17 @@ public class AuthorController {
         }
     }
 
-    private void addNewAuthor() {
+    public Author getAuthorById(Integer id) {
+        return library.getAuthorById(id);
+    } 
+
+    public Integer addNewAuthor() {
         String name = view.promptForAuthorName();
         String affiliation = view.promptForAuthorAffiliation();
         Author newAuthor = new Author(name, affiliation);
         library.addAuthor(newAuthor);
         view.displayMessage("Author added successfully.");
+        return newAuthor.getId();
     }
 
     private void editAuthor() {

@@ -26,7 +26,7 @@ public class DigitalLibraryController {
       int option = view.getOption();
       switch (option) {
         case 1:
-          documentController.handleDocumentOptions();
+          documentController.handleDocumentOptions(authorController, keywordController);
           break;
         case 2:
           authorController.handleAuthorOptions();
