@@ -1,0 +1,12 @@
+@startuml
+class Author {
+    - int id 
+    - String name 
+    - String surnames
+    + Author(int id, String name, String surnames)
+    + int getId()
+    + String getName()
+    + String getSurnames()
+    + String toStringAuthor()
+}
+@enduml
