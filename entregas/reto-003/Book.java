@@ -1,13 +1,15 @@
+import java.time.LocalDate;
+
 public class Book {
     private int id;
     private String title;
-    private int publicationYear;
+    private LocalDate publicationDate;
     private final String type;
 
-    public Book(int id, String title, int publicationYear,String type){
+    public Book(int id, String title, LocalDate publicationDate,String type){
         this.id=id;
         this.title=title;
-        this.publicationYear=publicationYear;
+        this.publicationDate=publicationDate;
         this.type=type;
     }
 
@@ -20,7 +22,7 @@ public class Book {
         return "Book{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", publicationYear=" + publicationYear +
+                ", publicationYear=" + publicationDate +
                 ", type='" + type + '\'' +
                 '}';
     }
