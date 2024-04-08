@@ -16,7 +16,7 @@ public class LibraryManager {
         this.sc = new Scanner(System.in);
     }
 
-    public void menu() {
+    public void showLibraryManager() {
         boolean salir = false;
         do {
             System.out.println("1. Agregar documento");
