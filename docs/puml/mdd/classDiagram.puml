@@ -1,0 +1,33 @@
+@startuml ClassDiagram
+class Document {
+    -title: String
+    -authors: List<Integer>
+    -publicationYear: int
+    -documentType: DocumentType
+    -keywords: List<Integer>
+}
+
+class DigitalLibrary {
+    -documents: List<Document>
+    -authors: List<Author>
+    -keywords: List<Keyword>
+}
+
+class Author {
+    -id: Integer
+    -name: String
+    -affiliation: String
+}
+
+class Keyword {
+    -id: Integer
+    -keyword: String
+}
+
+DigitalLibrary o-- Document : contains
+DigitalLibrary o-- Author : manages
+DigitalLibrary o-- Keyword : manages
+
+Document "0..*" -- "0..*" Author : has >
+Document "0..*" -- "0..*" Keyword : uses >
+@enduml

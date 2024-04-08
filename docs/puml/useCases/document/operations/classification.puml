@@ -1,0 +1,18 @@
+@startuml ClassifyDocuments
+actor User
+
+usecase "Classify Documents" as UC14
+
+User --> UC14
+
+note right of UC14
+  1. User or system triggers the document classification process,
+     which may occur automatically upon document creation or update.
+  2. System classifies documents based on their type (e.g., book, article)
+     and associated keywords into predefined categories.
+  3. Classified documents are easier to manage and retrieve,
+     enhancing the library's organization.
+  This use case supports the dynamic categorization of documents
+  to improve accessibility and management within the library.
+end note
+@enduml

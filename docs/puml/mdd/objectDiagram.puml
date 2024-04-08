@@ -1,0 +1,58 @@
+@startuml ObjectDiagram
+object Document1 {
+    title = "Advanced Java Programming"
+    authors = [1, 2]
+    publicationYear = 2021
+    documentType = DocumentType.BOOK
+    keywords = [1, 2]
+}
+
+object Document2 {
+    title = "Modern Web Development"
+    authors = [2]
+    publicationYear = 2022
+    documentType = DocumentType.ARTICLE
+    keywords = [3]
+}
+
+object Author1 {
+    id = 1
+    name = "John Doe"
+    affiliation = "Tech University"
+}
+
+object Author2 {
+    id = 2
+    name = "Jane Smith"
+    affiliation = "Web Innovations Lab"
+}
+
+object Keyword1 {
+    id = 1
+    keyword = "Java"
+}
+
+object Keyword2 {
+    id = 2
+    keyword = "Programming"
+}
+
+object Keyword3 {
+    id = 3
+    keyword = "Web Development"
+}
+
+object DigitalLibrary {
+}
+
+DigitalLibrary --> Document1 : contains
+DigitalLibrary --> Document2 : contains
+
+Document1 --> Author1 : has
+Document1 --> Author2 : has
+Document2 --> Author2 : has
+
+Document1 -down-> Keyword1 : uses
+Document1 -down-> Keyword2 : uses
+Document2 -left-> Keyword3 : uses
+@enduml

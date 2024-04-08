@@ -1,0 +1,16 @@
+@startuml SearchDocuments
+actor User
+
+usecase "Search Documents" as UC13
+
+User --> UC13
+
+note right of UC13
+  1. User initiates a search with specific criteria
+     (e.g., title, author, publication year, keywords).
+  2. System processes the search and displays matching documents.
+  3. User can select a document to view its details.
+  The search functionality allows for efficient retrieval
+  of documents from the digital library.
+end note
+@enduml

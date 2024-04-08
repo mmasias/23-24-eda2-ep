@@ -1,0 +1,13 @@
+@startuml ListAuthors
+actor User
+
+usecase "List Authors" as UC7
+
+User --> UC7
+
+note right of UC7
+  1. User requests a list of all authors in the system.
+  2. System displays the list, potentially with options
+     to filter by name, affiliation, or other criteria.
+end note
+@enduml

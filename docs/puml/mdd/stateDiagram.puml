@@ -1,0 +1,17 @@
+@startuml StateDiagram
+
+[*] --> Uninitialized
+Uninitialized --> Available : Document Created
+Available --> Editing : Edit Requested
+Editing --> Available : Changes Saved
+Available --> Searching : Search Initiated
+Searching --> Available : Search Completed
+Available --> Deleted : Delete Requested
+Deleted --> [*]
+
+note right of Available : Documents can be \nqueried and displayed here
+note right of Editing : Document details \nare being modified
+note right of Searching : Users are searching \nfor documents
+note right of Deleted : Document is permanently \nremoved from the library
+
+@enduml

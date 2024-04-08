@@ -1,0 +1,15 @@
+@startuml ReadDocument
+actor User
+
+usecase "Read Document" as UC2
+
+User --> UC2
+
+note right of UC2
+  1. User searches for a document using criteria
+     (title, author, year, etc.).
+  2. Selects a document from the search results.
+  3. System displays the document's details:
+     title, authors, publication year, keywords.
+end note
+@enduml

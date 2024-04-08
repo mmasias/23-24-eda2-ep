@@ -1,0 +1,15 @@
+@startuml RemoveKeyword
+actor User 
+
+usecase "Remove Keyword" as UC12
+
+User --> UC12
+
+note right of UC12
+  1. User identifies a keyword for removal, either by selecting
+     from a list or via search.
+  2. User confirms the desire to permanently remove the keyword.
+  3. System deletes the keyword, ensuring it is no longer associated
+     with any documents.
+end note
+@enduml
