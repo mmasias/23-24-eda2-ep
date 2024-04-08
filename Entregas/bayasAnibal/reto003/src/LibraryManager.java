@@ -37,6 +37,7 @@ public class LibraryManager {
                     break;
                 case 3:
                     System.out.println("Ingrese el nombre del autor");
+                    sc = new Scanner(System.in);
                     String name = sc.nextLine();
                     System.out.println("Ingrese el ID del autor");
                     int id = sc.nextInt();
@@ -74,7 +75,20 @@ public class LibraryManager {
                     }
                     break;
                 case 7:
+                    int codeBook = -1;
+                    do {
+                        listBook();
+                        System.out.println("Seleccione id de libro: ");
+                        codeBook = sc.nextInt();
+                    } while (!existBookCode(codeBook));
 
+                    int codeAuthor = -1;
+                    do {
+                        listAuthors();
+                        System.out.println("Seleccione id de autor: ");
+                        codeAuthor = sc.nextInt();
+                    } while (!existAuthorCode(codeAuthor));
+                    addRelation(codeBook,codeAuthor);
                 case 8:
                     salir = true;
                     break;
@@ -92,6 +106,7 @@ public class LibraryManager {
 
     private void addBook() {
         System.out.println("Ingrese el titulo del documento");
+        sc = new Scanner(System.in);
         String titulo = sc.nextLine();
         System.out.println("Ingrese el ID del documento");
         int id = sc.nextInt();
@@ -154,6 +169,7 @@ public class LibraryManager {
 
     private void addRelation(int bookId, int authorId) {
         relations.add(new BookAuthor(bookId, authorId));
+
     }
 
     private List<Author> getAuthorsByBookId(int bookId) {
@@ -196,26 +212,27 @@ public class LibraryManager {
     }
 
     private void listAuthors() {
-        for(Author autor:this.authors){
+        for (Author autor : this.authors) {
             System.out.println(autor.toString());
         }
     }
 
-    private void existAuthorCode(int codigo){
-        for(Author autor:this.authors){
-            if(autor.getId()==codigo){
-                System.out.println("El autor ya existe");
-                return;
+    private boolean existAuthorCode(int codigo) {
+        for (Author autor : this.authors) {
+            if (autor.getId() == codigo) {
+                return true;
             }
         }
+        return false;
     }
-    private void existBookCode(int codigo){
-        for(Book documento:this.books){
-            if(documento.getId()==codigo){
-                System.out.println("El documento ya existe");
-                return;
+
+    private boolean existBookCode(int codigo) {
+        for (Book documento : this.books) {
+            if (documento.getId() == codigo) {
+                return true;
             }
         }
+        return false;
     }
 
   /*
