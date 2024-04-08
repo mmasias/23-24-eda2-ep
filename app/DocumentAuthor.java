@@ -1,4 +1,4 @@
-package Models;
+package app;
 
 public class DocumentAuthor {
     private int documentId;

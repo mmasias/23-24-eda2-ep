@@ -1,4 +1,4 @@
-package Models;
+package app;
 
 public enum DocumentType {
     BOOK("Libro"),
