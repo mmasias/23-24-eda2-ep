@@ -88,7 +88,7 @@ public class LibraryManager {
                         System.out.println("Seleccione id de autor: ");
                         codeAuthor = sc.nextInt();
                     } while (!existAuthorCode(codeAuthor));
-                    addRelation(codeBook,codeAuthor);
+                    addRelation(codeBook, codeAuthor);
                     break;
                 case 8:
                     salir = true;
@@ -174,23 +174,23 @@ public class LibraryManager {
     }
 
     private List<Author> getAuthorsByBookId(int bookId) {
-        ArrayList<Author> auxiliar = new ArrayList<>();
+        ArrayList<Author> aux = new ArrayList<>();
         for (BookAuthor relation : relations) {
             if (relation.getBookId() == bookId) {
-                auxiliar.add(findAuthorById(relation.getAuthorId()));
+                aux.add(findAuthorById(relation.getAuthorId()));
             }
         }
-        return auxiliar;
+        return aux;
     }
 
     private List<Book> getBooksByAuthorId(int authorId) {
-        ArrayList<Book> auxiliar = new ArrayList<>();
+        ArrayList<Book> aux = new ArrayList<>();
         for (BookAuthor relation : relations) {
             if (relation.getAuthorId() == authorId) {
-                auxiliar.add(( findBookById(relation.getBookId()) ));
+                aux.add(( findBookById(relation.getBookId()) ));
             }
         }
-        return auxiliar;
+        return aux;
     }
 
     private Book findBookById(int BookId) {
