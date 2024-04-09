@@ -161,7 +161,7 @@ public class LibraryManager {
         boolean addingKeywords = true;
         while (addingKeywords) {
             System.out.println(
-                    "Selecciona el ID de la palabra clave para asociar con el documento, o introduce 'nuevo' para añadir una nueva palabra clave:");
+                    "Selecciona el ID de la palabra clave para asociar con el documento, o introduce 'nueva' para añadir una nueva palabra clave:");
             listKeyWords();
             String input = scanner.nextLine();
             if ("nuevo".equalsIgnoreCase(input)) {
