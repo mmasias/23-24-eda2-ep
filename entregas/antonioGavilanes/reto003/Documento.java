@@ -1,62 +1,61 @@
 package antonioGavilanes.reto003;
 
-class Documento {
-    private String titulo;
-    private String autor;
-    private String año;
-    private String tipo;
-    private String palabrasClave;
+import java.util.List;
 
-    public Documento(String titulo, String autor, String año, String tipo, String palabrasClave) {
+public class Documento {
+    private String titulo;
+    private List<String> autores;
+    private int añoPublicacion;
+    private String tipoDocumento;
+    private List<String> palabrasClave;
+
+    public Documento(String titulo, List<String> autores, int añoPublicacion, String tipoDocumento, List<String> palabrasClave) {
         this.titulo = titulo;
-        this.autor = autor;
-        this.año = año;
-        this.tipo = tipo;
+        this.autores = autores;
+        this.añoPublicacion = añoPublicacion;
+        this.tipoDocumento = tipoDocumento;
         this.palabrasClave = palabrasClave;
     }
-
+    
     public String getTitulo() {
         return titulo;
-    }
-
-    public String getAutor() {
-        return autor;
-    }
-
-    public String getAño() {
-        return año;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public String getPalabrasClave() {
-        return palabrasClave;
     }
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
 
-    public void setAutor(String autor) {
-        this.autor = autor;
+    public List<String> getAutores() {
+        return autores;
     }
 
-    public void setAño(String año) {
-        this.año = año;
+    public void setAutores(List<String> autores) {
+        this.autores = autores;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public int getAñoPublicacion() {
+        return añoPublicacion;
     }
 
-    public void setPalabrasClave(String palabrasClave) {
+    public void setAñoPublicacion(int añoPublicacion) {
+        this.añoPublicacion = añoPublicacion;
+    }
+
+    public String getTipoDocumento() {
+        return tipoDocumento;
+    }
+
+    public void setTipoDocumento(String tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
+    }
+
+    public List<String> getPalabrasClave() {
+        return palabrasClave;
+    }
+
+    public void setPalabrasClave(List<String> palabrasClave) {
         this.palabrasClave = palabrasClave;
     }
 
-    @Override
-    public String toString() {
-        return "Documento: " + titulo;
-    }
+
 }

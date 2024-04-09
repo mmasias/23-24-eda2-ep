@@ -1,31 +1,14 @@
 package antonioGavilanes.reto003;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class TipoDocumento {
-    ArrayList<String> tipoDoc = new ArrayList<String>();
+    private static final List<String> tipos = Arrays.asList("libro", "revista", "artículo", "paper científico");
 
-    public void add() {
-        tipoDoc.add("libro");
-        tipoDoc.add("revista");
-        tipoDoc.add("articulo");
-        tipoDoc.add("papel cientifico");
+    public static List<String> getTipos() {
+        return tipos;
     }
 
-    public void mostrar() {
-        for (String i : tipoDoc) {
-            System.out.print(" - " + i);
-        }
-        System.out.println();
-    }
-
-    public String mostrar(int i) {
-        return tipoDoc.get(i);
-    }
-
-    public int size() {
-        return tipoDoc.size();
-    }
-
-
+    
 }
