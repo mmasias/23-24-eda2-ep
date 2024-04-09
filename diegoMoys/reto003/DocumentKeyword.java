@@ -1,30 +1,37 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Objects;
 
 public class DocumentKeyword {
-    private Map<Integer, Integer> documentKeywords;
+    private Document document;
+    private Keywords keyword;
 
-    public DocumentKeyword() {
-        documentKeywords = new HashMap<>();
+    public DocumentKeyword(Document document, Keywords keyword) {
+        this.document = document;
+        this.keyword = keyword;
     }
 
-    public void addKeyword(int documentId, int keywordId) {
-        documentKeywords.put(documentId, keywordId);
+    public Document getDocument() {
+        return document;
     }
 
-    public int getKeyword(int documentId) {
-        return documentKeywords.get(documentId);
+    public Keywords getKeyword() {
+        return keyword;
     }
 
-    public void removeKeyword(int documentId) {
-        documentKeywords.remove(documentId);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DocumentKeyword that = (DocumentKeyword) o;
+        return document.equals(that.document) && keyword.equals(that.keyword);
     }
 
-    public boolean containsDocument(int documentId) {
-        return documentKeywords.containsKey(documentId);
+    @Override
+    public int hashCode() {
+        return Objects.hash(document, keyword);
     }
 
-    public boolean containsKeyword(int keywordId) {
-        return documentKeywords.containsValue(keywordId);
+    @Override
+    public String toString() {
+        return keyword.getKeyword();
     }
 }
