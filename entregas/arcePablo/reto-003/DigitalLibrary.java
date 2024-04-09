@@ -43,6 +43,8 @@ public class DigitalLibrary {
                     System.out.println("Opción no válida");
             }
         }
+
+        scanner.close();
     }
 
     static void fillLibrary(Library library, DocumentGenerator documentGenerator, int amountOfDocuments){
@@ -112,5 +114,6 @@ public class DigitalLibrary {
                     System.out.println("Opción no válida. Por favor, ingrese una opción válida.");
             }
         }
+        scanner.close();
     }
 }

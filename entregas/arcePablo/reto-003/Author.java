@@ -1,8 +1,10 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.UUID;
 import Types.DocType;
 
 public class Author {
+    private String id;
     private String name;
     private String email;
     private LocalDate birthDate;
@@ -13,6 +15,7 @@ public class Author {
         this.email = "";
         this.birthDate = LocalDate.now();
         this.genres = new ArrayList<>();
+        this.id = generateId();
     }
 
     public Author(String name, LocalDate birthDate, ArrayList<DocType> genres) {
@@ -20,6 +23,15 @@ public class Author {
         this.email = "";
         this.birthDate = birthDate;
         this.genres = genres;
+        this.id = generateId();
+    }
+
+    private String generateId() {
+        return UUID.randomUUID().toString();
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
