@@ -1,24 +1,16 @@
-import javax.print.Doc;
 import java.util.List;
-import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class LibraryController {
-    private Library model;
-    private LibraryView view;
+    private final Library model;
+    private final LibraryView view;
     private boolean isRunning = true;
 
-
-    private Scanner scanner;
-
-
-    public LibraryController(Library model, LibraryView view) {
+    protected LibraryController(Library model, LibraryView view) {
         this.model = model;
         this.view = view;
     }
-
-    public void startApplication() {
+    protected void startApplication() {
         while(isRunning){
             view.displayMenu();
             int choice = view.getChoice();
@@ -40,128 +32,125 @@ public class LibraryController {
                     isRunning = false;
                     break;
                 default:
-                    view.displayMessage("Invalid option. Please try again.");
+                    view.displayMessage("Opcion invalida, intentelo otra vez.");
             }
         }
     }
-
     private void handleAddDocument() {
         Document document = view.promptDocumentDetails();
         model.addDocument(document);
-        view.displayMessage("Document added successfully.");
+        view.displayMessage("Documento añadido.");
     }
-
     private void handleRemoveDocument() {
         String title = view.promptTitle();
         List<Document> documents = model.searchByTitle(title);
         if (documents.isEmpty()) {
-            view.displayMessage("No documents found with that title.");
+            view.displayMessage("No hay documentos con ese titulo.");
         } else {
             Document documentToRemove = view.promptDocumentSelection(documents);
             model.removeDocument(documentToRemove);
-            view.displayMessage("Document removed successfully.");
+            view.displayMessage("El documento se ha eliminado.");
         }
     }
-
     private void handleSearch() {
         view.displayDocumentSearch();
         int choice = view.getChoice();
         switch (choice) {
             case 1:
-                view.displayAllDocuments(findDocumentByTitle());
+                findDocumentByTitle();
                 break;
             case 2:
-                view.displayAllDocuments(findDocumentsByPublicationYear());
+                findDocumentsByPublicationYear();
                 break;
             case 3:
-                view.displayAllDocuments(findDocumentsByAuthor());
+                findDocumentsByAuthor();
                 break;
             case 4:
-                view.displayAllDocuments(findDocumentsByType());
+                findDocumentsByType();
                 break;
             case 5:
-                view.displayAllDocuments(findDocumentsByKeyword());
+                findDocumentsByKeyword();
                 break;
             default:
                 System.out.println("No es una opcion valida");
         }
     }
-
-    private List<Document> findDocumentByTitle(){
-        String title = view.promptTitle();
-        List<Document> documentsByTitle = model.searchByTitle(title);
-        allDocuments.stream()
-                .filter(document -> document.getDocumentType().toLowerCase().contains(documentType))
-                .collect(Collectors.toList());        if (documentsByTitle.isEmpty()) {
-            view.displayMessage("No documents found with that title.");
+    private void findDocumentByTitle(){
+        String documentTitle = view.promptTitle();
+        List<Document> documentsByTitle = model.searchByTitle(documentTitle);
+        documentsByTitle.stream()
+                .filter(document -> document.getDocumentType().toLowerCase().contains(documentTitle))
+                .collect(Collectors.toList());
+        if (documentsByTitle.isEmpty()) {
+            view.displayMessage("No hay documentos con ese titulo.");
         } else {
             view.displayDocuments(documentsByTitle);
         }
-        return documentsByTitle;
     }
-
-    public List<Document> findDocumentsByAuthor() {
-        List<Author> authorName = view.promptAuthors();
-        List<Document> documentsByAuthor = new ArrayList<>();
+    private void findDocumentsByAuthor() {
+        List<Author> authors = view.promptAuthors();
         List<Document> allDocuments = model.getAllDocuments();
-        for (Document document : allDocuments) {
-            for (Author authorDocument : document.getAuthors()) {
-                for (Author authors : authorName) {
-                    if (authorDocument.getAuthorName().toLowerCase().contains(authors.getAuthorName().toLowerCase())) {
-                        documentsByAuthor.add(document);
-                        break;
-                    }
-                }
-            }
-        }
-        return documentsByAuthor;
-    }
+        List<Document> filteredDocuments = allDocuments.stream()
+                .filter(document -> document.getAuthors().stream()
+                        .anyMatch(author ->
+                                authors.stream()
+                                        .anyMatch(au ->
+                                                author.getAuthorName().toLowerCase().contains(au.getAuthorName().toLowerCase()))))
+                .toList();
 
-    public List<Document> findDocumentsByKeyword( ) {
-        List<Keyword> keyword = view.promptKeywords();
-        List<Document> documentsByKeyword = new ArrayList<>();
+        if (filteredDocuments.isEmpty()) {
+            view.displayMessage("No hay documentos con ese autor.");
+        } else {
+            view.displayDocuments(filteredDocuments);
+        }
+    }
+    private void findDocumentsByKeyword() {
+        List<Keyword> keywords = view.promptKeywords();
         List<Document> allDocuments = model.getAllDocuments();
-        for (Document document : allDocuments) {
-            for (Keyword key : document.getKeywords()) {
-                for (Keyword keywords : keyword) {
-                    if (key.getKeyword().toLowerCase().contains(keywords.getKeyword().toLowerCase())) {
-                        documentsByKeyword.add(document);
-                        break;
-                    }
-                }
-            }
-        }
-        return documentsByKeyword;
-    }
+        List<Document> filteredDocuments = allDocuments.stream()
+                .filter(document -> document.getKeywords().stream()
+                        .anyMatch(keyword ->
+                                keywords.stream()
+                                        .anyMatch(key ->
+                                                keyword.getKeyword().toLowerCase().contains(key.getKeyword().toLowerCase()))))
+                .toList();
 
-    public List<Document> findDocumentsByType() {
+        if (filteredDocuments.isEmpty()) {
+            view.displayMessage("No hay documentos con esa palabra clave.");
+        } else {
+            view.displayDocuments(filteredDocuments);
+        }
+    }
+    private void findDocumentsByType() {
         String documentType = view.promptDocumentType();
-         List<Document> allDocuments = model.getAllDocuments();
-
-        return allDocuments.stream()
+        List<Document> documentsByType = model.searchByType(documentType);
+        List<Document> filteredDocuments = documentsByType.stream()
                 .filter(document -> document.getDocumentType().toLowerCase().contains(documentType))
                 .collect(Collectors.toList());
-    }
 
-    public List<Document> findDocumentsByPublicationYear() {
-        int publicationYear = view.promptPublicationYear();
-        List<Document> documentsByPublicationYear = new ArrayList<>();
-        List<Document> allDocuments = model.getAllDocuments();
-        for (Document document : allDocuments) {
-            if (document.getPublicationYear() == publicationYear) {
-                documentsByPublicationYear.add(document);
-            }
+        if (filteredDocuments.isEmpty()) {
+            view.displayMessage("No hay documentos con ese tipo.");
+        } else {
+            view.displayDocuments(filteredDocuments);
         }
-        return documentsByPublicationYear;
     }
+    private void findDocumentsByPublicationYear() {
+        int publicationYear = view.promptPublicationYear();
+        List<Document> allDocuments = model.searchByYearofPublication(publicationYear);
+        List<Document> documentsByYear = allDocuments.stream()
+                .filter(document -> document.getPublicationYear() == publicationYear)
+                .collect(Collectors.toList());
 
-
-
-    public void displayAllDocuments() {
+        if (documentsByYear.isEmpty()) {
+            view.displayMessage("No hay documentos publicados en el año " + publicationYear + ".");
+        } else {
+            view.displayDocuments(documentsByYear);
+        }
+    }
+    private void displayAllDocuments() {
         List<Document> documents = model.getAllDocuments();
         view.displayAllDocuments(documents);
     }
-
     private void handleApplicationOutput(){
         view.displayMessage("Exiting the application.");
     }
