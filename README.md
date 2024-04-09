@@ -1,4 +1,4 @@
-# Ajustes realizados al reto 3
+# EXAMEN PARCIAL - Ajustes realizados al reto 3
 
 El primer paso realizado ha sido la modificación de los nombres de las clases para que se ajuste al modelo propuesto.  
 
