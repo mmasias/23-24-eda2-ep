@@ -14,6 +14,14 @@ public class Documento {
         this.palabrasClave = new ArrayList<String>();
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getTitulo() {
         return titulo;
     }

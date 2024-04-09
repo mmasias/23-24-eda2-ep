@@ -7,11 +7,11 @@ public class AutorDocumento {
         this.autorId = autorId;
     }
 
-    public int getdocumentoId() {
+    public int getDocumentoId() {
         return documentoId;
     }
 
-    public int getautorId() {
+    public int getAutorId() {
         return autorId;
     }
 }

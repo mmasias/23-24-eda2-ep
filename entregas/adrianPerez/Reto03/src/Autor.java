@@ -6,7 +6,7 @@ public class Autor {
         return nombre;
     }
 
-    public int getid() {
+    public int getId() {
         return id;
     }
     
@@ -14,7 +14,7 @@ public class Autor {
         this.nombre = nombre;
     }
 
-    public void setid(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
