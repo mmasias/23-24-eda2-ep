@@ -1,7 +1,6 @@
 package v003.src;
 
 import java.util.Iterator;
-import javax.swing.text.Document;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -36,6 +35,7 @@ public class LibraryManager {
             System.out.println("4. Listar palabras clave");
             System.out.println("5. Buscar un documento");
             System.out.println("6. Editar un documento");
+            System.out.println("7. Eliminar un documento");
             System.out.println("-1. Salir");
             String choice = scanner.nextLine();
 
@@ -57,6 +57,9 @@ public class LibraryManager {
                     break;
                 case "6":
                     editBook();
+                    break;
+                case "7":
+                    deleteBook();
                     break;
                 case "-1":
                     System.out.println("Saliendo del gestor de biblioteca...");
@@ -381,8 +384,6 @@ public class LibraryManager {
         }
     }
 
-
-
     private void editBook() {
         System.out.println("Editar un documento");
         listBooks();
@@ -431,15 +432,11 @@ public class LibraryManager {
         System.out.println("Documento editado correctamente.");
     }
 
-
-
     private void editTitle(Book book) {
         System.out.println("Introduce el nuevo título del documento:");
         String newTitle = scanner.nextLine();
         book.setTitle(newTitle);
     }
-
-
 
     private void editYear(Book book) {
         System.out.println("Introduce el nuevo año de publicación:");
@@ -448,15 +445,11 @@ public class LibraryManager {
         book.setPublicationYear(newYear);
     }
 
-
-
     private void editType(Book book) {
         System.out.println("Introduce el nuevo tipo de documento:");
         String newType = scanner.nextLine();
         book.setType(newType);
     }
-
-
 
     private void editAuthorsForBook(Book book) {
         System.out.println("Editar autores para el libro: " + book.getTitle());
@@ -554,9 +547,6 @@ public class LibraryManager {
         addAuthorRelation(book.getId(), newAuthor.getId());
         System.out.println("Autor nuevo añadido y asociado al libro.");
     }
-    
-    
-
 
     private void editKeywordsForBook(Book book) {
         System.out.println("Editar palabras clave para el libro: " + book.getTitle());
@@ -653,7 +643,48 @@ public class LibraryManager {
         addKeyWord(newKeyword);
         addKeyWordRelation(book.getId(), newKeyword.getId());
         System.out.println("Palabra clave nueva añadida y asociada al libro.");
-    }    
-    
+    }
+
+    private void deleteBook() {
+        System.out.println("Eliminar un documento");
+        listBooks();
+
+        System.out.println("Selecciona el ID del documento que deseas eliminar:");
+        int documentIdToDelete = scanner.nextInt();
+        scanner.nextLine();
+
+        boolean documentDeleted = false;
+        Iterator<Book> iterator = books.iterator();
+        while (iterator.hasNext()) {
+            Book book = iterator.next();
+            if (book.getId() == documentIdToDelete) {
+                iterator.remove();
+                documentDeleted = true;
+
+                Iterator<BookAuthor> authorIterator = authorrelations.iterator();
+                while (authorIterator.hasNext()) {
+                    BookAuthor relation = authorIterator.next();
+                    if (relation.getBookId() == documentIdToDelete) {
+                        authorIterator.remove();
+                    }
+                }
+
+                Iterator<BookKeyWord> keywordIterator = keywordrelations.iterator();
+                while (keywordIterator.hasNext()) {
+                    BookKeyWord relation = keywordIterator.next();
+                    if (relation.getBookId() == documentIdToDelete) {
+                        keywordIterator.remove();
+                    }
+                }
+                break;
+            }
+        }
+
+        if (documentDeleted) {
+            System.out.println("Documento eliminado correctamente.");
+        } else {
+            System.out.println("No se encontró el documento con el ID especificado.");
+        }
+    }
 
 }
