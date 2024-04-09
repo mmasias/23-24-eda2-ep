@@ -2,7 +2,7 @@
 
 <div align=center>
 
-|![Modelo UML](/modelo/modelo.svg)|
+|![Modelo UML](/entregas/ExamenParcial/v003/modelo/modelo.svg)|
 |:-:|
 [App.java](App.java) 
 [LibraryManager.java](LibraryManager.java)  
