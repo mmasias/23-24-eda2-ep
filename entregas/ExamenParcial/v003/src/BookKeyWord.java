@@ -1,4 +1,4 @@
-package v003;
+package v003.src;
 
 class BookKeyWord {
     private int bookId;

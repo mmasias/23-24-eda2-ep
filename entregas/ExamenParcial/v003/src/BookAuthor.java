@@ -1,4 +1,4 @@
-package v003;
+package v003.src;
 
 class BookAuthor {
     private int bookId;

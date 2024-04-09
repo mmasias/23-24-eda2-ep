@@ -1,5 +1,6 @@
-package v003;
+package v003.src;
 
+import java.util.Iterator;
 import javax.swing.text.Document;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -380,6 +381,8 @@ public class LibraryManager {
         }
     }
 
+
+
     private void editBook() {
         System.out.println("Editar un documento");
         listBooks();
@@ -428,11 +431,15 @@ public class LibraryManager {
         System.out.println("Documento editado correctamente.");
     }
 
+
+
     private void editTitle(Book book) {
         System.out.println("Introduce el nuevo título del documento:");
         String newTitle = scanner.nextLine();
         book.setTitle(newTitle);
     }
+
+
 
     private void editYear(Book book) {
         System.out.println("Introduce el nuevo año de publicación:");
@@ -441,43 +448,116 @@ public class LibraryManager {
         book.setPublicationYear(newYear);
     }
 
+
+
     private void editType(Book book) {
         System.out.println("Introduce el nuevo tipo de documento:");
         String newType = scanner.nextLine();
         book.setType(newType);
     }
 
+
+
     private void editAuthorsForBook(Book book) {
-        System.out.println("Editar autores para el documento: " + book.getTitle());
-        listAuthors();
-
-        System.out.println("Introduce el ID del autor que deseas editar o 'nuevo' para añadir un nuevo autor:");
-        String input = scanner.nextLine();
-
-        if ("nuevo".equalsIgnoreCase(input)) {
-            System.out.println("Introduce el nombre del nuevo autor:");
-            String authorName = scanner.nextLine();
-            Author newAuthor = new Author(authors.size() + 1, authorName);
-            addAuthor(newAuthor);
-            addAuthorRelation(book.getId(), newAuthor.getId());
-            System.out.println("Autor nuevo añadido y asociado al documento.");
-        } else {
-            try {
-                int authorId = Integer.parseInt(input);
-                Author authorToEdit = findAuthorById(authorId);
-                if (authorToEdit == null) {
-                    System.out.println("El autor con ID " + authorId + " no existe.");
-                    return;
-                }
-                System.out.println("Introduce el nuevo nombre del autor:");
-                String newAuthorName = scanner.nextLine();
-                authorToEdit.setName(newAuthorName);
-                System.out.println("Autor editado correctamente.");
-            } catch (NumberFormatException e) {
-                System.out.println("Entrada no válida.");
+        System.out.println("Editar autores para el libro: " + book.getTitle());
+        List<Author> authorsInBook = getAuthorsByBookId(book.getId());
+        if (authorsInBook.isEmpty()) {
+            System.out.println("El libro no tiene autores asociados.");
+            return;
+        }
+        System.out.println("Autores en el libro:");
+        for (Author author : authorsInBook) {
+            System.out.println("ID: " + author.getId() + ", Nombre: " + author.getName());
+        }
+    
+        boolean isEditing = true;
+        while (isEditing) {
+            System.out.println("¿Qué acción deseas realizar con los autores?");
+            System.out.println("1. Eliminar un autor del documento");
+            System.out.println("2. Añadir un autor existente al documento");
+            System.out.println("3. Crear un nuevo autor para añadir al documento");
+            System.out.println("4. Salir de la edición de autores");
+    
+            int choice = scanner.nextInt();
+            scanner.nextLine(); 
+            switch (choice) {
+                case 1:
+                    deleteAuthorFromBook(book);
+                    break;
+                case 2:
+                    addExistingAuthorToBook(book);
+                    break;
+                case 3:
+                    addNewAuthorToBook(book);
+                    break;
+                case 4:
+                    isEditing = false;
+                    System.out.println("Saliendo de la edición de autores.");
+                    break;
+                default:
+                    System.out.println("Opción no válida.");
+                    break;
             }
         }
     }
+    
+    private void deleteAuthorFromBook(Book book) {
+        System.out.println("Introduce el ID del autor que deseas eliminar:");
+        int authorIdToDelete = scanner.nextInt();
+        scanner.nextLine(); 
+    
+        boolean authorDeleted = false;
+        Iterator<BookAuthor> iterator = authorrelations.iterator();
+        while (iterator.hasNext()) {
+            BookAuthor relation = iterator.next();
+            if (relation.getBookId() == book.getId() && relation.getAuthorId() == authorIdToDelete) {
+                iterator.remove();
+                authorDeleted = true;
+                break;
+            }
+        }
+    
+        if (authorDeleted) {
+            System.out.println("Autor eliminado del libro.");
+        } else {
+            System.out.println("No se encontró el autor en el libro.");
+        }
+    }
+    
+    private void addExistingAuthorToBook(Book book) {
+        listAuthors();
+        System.out.println("Introduce el ID del autor que deseas añadir:");
+        int authorIdToAdd = scanner.nextInt();
+        scanner.nextLine(); 
+    
+        boolean authorAdded = false;
+        for (Author author : authors) {
+            if (author.getId() == authorIdToAdd) {
+                addAuthorRelation(book.getId(), authorIdToAdd);
+                authorAdded = true;
+                break;
+            }
+        }
+    
+        if (authorAdded) {
+            System.out.println("Autor añadido al libro.");
+        } else {
+            System.out.println("No se encontró el autor en la biblioteca.");
+        }
+    }
+    
+    private void addNewAuthorToBook(Book book) {
+        System.out.println("Introduce el nombre del nuevo autor:");
+        String authorName = scanner.nextLine();
+        Author newAuthor = new Author(authors.size() + 1, authorName);
+        addAuthor(newAuthor);
+        addAuthorRelation(book.getId(), newAuthor.getId());
+        System.out.println("Autor nuevo añadido y asociado al libro.");
+    }
+    
+    
+
+
 
     private void editKeywordsForBook(Book book) {
         System.out.println("Editar palabras clave para el libro: " + book.getTitle());

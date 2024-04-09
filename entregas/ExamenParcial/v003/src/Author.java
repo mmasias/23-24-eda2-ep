@@ -1,4 +1,4 @@
-package v003;
+package v003.src;
 
 public class Author {
     private int id;
