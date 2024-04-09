@@ -190,7 +190,7 @@ public class LibraryManager {
         }
     }
 
-    public void addKeyWord(KeyWord keyword) {
+    private void addKeyWord(KeyWord keyword) {
         keywords.add(keyword);
     }
 
