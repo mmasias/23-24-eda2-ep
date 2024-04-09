@@ -21,3 +21,10 @@ Primero voy a comprobar solo leyendo las clases lo que deben/pueden hacer.
 ## CAMBIOS IMPREVISTOS
 
 Una idea que he tenido para el buscador es que sea un metodo a parte que se encargue de juntar los otros metodos de buscar. Por ejemplo, si pulsar el 5 inicia el buscador y que se incie otro menu que muestre: 1-Buscar autor por ID, 2-Buscar libro por autor, etc. Haria el método start mucho más limpio y juntaría varios métodos que alargan demasiado *start*
+
+## DIAGRAMA DE CLASES
+
+El siguiente diagrama muestra la estructura de clases del proyecto:
+
+![Diagrama de Clases](link_al_diagrama)
+
