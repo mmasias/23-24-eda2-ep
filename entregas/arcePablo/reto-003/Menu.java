@@ -13,30 +13,33 @@ public class Menu {
         System.out.println("\n=== Menú de la Librería Digital ===");
         System.out.println("a - Añadir documento");
         System.out.println("f - Modificar buscador");
+        System.out.println("d - Eliminar documento");
         System.out.println("l - Listar documentos");
         System.out.println("s - Salir\n");
     }
 
-public void listDocuments(ArrayList<Document> documents) {
+    public void listDocuments(ArrayList<Document> documents) {
         System.out.println("=== Lista de Documentos ===");
-        System.out.println("=".repeat(130));
-        System.out.println("|   Title" + " ".repeat(34) + "|   Author" + " ".repeat(3) + "| Date Published | Keywords");
-        System.out.println("=".repeat(130));
+        System.out.println("=".repeat(150));
+        System.out.println("| Document ID " + "|   Title" + " ".repeat(30) + "|   Author" + " ".repeat(3) + "| Date Published | Keywords");
+        System.out.println("=".repeat(150));
 
         for (Document document : documents) {
+            String documentId = String.valueOf(document.getDocumentId());
             String title = document.getTitle();
             Author author = document.getAuthor();
             Date datePublished = document.getDatePublished();
             ArrayList<KeyWordTypes> keywords = document.getKeyWords();
 
-            String formattedTitle = formatCell(title, 40);
+            String formattedDocumentId = formatCell(documentId, 11);
+            String formattedTitle = formatCell(title, 30);
             String formattedAuthor = formatCell(author.getName(), 10);
             String formattedDate = new java.text.SimpleDateFormat("dd/MM/yyyy").format(datePublished);
             String formattedKeywords = formatKeywords(keywords);
 
-            System.out.format("| %-40s | %-10s | %-14s | %-53s |\n", formattedTitle, formattedAuthor, formattedDate, formattedKeywords);
+            System.out.format("| %-11s | %-30s | %-10s | %-14s | %-53s |\n", formattedDocumentId, formattedTitle, formattedAuthor, formattedDate, formattedKeywords);
         }
-        System.out.println("=".repeat(130));
+        System.out.println("=".repeat(150));
     }
 
     private String formatCell(String value, int maxLength) {
@@ -60,7 +63,7 @@ public void listDocuments(ArrayList<Document> documents) {
     }
 
 
-public void displayInputs(Searchbar searchbar) {
+    public void displayInputs(Searchbar searchbar) {
         System.out.println("\nBuscador: ");
 
         if (!searchbar.getSearchedTitle().isEmpty() && searchbar.getSearchedTitle() != null) {

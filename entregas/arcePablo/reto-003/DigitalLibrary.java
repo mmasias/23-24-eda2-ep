@@ -21,7 +21,7 @@ public class DigitalLibrary {
             String option = scanner.nextLine();
             switch (option){
                 case "a":
-                    library.addDocument(documentGenerator.generateRandomDocument());
+                    library.addDocument(documentGenerator.generateRandomDocument(library.getLastDocumentId() + 1));
                     break;
                 case "f":
                     menu.displayInputs(searchbar);
@@ -39,6 +39,17 @@ public class DigitalLibrary {
                 case "s":
                     running = false;
                     break;
+                case "d":
+                    System.out.println("Ingrese el id del documento a eliminar:");
+                    int id = scanner.nextInt();
+                    int indexToDelete = library.searchDocumentByID(id);
+                    if (indexToDelete == -1){
+                        System.out.println("No se encontró el documento con el id ingresado.");
+                    } else {
+                        library.deleteDocument(indexToDelete);
+                        System.out.println("Documento eliminado exitosamente.");
+                    }
+                    break;
                 default:
                     System.out.println("Opción no válida");
             }
@@ -49,7 +60,7 @@ public class DigitalLibrary {
 
     static void fillLibrary(Library library, DocumentGenerator documentGenerator, int amountOfDocuments){
         for (int i = 0; i < amountOfDocuments; i++){        
-            library.addDocument(documentGenerator.generateRandomDocument());
+            library.addDocument(documentGenerator.generateRandomDocument(i + 1));
         }
     }
 

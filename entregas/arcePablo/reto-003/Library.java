@@ -27,6 +27,26 @@ public class Library {
         }
     }
 
+    public int getDocumentCount() {
+        return documents.size();
+    }
+
+    public int getLastDocumentId() {
+        if (documents.size() > 0) {
+            return documents.get(documents.size() - 1).getDocumentId();
+        }
+        return 0;
+    }
+
+    public int searchDocumentByID(int id) {
+        for (int i = 0; i < documents.size(); i++) {
+            if (documents.get(i).getDocumentId() == id) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public void deleteDocument(int index) {
         if (index >= 0 && index < documents.size()) {
             documents.remove(index);

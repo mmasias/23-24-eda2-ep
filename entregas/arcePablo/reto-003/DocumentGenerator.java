@@ -8,8 +8,8 @@ import Types.KeyWordTypes;
 public class DocumentGenerator {
     static Random random = new Random();
 
-    public Document generateRandomDocument() {
-        Document document = new Document();
+    public Document generateRandomDocument(int index) {
+        Document document = new Document(index);
 
         String[] titles = {"El arte de programar en Java", "Historia del mundo", "Introducción a la inteligencia artificial"};
         document.setTitle(titles[random.nextInt(titles.length)]);
