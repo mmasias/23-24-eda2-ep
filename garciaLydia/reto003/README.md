@@ -38,5 +38,5 @@ Esta clase representa una biblioteca digital que contiene una lista de documento
 
 Esta clase contiene el método `main` que actúa como punto de entrada del programa. En el método `main`, se crea una instancia de `BibliotecaDigital`, se agregan varios documentos a la biblioteca y se realizan búsquedas de documentos por título, autor y palabras clave.
 
-![Diagrama UML](C:\Users\lydia\OneDrive\Escritorio\reto003UML.png)
+![Diagrama UML]("C:\Users\lydia\OneDrive\Escritorio\reto003UML.jpg")
 

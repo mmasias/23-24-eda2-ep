@@ -55,4 +55,4 @@ Este proyecto es una implementación básica de un sistema de gestión de biblio
 - Utiliza las clases `Book`, `Author` y `BookAuthor` para modelar libros, autores y relaciones.
 - La clase `LibraryManager` coordina las operaciones de la biblioteca y proporciona una interfaz de usuario.
 
-![Diagrama UML](C:\Users\lydia\OneDrive\Escritorio\parcialUML.png")
+![Diagrama UML]("C:\Users\lydia\OneDrive\Escritorio\parcialUML.jpg")
