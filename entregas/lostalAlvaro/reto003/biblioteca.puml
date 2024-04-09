@@ -1,0 +1,83 @@
+@startuml biblioteca
+class Autor {
+    -id: int
+    -nombre: String
+    -apellido: String
+    +Autor(int id, String nombre, String apellido)
+    +getNombre(): String
+    +getApellido(): String
+    +getId(): int
+    +toString(): String
+}
+
+class Documento {
+    -id: int
+    -titulo: String
+    -año: int
+    -palabrasClave: ArrayList<String>
+    -tipo: Tipo
+    +Documento(int id, String titulo, int año, ArrayList<String> palabrasClave, Tipo tipo)
+    +getTitulo(): String
+    +setTitulo(String titulo): void
+    +getAño(): int
+    +setAño(int año): void
+    +setPalabrasClave(ArrayList<String> palabrasClave): void
+    +getPalabrasClave(): ArrayList<String>
+    +getTipo(): Tipo
+    +setTipo(Tipo tipo): void
+    +getId(): int
+    +toString(): String
+}
+
+class Gestion {
+    -documentos: ArrayList<Documento>
+    -autores: ArrayList<Autor>
+    -relaciones: ArrayList<Relacion>
+    -scanner: Scanner
+    +Gestion()
+    +main(String[] args): void
+    -agregarDocumento(Documento documento): void
+    -agregarDocumento(): void
+    -listarDocumentos(): void
+    -modificarDocumento(Documento documento, String titulo, int año, ArrayList<String> palabrasClave, Tipo tipo): void
+    -modificarDocumento(): void
+    -eliminarDocumento(Documento documento): void
+    -eliminarDocumento(): void
+    -agregarAutor(Autor autor): void
+    -agregarAutor(Documento documento): void
+    -agregarAutor(): void
+    -agregarAutorADocumento(): void
+    -agregarAutorALista(): void
+    -eliminarAutor(Autor autor): void
+    -eliminarAutor(): void
+    -listarAutores(): void
+    -listarAutoresPorDocumento(Documento documento): void
+    -obtenerDocumentoPorId(int id): Documento
+    -obtenerAutorPorId(int id): Autor
+    -obtenerAutoresPorId(int idDocumento): ArrayList<Autor>
+    -añadirRelacion(int idDocumento, int idAutor): void
+    -buscar(String criterio, String valor): ArrayList<Documento>
+    -buscar(): void
+    -mostrarMenu(Gestion biblioteca): void
+}
+
+class Relacion {
+    -idLibro: int
+    -idAutor: int
+    +Relacion(int idLibro, int idAutor)
+    +getIdLibro(): int
+    +getIdAutor(): int
+}
+
+enum Tipo {
+    LIBRO, REVISTA, ARTICULO, PAPER
+}
+
+Gestion -- "0..*" Autor : gestiona
+Gestion -- "0..*" Documento : gestiona
+Gestion -- "0..*" Relacion : gestiona
+Documento --* Tipo
+
+Autor "1" -- "0..*" Relacion : contiene
+Documento "1" -- "0..*" Relacion : contiene
+@enduml
