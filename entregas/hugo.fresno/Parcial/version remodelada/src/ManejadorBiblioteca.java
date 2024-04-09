@@ -105,10 +105,12 @@ public class ManejadorBiblioteca {
                 case 2:
                     if (!(biblioteca.getGestionLibro().getLibros().isEmpty())) {
 
+
+
+
+                        System.out.print("\nIngrese el ID del libro al cual desea añadir un autor\n ");
                         biblioteca.mostrarLibrosId();
 
-
-                        System.out.print("Ingrese el ID del libro al cual desea añadir un autor: ");
                         int bookId = scanner.nextInt();
                         scanner.nextLine();
 

@@ -66,12 +66,15 @@ class Busqueda {
         List<Libro> resultado = new ArrayList<>();
         List<Libro> libros = gestionLibro.getLibros();
         for (int i = 0; i < libros.size(); i++) {
-            if (libros.get(i).getTitulo().toLowerCase().contains(titulo.toLowerCase())) {
-                resultado.add(libros.get(i));
+            Libro libro = libros.get(i);
+            if (libro.getTitulo().equalsIgnoreCase(titulo)) {
+                resultado.add(libro);
+                break; 
             }
         }
         return resultado;
     }
+
 
 
 }
