@@ -1,34 +1,75 @@
-public class Libro extends Documento {
+import java.util.ArrayList;
+import java.util.List;
 
-    private String editorial;
-    private int numeroPaginas;
+class Libro {
+    private String title;
+    private List<Author> authors = new ArrayList<>();
+    private int publishingYear;
+    private String type;
+    private List<String> keyWords = new ArrayList<>();
 
-    public Libro(String titulo, List<Autor> autores, int anioPublicacion, String editorial, int numeroPaginas) {
-        super(titulo, autores, anioPublicacion, TipoDocumento.LIBRO, new ArrayList<>());
-        this.editorial = editorial;
-        this.numeroPaginas = numeroPaginas;
+    public Book(String title, int publishingYear, String type, List<String> keyWords) {
+        this.title = title;
+        this.publishingYear = publishingYear;
+        this.type = type;
+        this.keyWords = keyWords;
     }
 
-    // Métodos para obtener y modificar los atributos específicos de un libro
-    public String getEditorial() {
-        return editorial;
+    public String getTitle() {
+        return title;
     }
 
-    public void setEditorial(String editorial) {
-        this.editorial = editorial;
+    public void setTitle(String newTitle) {
+        this.title = newTitle;
     }
 
-    public int getNumeroPaginas() {
-        return numeroPaginas;
+    public List<Author> getAuthors() {
+        return authors;
     }
 
-    public void setNumeroPaginas(int numeroPaginas) {
-        this.numeroPaginas = numeroPaginas;
+    public List<String> getAuthorNames() {
+        List<String> authorNames = new ArrayList<>();
+        for (Author author : this.authors) {
+            authorNames.add(author.getName());
+        }
+        return authorNames;
+    }    
+
+    public void addAuthor(Author author) {
+        if (!authors.contains(author)) {
+            authors.add(author);
+            author.addDocument(this);
+        }
     }
 
-    @Override
-    public String toString() {
-        return super.toString() + " - " + editorial + " (" + numeroPaginas + " pags.)";
+    public void removeAuthor(Author author) {
+        if (authors.remove(author)) {
+            author.removeDocument(this);
+        }
+    }
+
+    public int getPublishingYear() {
+        return publishingYear;
+    }
+
+    public void setPublishingYear(int newYear) {
+        this.publishingYear = newYear;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String newType) {
+        this.type = newType;
+    }
+
+    public List<String> getKeyWords() {
+        return keyWords;
+    }
+
+    public void setKeyWords(List<String> keyWords) {
+        this.keyWords = new ArrayList<>(keyWords);
     }
 
 }

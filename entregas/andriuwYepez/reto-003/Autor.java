@@ -1,25 +1,37 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Autor {
+    private String name;
+    private List<Book> documents;
 
-    private String nombre;
-    private String apellido;
-
-    public Autor(String nombre, String apellido) {
-        this.nombre = nombre;
-        this.apellido = apellido;
+    public Author(String name) {
+        this.name = name;
+        this.documents = new ArrayList<>();
     }
 
-    // Métodos para obtener los atributos del autor
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public String getApellido() {
-        return apellido;
+    public List<Book> getDocuments() {
+        return documents;
     }
 
-    @Override
-    public String toString() {
-        return nombre + " " + apellido;
+    public void addDocument(Book document) {
+        if (!documents.contains(document)) {
+            documents.add(document);
+            if (!document.getAuthors().contains(this)) {
+                document.addAuthor(this);
+            }
+        }
     }
 
+    public void removeDocument(Book document) {
+        if (documents.remove(document)) {
+            if (document.getAuthors().contains(this)) {
+                document.removeAuthor(this);
+            }
+        }
+    }
 }
