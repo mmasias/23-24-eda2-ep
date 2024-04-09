@@ -1,7 +1,7 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Arrays;
 
 public class LibraryManager {
     private List<Book> books;
@@ -23,26 +23,19 @@ public class LibraryManager {
             System.out.println("3. Agregar Libro");
             System.out.println("4. Agregar Autor");
             System.out.println("5. Agregar Relación");
-            System.out.println("6. Buscar Libros por Palabras Clave");
-            System.out.println("7. Salir");
+            System.out.println("6. Listar Relaciones de Libros y Autores");
+            System.out.println("7. Buscar Libros por Palabras Clave");
+            System.out.println("8. Salir");
             System.out.print("Ingrese su elección: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
 
             switch (choice) {
                 case 1:
-                    if (books.isEmpty()) {
-                        System.out.println("No hay libros para mostrar.");
-                    } else {
-                        listBooks();
-                    }
+                    listBooks();
                     break;
                 case 2:
-                    if (authors.isEmpty()) {
-                        System.out.println("No hay autores para mostrar.");
-                    } else {
-                        listAuthors();
-                    }
+                    listAuthors();
                     break;
                 case 3:
                     addBook();
@@ -54,9 +47,12 @@ public class LibraryManager {
                     addRelation();
                     break;
                 case 6:
-                    searchBooksByKeywords();
+                    listRelations();
                     break;
                 case 7:
+                    searchBooksByKeywords();
+                    break;
+                case 8:
                     System.out.println("Saliendo del Administrador de Biblioteca.");
                     scanner.close();
                     return;
@@ -67,6 +63,11 @@ public class LibraryManager {
     }
 
     private void listBooks() {
+        if (books.isEmpty()) {
+            System.out.println("No hay libros para mostrar.");
+            return;
+        }
+    
         System.out.println("Lista de Libros:");
         for (Book book : books) {
             System.out.println(book);
@@ -82,6 +83,7 @@ public class LibraryManager {
             System.out.println();
         }
     }
+    
 
     private void listAuthors() {
         System.out.println("Lista de Autores:");
@@ -95,7 +97,7 @@ public class LibraryManager {
         String title = scanner.nextLine();
         System.out.print("Ingrese el año de publicación: ");
         int publicationYear = scanner.nextInt();
-        scanner.nextLine(); 
+        scanner.nextLine();
 
         boolean validTypeOfDocument = true;
         String typeDocument = "";
@@ -103,7 +105,7 @@ public class LibraryManager {
             System.out.println("Tipo de documento: (1-Libro, 2-Revista, 3-Artículo, 4-Paper) ");
             validTypeOfDocument = true;
             int numberDocument = scanner.nextInt();
-            scanner.nextLine(); 
+            scanner.nextLine();
 
             switch (numberDocument) {
                 case 1:
@@ -128,7 +130,7 @@ public class LibraryManager {
         String inputKeywords = scanner.nextLine();
         String[] keywords = inputKeywords.split(",");
 
-        Book newBook = new Book(books.size() + 1, title, publicationYear, typeDocument);
+        Book newBook = new Book(books.size() + 1, title, publicationYear, "Libro");
         newBook.setKeywords(keywords);
         books.add(newBook);
         System.out.println("Libro agregado correctamente.");
@@ -144,27 +146,10 @@ public class LibraryManager {
     }
 
     private void addRelation() {
-        System.out.println("Agregar relación entre Libro y Autor:");
-        
-        System.out.println("Libros disponibles:");
-        for (Book book : books) {
-            System.out.println(book.getId() + ". " + book.getTitle());
-        }
-        System.out.print("Seleccione el ID del libro: ");
-        int bookId = scanner.nextInt();
-        scanner.nextLine(); 
+        System.out.println("Lista de autores disponibles para relacionar:");
+        listAuthors();
 
-        Book book = findBookById(bookId);
-        if (book == null) {
-            System.out.println("Libro no encontrado.");
-            return;
-        }
-
-        System.out.println("Autores disponibles:");
-        for (Author author : authors) {
-            System.out.println(author.getId() + ". " + author.getName());
-        }
-        System.out.print("Seleccione el ID del autor: ");
+        System.out.print("Ingrese el ID del autor para agregar la relación: ");
         int authorId = scanner.nextInt();
         scanner.nextLine();
 
@@ -174,17 +159,36 @@ public class LibraryManager {
             return;
         }
 
-        for (BookAuthor relation : relations) {
-            if (relation.getBookId() == bookId && relation.getAuthorId() == authorId) {
-                System.out.println("La relación ya existe.");
-                return;
-            }
+        System.out.println("Lista de libros disponibles para relacionar:");
+        listBooks();
+
+        System.out.print("Ingrese el ID del libro para agregar la relación: ");
+        int bookId = scanner.nextInt();
+        scanner.nextLine();
+
+        Book book = findBookById(bookId);
+        if (book == null) {
+            System.out.println("Libro no encontrado.");
+            return;
         }
 
         BookAuthor newRelation = new BookAuthor(bookId, authorId);
         relations.add(newRelation);
-        System.out.println("Relación agregada correctamente: " + book.getTitle() + " - " + author.getName());
+        System.out.println("Relación agregada correctamente.");
     }
+
+    private void listRelations() {
+        System.out.println("Lista de Relaciones de Libros y Autores:");
+        for (BookAuthor relation : relations) {
+            Book book = findBookById(relation.getBookId());
+            Author author = findAuthorById(relation.getAuthorId());
+            if (book != null && author != null) {
+                System.out.println("ID Libro: " + book.getId() + ", Título: " + book.getTitle()
+                    + " - ID Autor: " + author.getId() + ", Nombre: " + author.getName());
+            }
+        }
+    }
+    
 
     private void searchBooksByKeywords() {
         System.out.print("Ingrese las palabras clave para buscar libros: ");
