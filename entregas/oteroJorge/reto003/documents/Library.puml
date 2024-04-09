@@ -1,0 +1,94 @@
+@startuml
+class Author {
+    - id: int
+    - name: String
+
+    + Author(int id, String name)
+    + getId(): int
+    + getName(): String
+    + setId(int id): void
+    + setNombreCompleto(String name): void
+    + toString(): String
+}
+class Book {
+    - id: int
+    - title: String
+    - publicationYear: int
+    - type: String
+
+    + Book(int id, String title, int publicationYear, String type)
+    + getId(): int
+    + getTitle(): String
+    + toString(): String
+}
+class BookAuthor {
+    - bookId: int
+    - authorId: int
+
+    + BookAuthor(int bookId, int authorId)
+    + getBookId(): int
+    + getAuthorId(): int
+}
+class BookTopic {
+    - bookId: int
+    - topicId: int
+
+    + BookTopic(int bookId, int topicId)
+    + getBookId(): int
+    + getTopicId(): int
+}
+class Library {
+    + main(String[] args)
+}
+class LibraryManager {
+    - books: List<Book>
+    - authors: List<Author>
+    - bookAuthors: List<BookAuthor>
+    - topics: List<Topic>
+    - bookTopics: List<BookTopic>
+    - scanner: Scanner
+    + LibraryManager()
+    - listBooks(): void
+    - listAuthors(): void
+    - listTopics(): void
+    - addExampleBooks(): void
+    - addBook(): void
+    - addAuthorToBook(Book): void
+    - addTopicToBook(Book): void
+    - addAuthor(Book): void
+    - addTopic(Book): void
+    - addNewAuthor(Book): void
+    - addNewTopic(Book): void
+    - addAuthorRelation(int, int): void
+    - addTopicRelation(int, int): void
+    - getAuthorsByBookId(int): String
+    - searchAuthor(): void
+    - searchTopic(): void
+    - searchBook(): void
+    - findBookByAuthor(): void
+    - findBookByTopic(): void
+    - findAuthorByBook(): void
+    - findTopicByBook(): void
+    - searcher(): void
+    + start(): void
+}
+class Topic {
+    - id: int
+    - name: String
+
+    + Topic(int id, String name)
+    + getId(): int
+    + getName(): String
+    + setId(int id): void
+    + setNombreCompleto(String name): void
+    + toString(): String
+}
+
+
+LibraryManager --> Book: manages
+LibraryManager --> Author: manages
+LibraryManager --> BookAuthor: manages
+LibraryManager --> Topic: manages
+LibraryManager --> BookTopic: manages
+Library --> LibraryManager
+@enduml
