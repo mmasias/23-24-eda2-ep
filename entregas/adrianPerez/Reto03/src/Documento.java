@@ -3,14 +3,13 @@ import java.util.ArrayList;
 public class Documento {
     private String titulo;
     private int añoDePublicacion;
-    private ArrayList<Autor> autores;
-    private TipoDoc tipo;
+    private String tipo;
     private ArrayList<String> palabrasClave;
+    private int id;
 
-    public Documento(String titulo, int añoDePublicacion, ArrayList<Autor> autores, TipoDoc tipo ) {
+    public Documento(int id, String titulo, int añoDePublicacion, String tipo ) {
         this.titulo = titulo;
         this.añoDePublicacion = añoDePublicacion;
-        this.autores = autores;
         this.tipo = tipo;
         this.palabrasClave = new ArrayList<String>();
     }
@@ -31,19 +30,11 @@ public class Documento {
         this.añoDePublicacion = añoDePublicacion;
     }
 
-    public ArrayList<Autor> getAutores() {
-        return autores;
-    }
-
-    public void setAutores(ArrayList<Autor> autores) {
-        this.autores = autores;
-    }
-
-    public TipoDoc getTipo() {
+    public String getTipo() {
         return tipo;
     }
 
-    public void setTipo(TipoDoc tipo) {
+    public void setTipo(String tipo) {
         this.tipo = tipo;
     }
 
@@ -55,20 +46,22 @@ public class Documento {
         this.palabrasClave = palabrasClave;
     }
 
-    public void añadirAutor(Autor autor){
-        this.autores.add(autor);
-    }
-
     public  void añadirPalabraClave(String palabraClave){
         this.palabrasClave.add(palabraClave);
     }
 
-    public void eliminarAutor(Autor autor){
-        this.autores.remove(autor);
-    }
-
     public void eliminarPalabraClave(String palabraClave){
         this.palabrasClave.remove(palabraClave);
+    }
+
+    @Override
+    public String toString() {
+        return "> Libro{" +
+               "id=" + id +
+               ", titulo='" + titulo + '\'' +
+               ", añoDePublicación=" + añoDePublicacion +
+               ", tipo='" + tipo + '\'' +
+               '}';
     }
 
 }
