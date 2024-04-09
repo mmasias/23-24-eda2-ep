@@ -1,0 +1,107 @@
+@startuml
+!define RECTANGLE class
+
+RECTANGLE Autor {
+    - int id
+    - String name
+    + Autor(int id, String name)
+    + int getId()
+    + String getName()
+    + String toString() : String
+}
+
+RECTANGLE Libro {
+    - int id
+    - String titulo
+    - List<Autor> autores
+    - int añoPublicacion
+    - TipoLibro tipoLibro
+    - List<String> palabrasClave
+    + Libro(String titulo, List<Autor> autores, int añoPublicacion, TipoLibro tipoLibro, List<String> palabrasClave)
+    + void setId(int id)
+    + void setTitulo(String titulo)
+    + void setAutores(List<Autor> autores)
+    + void setAñoPublicacion(int añoPublicacion)
+    + void setTipoLibro(TipoLibro tipoLibro)
+    + void setPalabrasClave(List<String> palabrasClave)
+}
+
+RECTANGLE Busqueda {
+    - GestionLibro gestionLibro
+    + Busqueda(GestionLibro gestionLibro)
+    + List<Libro> buscarPorAutor(String nombreAutor)
+    + List<Libro> buscarPorAño(int año)
+    + List<Libro> buscarPorPalabraClave(String palabraClave)
+    + List<Libro> buscarPorTipo(TipoLibro tipo)
+    + List<Libro> buscarPorTitulo(String titulo)
+}
+
+RECTANGLE Biblioteca {
+    - GestionLibro gestionLibro
+    - Busqueda busqueda
+    - List<Autor> autores
+    - static int nextAutorId = 1
+    + Biblioteca()
+    + void agregarLibro(Libro libro)
+    + void agregarAutor(String nombre)
+    + Autor buscarAutorPorNombre(String nombre)
+    + void addAuthorToBook(int bookId, Autor nuevoAutor)
+    + void mostrarLibros()
+    + void mostrarLibrosId()
+    + List<Libro> buscarPorAutor(String nombreAutor)
+    + List<Libro> buscarPorAño(int año)
+    + List<Libro> buscarPorPalabraClave(String palabraClave)
+    + List<Libro> buscarPorTipo(TipoLibro tipo)
+    + List<Libro> buscarPorTitulo(String titulo)
+    + void imprimirResultadosBusquedaTitulo(List<Libro> resultados)
+    + void imprimirResultadosBusquedaAutor(List<Libro> resultados)
+    + void imprimirResultadosAño(List<Libro> resultados)
+    + void imprimirResultadosDocumento(List<Libro> resultados)
+    + void imprimirResultadosPalabraClave(List<Libro> resultados)
+    + int getNextAutorId()
+    + GestionLibro getGestionLibro()
+}
+
+RECTANGLE GestionLibro {
+    - List<Libro> libros
+    - static int nextId = 1
+    + GestionLibro()
+    + void agregarLibro(Libro libro)
+    + boolean eliminarLibro(String titulo)
+    + boolean eliminarLibroPorId(int id)
+    + void editarLibro(int idLibro, String nuevoTitulo, List<Autor> nuevosAutores, Integer nuevoAnio, TipoLibro nuevoTipo, List<String> nuevasPalabrasClave)
+    + Libro buscarLibroPorId(int id)
+    + List<Libro> getLibros()
+    + void mostrarLibros()
+    + void mostrarLibrosId()
+    + void setLibros(List<Libro> libros)
+    + static int getNextId()
+    + static void setNextId(int nextId)
+}
+
+RECTANGLE ManejadorBiblioteca {
+    +solicitarAutores()
+    +void editarLibro()
+    + void ejecutar()
+}
+
+RECTANGLE App {
+    + static void main(String[] args)
+}
+
+enum TipoLibro {
+    LIBRO
+    REVISTA
+    ARTICULO
+    TESIS
+    NOVELA
+}
+
+Libro "1" -- "0..*" Autor : contiene >
+Biblioteca "1" -- "1" GestionLibro : gestiona
+Biblioteca "1" -- "1" Busqueda : utiliza
+GestionLibro "1" -- "0..*" Libro : almacena
+Busqueda ..> Libro : busca >
+ManejadorBiblioteca ..> Biblioteca : usa >
+App ..> ManejadorBiblioteca : inicia >
+@enduml
