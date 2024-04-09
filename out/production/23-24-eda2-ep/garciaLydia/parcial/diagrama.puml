@@ -1,0 +1,49 @@
+@startuml
+
+class Author {
+    -name: String
+    -booksAuthor: List<BookAuthor>
+    +Author(String)
+    +getName(): String
+    +addBookAuthor(BookAuthor): void
+    +toString(): String
+}
+
+class Book {
+    -id: int
+    -title: String
+    -publicationYear: int
+    -type: String
+    -booksAuthor: List<BookAuthor>
+    +Book(int, String, int, String)
+    +toString(): String
+}
+
+class BookAuthor {
+    -author: Author
+    -book: Book
+    +BookAuthor(Author, Book)
+    +toString(): String
+}
+
+class LibraryManager {
+    -books: List<Book>
+    -authors: List<Author>
+    -authorBooks: List<BookAuthor>
+    -scanner: Scanner
+    +LibraryManager()
+    +startLibraryManager(): void
+    +listBooks(): void
+    +addBook(): void
+    +findOrCreateAuthor(String): Author
+    +listAuthors(): void
+}
+
+LibraryManager -- "0..*" Book : manages
+LibraryManager -- "0..*" Author : manages
+LibraryManager -- "0..*" BookAuthor : manages
+Book "1" -l- "0..*" BookAuthor : contains
+Author "1" --r- "0..*" BookAuthor : contains
+
+@enduml
+
