@@ -12,7 +12,7 @@ public class Biblioteca {
 
     public Biblioteca() {
         this.gestionLibro = new GestionLibro();
-        this.busqueda = new Busqueda(gestionLibro.getLibros());
+        this.busqueda = new Busqueda(this.gestionLibro);
         this.autores = new ArrayList<>();
 
     }
@@ -81,7 +81,7 @@ public class Biblioteca {
         return busqueda.buscarPorAutor(nombreAutor);
     }
 
-    public List<Libro> buscarPorAño(int año) {
+    /*public List<Libro> buscarPorAño(int año) {
         return busqueda.buscarPorAño(año);
     }
 
@@ -95,7 +95,7 @@ public class Biblioteca {
 
     public Libro buscarLibroPorTitulo(String titulo) {
         return gestionLibro.buscarLibroPorTitulo(titulo);
-    }
+    }*/
 
     public void imprimirResultadosBusqueda(List<Libro> resultados) {
         if (resultados.isEmpty()) {

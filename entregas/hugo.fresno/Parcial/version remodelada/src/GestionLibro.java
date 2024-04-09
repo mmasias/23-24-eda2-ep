@@ -73,15 +73,6 @@ public class GestionLibro {
         return null;
     }
 
-    public void editarLibro(int idLibro, Libro libroModificado) {
-        for (int i = 0; i < libros.size(); i++) {
-            if (libros.get(i).getId() == idLibro) {
-                libros.set(i, libroModificado);
-                return;
-            }
-        }
-    }
-
     public List<Libro> getLibros() {
         return new ArrayList<>(libros);
     }
@@ -123,5 +114,18 @@ public class GestionLibro {
             System.out.println();
 
         }
+    }
+
+
+    public void setLibros(List<Libro> libros) {
+        this.libros = libros;
+    }
+
+    public static int getNextId() {
+        return nextId;
+    }
+
+    public static void setNextId(int nextId) {
+        GestionLibro.nextId = nextId;
     }
 }

@@ -189,22 +189,22 @@ public class ManejadorBiblioteca {
                                 System.out.print("Ingrese el año de publicación: ");
                                 int year = scanner.nextInt();
                                 scanner.nextLine();
-                                List<Libro> resultadosAño = biblioteca.buscarPorAño(year);
-                                biblioteca.imprimirResultadosBusqueda(resultadosAño);
+                                //List<Libro> resultadosAño = biblioteca.buscarPorAño(year);
+                                //biblioteca.imprimirResultadosBusqueda(resultadosAño);
                                 break;
                             case 3:
                                 System.out.print("Ingrese la palabra clave: ");
                                 String palabraClave = scanner.nextLine();
-                                List<Libro> resultadosPalabraClave = biblioteca.buscarPorPalabraClave(palabraClave);
-                                biblioteca.imprimirResultadosBusqueda(resultadosPalabraClave);
+                                //List<Libro> resultadosPalabraClave = biblioteca.buscarPorPalabraClave(palabraClave);
+                                //biblioteca.imprimirResultadosBusqueda(resultadosPalabraClave);
                                 break;
                             case 4:
                                 System.out.print("Ingrese el tipo de documento (LIBRO, REVISTA, ARTICULO, TESIS): ");
                                 String type = scanner.nextLine().toUpperCase();
                                 try {
                                     TipoLibro bookType = TipoLibro.valueOf(type);
-                                    List<Libro> resultadosTipo = biblioteca.buscarPorTipo(bookType);
-                                    biblioteca.imprimirResultadosBusqueda(resultadosTipo);
+                                    //List<Libro> resultadosTipo = biblioteca.buscarPorTipo(bookType);
+                                    //biblioteca.imprimirResultadosBusqueda(resultadosTipo);
                                 } catch (IllegalArgumentException e) {
                                     System.out.println("Tipo de documento no válido.");
                                 }
