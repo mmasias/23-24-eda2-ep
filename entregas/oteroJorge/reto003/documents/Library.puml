@@ -1,4 +1,4 @@
-@startuml
+@startuml Library
 class Author {
     - id: int
     - name: String
@@ -83,12 +83,11 @@ class Topic {
     + setNombreCompleto(String name): void
     + toString(): String
 }
-
+Library --> LibraryManager: uses
 
 LibraryManager --> Book: manages
 LibraryManager --> Author: manages
 LibraryManager --> BookAuthor: manages
 LibraryManager --> Topic: manages
 LibraryManager --> BookTopic: manages
-Library --> LibraryManager
 @enduml
