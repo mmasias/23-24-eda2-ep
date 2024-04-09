@@ -26,5 +26,5 @@ Una idea que he tenido para el buscador es que sea un metodo a parte que se enca
 
 El siguiente diagrama muestra la estructura de clases del proyecto:
 
-![Diagrama de Clases](link_al_diagrama)
+![Diagrama de Clases](https://github.com/Jorgeog25/23-24-eda2-ep/blob/parcial/entregas/oteroJorge/reto003/documents/Library.png)
 
