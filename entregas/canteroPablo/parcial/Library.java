@@ -89,9 +89,11 @@ public class Library {
                     }
                 }
             } else if (option == 2) {
+                System.out.println("Autores posibles");
                 printAuthorListing();
                 System.out.println("Id del autor: ");
                 int authorId = userInput.nextInt();
+                System.out.println("Documentos posibles");
                 printIDDocument();
                 System.out.println("Id del documento: ");
                 int documentId = userInput.nextInt();
@@ -156,9 +158,11 @@ public class Library {
                     }
                 }
             } else if (option == 2) {
+                System.out.println("Palabras clave posibles");
                 printKeyWordsListing();
                 System.out.println("Id de la palabra clave: ");
                 int keyWordId = userInput.nextInt();
+                System.out.println("Documentos posibles");
                 printIDDocument();
                 System.out.println("Id del documento: ");
                 int documentId = userInput.nextInt();
@@ -420,11 +424,18 @@ public class Library {
         System.out.println("¿Que autor quieres eliminar?, dime el id del autor");
         Scanner userInput = new Scanner(System.in);
         int id = userInput.nextInt();
-        if (authorList.contains(id)) {
-            authorList.remove(id);
-        } else {
-            System.out.println("El autor no existe");
+        boolean found = false;
+    for (Author author : authorList) {
+        if (author.getId() == id) {
+            found = true;
+            authorList.remove(author);
+            System.out.println("Autor eliminado correctamente");
+            break; 
         }
+    }
+    if (!found) {
+        System.out.println("El autor no existe");
+    }
         removeRelationsDocumentAuthors(id);
 
     }
