@@ -18,28 +18,40 @@ public class LibraryManager {
     public void startLibraryManager() {
         while (true) {
             System.out.println("1. Listar Libros");
-            System.out.println("2. Agregar Libro");
-            System.out.println("3. Agregar Autor");
-            System.out.println("4. Agregar Relación");
-            System.out.println("5. Salir");
+            System.out.println("2. Listar Autores");
+            System.out.println("3. Agregar Libro");
+            System.out.println("4. Agregar Autor");
+            System.out.println("5. Agregar Relación");
+            System.out.println("6. Salir");
             System.out.print("Ingrese su elección: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
 
             switch (choice) {
                 case 1:
-                    listBooks();
+                    if (books.isEmpty()) {
+                        System.out.println("No hay libros para mostrar.");
+                    } else {
+                        listBooks();
+                    }
                     break;
                 case 2:
-                    addBook();
+                    if (authors.isEmpty()) {
+                        System.out.println("No hay autores para mostrar.");
+                    } else {
+                        listAuthors();
+                    }
                     break;
                 case 3:
-                    addAuthor();
+                    addBook();
                     break;
                 case 4:
-                    addRelation();
+                    addAuthor();
                     break;
                 case 5:
+                    addRelation();
+                    break;
+                case 6:
                     System.out.println("Saliendo del Administrador de Biblioteca.");
                     scanner.close();
                     return;
@@ -53,6 +65,13 @@ public class LibraryManager {
         System.out.println("Lista de Libros:");
         for (Book book : books) {
             System.out.println(book);
+        }
+    }
+
+    private void listAuthors() {
+        System.out.println("Lista de Autores:");
+        for (Author author : authors) {
+            System.out.println(author);
         }
     }
 
@@ -116,4 +135,10 @@ public class LibraryManager {
         }
         return null;
     }
+
+    public static void main(String[] args) {
+        LibraryManager libraryManager = new LibraryManager();
+        libraryManager.startLibraryManager();
+    }
 }
+
