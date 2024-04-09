@@ -97,7 +97,7 @@ public class LibraryManager {
 
     private void addBook(Book book) {
         books.add(book);
-        System.out.println("Libro añadido. ¿Deseas añadir autores a este documento? (s/n)");
+        System.out.println("Documento añadido. ¿Deseas añadir autores a este documento? (s/n)");
         String response = scanner.nextLine();
         if ("s".equalsIgnoreCase(response)) {
             addAuthor(book);
@@ -558,38 +558,102 @@ public class LibraryManager {
     
 
 
-
     private void editKeywordsForBook(Book book) {
         System.out.println("Editar palabras clave para el libro: " + book.getTitle());
-        listKeyWords();
+        List<KeyWord> keywordsInBook = getKeyWordsByBookId(book.getId());
+        if (keywordsInBook.isEmpty()) {
+            System.out.println("El libro no tiene palabras clave asociadas.");
+            return;
+        }
+        System.out.println("Palabras clave en el libro:");
+        for (KeyWord keyword : keywordsInBook) {
+            System.out.println("ID: " + keyword.getId() + ", Palabra clave: " + keyword.getName());
+        }
     
-        System.out.println("Introduce el ID de la palabra clave que deseas editar o 'nuevo' para crear una nueva palabra clave:");
-        String input = scanner.nextLine();
+        boolean isEditing = true;
+        while (isEditing) {
+            System.out.println("¿Qué acción deseas realizar con las palabras clave?");
+            System.out.println("1. Eliminar una palabra clave del documento");
+            System.out.println("2. Añadir una palabra clave existente al documento");
+            System.out.println("3. Crear una nueva palabra clave para añadir al documento");
+            System.out.println("4. Salir de la edición de palabras clave");
     
-        if ("nuevo".equalsIgnoreCase(input)) {
-            System.out.println("Introduce el nombre de la nueva palabra clave:");
-            String keywordName = scanner.nextLine();
-            KeyWord newKeyword = new KeyWord(keywords.size() + 1, keywordName);
-            addKeyWord(newKeyword);
-            addKeyWordRelation(book.getId(), newKeyword.getId());
-            System.out.println("Palabra clave nueva añadida y asociada al libro.");
-        } else {
-            try {
-                int keywordId = Integer.parseInt(input);
-                KeyWord keywordToEdit = findKeyWordById(keywordId);
-                if (keywordToEdit == null) {
-                    System.out.println("La palabra clave con ID " + keywordId + " no existe.");
-                    return;
-                }
-                System.out.println("Introduce el nuevo nombre de la palabra clave:");
-                String newKeywordName = scanner.nextLine();
-                keywordToEdit.setName(newKeywordName);
-                System.out.println("Palabra clave editada correctamente.");
-            } catch (NumberFormatException e) {
-                System.out.println("Entrada no válida.");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); 
+            switch (choice) {
+                case 1:
+                    deleteKeywordFromBook(book);
+                    break;
+                case 2:
+                    addExistingKeywordToBook(book);
+                    break;
+                case 3:
+                    addNewKeywordToBook(book);
+                    break;
+                case 4:
+                    isEditing = false;
+                    System.out.println("Saliendo de la edición de palabras clave.");
+                    break;
+                default:
+                    System.out.println("Opción no válida.");
+                    break;
             }
         }
     }
+    
+    private void deleteKeywordFromBook(Book book) {
+        System.out.println("Introduce el ID de la palabra clave que deseas eliminar:");
+        int keywordIdToDelete = scanner.nextInt();
+        scanner.nextLine(); 
+    
+        boolean keywordDeleted = false;
+        Iterator<BookKeyWord> iterator = keywordrelations.iterator();
+        while (iterator.hasNext()) {
+            BookKeyWord relation = iterator.next();
+            if (relation.getBookId() == book.getId() && relation.getKeyWordId() == keywordIdToDelete) {
+                iterator.remove();
+                keywordDeleted = true;
+                break;
+            }
+        }
+    
+        if (keywordDeleted) {
+            System.out.println("Palabra clave eliminada del libro.");
+        } else {
+            System.out.println("No se encontró la palabra clave en el libro.");
+        }
+    }
+    
+    private void addExistingKeywordToBook(Book book) {
+        listKeyWords();
+        System.out.println("Introduce el ID de la palabra clave que deseas añadir:");
+        int keywordIdToAdd = scanner.nextInt();
+        scanner.nextLine(); 
+    
+        boolean keywordAdded = false;
+        for (KeyWord keyword : keywords) {
+            if (keyword.getId() == keywordIdToAdd) {
+                addKeyWordRelation(book.getId(), keywordIdToAdd);
+                keywordAdded = true;
+                break;
+            }
+        }
+    
+        if (keywordAdded) {
+            System.out.println("Palabra clave añadida al libro.");
+        } else {
+            System.out.println("No se encontró la palabra clave en la biblioteca.");
+        }
+    }
+    
+    private void addNewKeywordToBook(Book book) {
+        System.out.println("Introduce el nombre de la nueva palabra clave:");
+        String keywordName = scanner.nextLine();
+        KeyWord newKeyword = new KeyWord(keywords.size() + 1, keywordName);
+        addKeyWord(newKeyword);
+        addKeyWordRelation(book.getId(), newKeyword.getId());
+        System.out.println("Palabra clave nueva añadida y asociada al libro.");
+    }    
     
 
 }
