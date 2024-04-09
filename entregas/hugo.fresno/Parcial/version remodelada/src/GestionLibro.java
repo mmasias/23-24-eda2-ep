@@ -72,7 +72,7 @@ public class GestionLibro {
 
     public void mostrarLibros() {
         if (libros.isEmpty()) {
-            System.out.println("No hay libros en la biblioteca.");
+            System.out.println("--No hay libros en la biblioteca.--");
             return;
         }
 
@@ -96,14 +96,15 @@ public class GestionLibro {
 
     public void mostrarLibrosId() {
         if (libros.isEmpty()) {
-            System.out.println("No hay libros en la biblioteca.");
+            System.out.println("--No hay libros en la biblioteca.--");
             return;
         }
 
+        System.out.println();
         for (int i = 0; i < libros.size(); i++) {
             Libro libro = libros.get(i);
-            System.out.println("\nTitulo: " + libro.getTitulo());
-            System.out.println("Id: " + libro.getId());
+            System.out.println("-Titulo: " + libro.getTitulo());
+            System.out.println(" Id: " + libro.getId());
             System.out.println();
         }
     }

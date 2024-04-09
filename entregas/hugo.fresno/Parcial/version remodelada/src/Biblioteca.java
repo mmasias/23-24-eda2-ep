@@ -90,7 +90,7 @@ public class Biblioteca {
         return  busqueda.buscarPorTitulo(nombreLibro);
     }
 
-    public void imprimirResultadosBusqueda(List<Libro> resultados) {
+    public void imprimirResultadosBusquedaTitulo(List<Libro> resultados) {
         if (resultados.isEmpty()) {
             System.out.println("No se encontraron resultados.");
         } else {
@@ -104,6 +104,82 @@ public class Biblioteca {
                 System.out.println("\n**RESULTADO**");
                 System.out.println("Titulo: " + libro.getTitulo());
                 System.out.println("Id Libro: " + libro.getId());
+            }
+        }
+    }
+    public void imprimirResultadosBusquedaAutor(List<Libro> resultados) {
+        if (resultados.isEmpty()) {
+            System.out.println("No se encontraron resultados.");
+        } else {
+            for (int i = 0; i < resultados.size(); i++) {
+                Libro libro = resultados.get(i);
+                System.out.println("\n**RESULTADO**");
+                System.out.println("Título: " + libro.getTitulo());
+
+                System.out.print("Autor(es): ");
+                List<String> nombresAutores = new ArrayList<>();
+                for (int j = 0; j < libro.getAutores().size(); j++) {
+                    Autor autor = libro.getAutores().get(j);
+                    nombresAutores.add(autor.getName() + " (ID: " + autor.getId() + ")");
+                }
+                System.out.println(String.join(", ", nombresAutores));
+
+
+            }
+        }
+    }
+
+
+    public void imprimirResultadosAño(List<Libro> resultados) {
+        if (resultados.isEmpty()) {
+            System.out.println("No se encontraron resultados.");
+        } else {
+            for (int i = 0; i < resultados.size(); i++) {
+                Libro libro = resultados.get(i);
+                List<String> nombresAutores = new ArrayList<>();
+                for (int j = 0; j < libro.getAutores().size(); j++) {
+                    Autor autor = libro.getAutores().get(j);
+                    nombresAutores.add(autor.getName());
+                }
+                System.out.println("\n**RESULTADO**");
+                System.out.println("Titulo: " + libro.getTitulo());
+                System.out.println("Año publicación: " + libro.getAñoPublicacion());
+            }
+        }
+    }
+
+    public void imprimirResultadosDocumento(List<Libro> resultados) {
+        if (resultados.isEmpty()) {
+            System.out.println("No se encontraron resultados.");
+        } else {
+            for (int i = 0; i < resultados.size(); i++) {
+                Libro libro = resultados.get(i);
+                List<String> nombresAutores = new ArrayList<>();
+                for (int j = 0; j < libro.getAutores().size(); j++) {
+                    Autor autor = libro.getAutores().get(j);
+                    nombresAutores.add(autor.getName());
+                }
+                System.out.println("\n**RESULTADO**");
+                System.out.println("Titulo: " + libro.getTitulo());
+                System.out.println("Tipo documento: " + libro.getTipoLibro());
+            }
+        }
+    }
+
+    public void imprimirResultadosPalabraClave(List<Libro> resultados) {
+        if (resultados.isEmpty()) {
+            System.out.println("No se encontraron resultados.");
+        } else {
+            for (int i = 0; i < resultados.size(); i++) {
+                Libro libro = resultados.get(i);
+                List<String> nombresAutores = new ArrayList<>();
+                for (int j = 0; j < libro.getAutores().size(); j++) {
+                    Autor autor = libro.getAutores().get(j);
+                    nombresAutores.add(autor.getName());
+                }
+                System.out.println("\n**RESULTADO**");
+                System.out.println("Titulo: " + libro.getTitulo());
+                System.out.println("Palabra clave: " + libro.getPalabrasClave());
             }
         }
     }
