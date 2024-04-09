@@ -451,7 +451,7 @@ public class LibraryManager {
         System.out.println("Editar autores para el documento: " + book.getTitle());
         listAuthors();
 
-        System.out.println("Introduce el ID del autor que deseas editar o 'nuevo' para crear un nuevo autor:");
+        System.out.println("Introduce el ID del autor que deseas editar o 'nuevo' para añadir un nuevo autor:");
         String input = scanner.nextLine();
 
         if ("nuevo".equalsIgnoreCase(input)) {
@@ -480,24 +480,36 @@ public class LibraryManager {
     }
 
     private void editKeywordsForBook(Book book) {
-        System.out.println("Editar palabras clave para el documento: " + book.getTitle());
+        System.out.println("Editar palabras clave para el libro: " + book.getTitle());
         listKeyWords();
-
-        System.out.println("Introduce el ID de la palabra clave que deseas añadir o editar:");
-        int keywordId = scanner.nextInt();
-        scanner.nextLine();
-
-        KeyWord keyword = findKeyWordById(keywordId);
-        if (keyword == null) {
-            System.out.println("La palabra clave no existe. Se creará una nueva.");
+    
+        System.out.println("Introduce el ID de la palabra clave que deseas editar o 'nuevo' para crear una nueva palabra clave:");
+        String input = scanner.nextLine();
+    
+        if ("nuevo".equalsIgnoreCase(input)) {
             System.out.println("Introduce el nombre de la nueva palabra clave:");
             String keywordName = scanner.nextLine();
-            keyword = new KeyWord(keywords.size() + 1, keywordName);
-            addKeyWord(keyword);
+            KeyWord newKeyword = new KeyWord(keywords.size() + 1, keywordName);
+            addKeyWord(newKeyword);
+            addKeyWordRelation(book.getId(), newKeyword.getId());
+            System.out.println("Palabra clave nueva añadida y asociada al libro.");
+        } else {
+            try {
+                int keywordId = Integer.parseInt(input);
+                KeyWord keywordToEdit = findKeyWordById(keywordId);
+                if (keywordToEdit == null) {
+                    System.out.println("La palabra clave con ID " + keywordId + " no existe.");
+                    return;
+                }
+                System.out.println("Introduce el nuevo nombre de la palabra clave:");
+                String newKeywordName = scanner.nextLine();
+                keywordToEdit.setName(newKeywordName);
+                System.out.println("Palabra clave editada correctamente.");
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada no válida.");
+            }
         }
-
-        addKeyWordRelation(book.getId(), keyword.getId());
-        System.out.println("Palabra clave asociada al documento.");
     }
+    
 
 }
