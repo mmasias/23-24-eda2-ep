@@ -1,11 +1,9 @@
 import java.util.Objects;
 
 public class Author {
-    private int id;
     private String name;
 
-    public Author(int id, String name) {
-        this.id = id;
+    public Author(String name) {
         this.name = name;
     }
 
@@ -13,15 +11,21 @@ public class Author {
         return name;
     }
 
-    public int getId() {
-        return id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Author author = (Author) o;
+        return name.equals(author.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
     }
 
     @Override
     public String toString() {
-        return "> Author{" +
-               "id=" + id +
-               ", name='" + name + '\'' +
-               '}';
+        return name;
     }
 }
