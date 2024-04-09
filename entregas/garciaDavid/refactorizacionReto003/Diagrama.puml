@@ -1,0 +1,76 @@
+@startuml
+class Autor {
+  -id: int
+  -nombre: String
+  -apellido: String
+  +Autor(id, nombre, apellido)
+  +getId(): int
+  +setId(id: int): void
+  +getNombre(): String
+  +setNombre(nombre: String): void
+  +getApellido(): String
+  +setApellido(apellido: String): void
+  +toString(): String
+}
+
+class AutorDocumento {
+  -documentoId: int
+  -autorId: int
+  +AutorDocumento(documentoId, autorId)
+  +getDocumentoId(): int
+  +setDocumentoId(documentoId: int): void
+  +getAutorId(): int
+  +setAutorId(autorId: int): void
+}
+
+class Documento {
+  -titulo: String
+  -anoDePublicacion: int
+  -tipo: Tipo
+  -id: int
+  +Documento(titulo, anoDePublicacion, tipo, id)
+  +getTitulo(): String
+  +setTitulo(titulo: String): void
+  +getAnoDePublicacion(): int
+  +setAnoDePublicacion(anoDePublicacion: int): void
+  +getTipo(): Tipo
+  +setTipo(tipo: Tipo): void
+  +getId(): int
+  +setId(id: int): void
+  +toString(): String
+}
+
+class Gestion {
+  -ArrayList<Documento> documentos;
+  -ArrayList<Autor> autores;
+  -ArrayList<AutorDocumento> autorDocumentos;
+  -Scanner scanner;
+  +Gestion()
+  -listarDocumentos(): void
+  -agregarDocumento(Documento): void
+  -agregarAutor(Autor): void
+  -agregarRelacion(AutorDocumento): void
+  -existeRelacionAutorDocumento(Autor, Documento): boolean
+  -obtenerAutorPorDocumentoId(int): Autor
+  -obtenerDocumentoPorAutorId(int): Documento
+  -buscarDocPorId(int): Documento
+  -buscarAutorPorId(int): Autor
+  -listarAutores(): void
+  -menu(): void
+}
+
+enum Tipo {
+  LIBRO
+  ARTICULO
+  REVISTA
+  PAPER
+}
+
+Gestion "1" -- "0..*" Autor : manages
+Gestion "1" -- "0..*" Documento : manages
+Gestion "1" -- "0..*" AutorDocumento : manages
+Autor "1" -- "0..*" AutorDocumento : contains
+Documento "1" -- "0..*" AutorDocumento : contains
+Documento "1" -- "1" Tipo : has >
+
+@enduml
