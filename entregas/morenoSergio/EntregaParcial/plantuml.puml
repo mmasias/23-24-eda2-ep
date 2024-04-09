@@ -1,0 +1,48 @@
+@startuml
+
+class Author {
+    - id: int
+    - nombre: String
+    + Author(id: int, nombre: String)
+    + getId(): int
+    + getNombre(): String
+    + toString(): String
+}
+
+class Book {
+    - id: int
+    - titulo: String
+    - anioPublicacion: int
+    - tipo: String
+    + Book(id: int, titulo: String, anioPublicacion: int, tipo: String)
+    + getId(): int
+    + getTitulo(): String
+    + getAnioPublicacion(): int
+    + getTipo(): String
+    + toString(): String
+}
+
+class BookAuthor {
+    - idLibro: int
+    - idAutor: int
+    + BookAuthor(idLibro: int, idAutor: int)
+    + getIdLibro(): int
+    + getIdAutor(): int
+    + toString(): String
+}
+
+class LibraryManager {
+    - libros: List<Book>
+    - autores: List<Author>
+    - relaciones: List<BookAuthor>
+    - scanner: Scanner
+    + LibraryManager()
+    + main(args: String[]): void
+}
+
+Book "0..*" -- "0..*" Author : Through < BookAuthor >
+LibraryManager -down-> "0..*" Book : contains
+LibraryManager -down-> "0..*" Author : contains
+LibraryManager -down-> "0..*" BookAuthor : contains
+
+@enduml
