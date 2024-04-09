@@ -89,8 +89,10 @@ public class Library {
                     }
                 }
             } else if (option == 2) {
+                printAuthorListing();
                 System.out.println("Id del autor: ");
                 int authorId = userInput.nextInt();
+                printIDDocument();
                 System.out.println("Id del documento: ");
                 int documentId = userInput.nextInt();
                 boolean authorExists = false;
@@ -154,8 +156,10 @@ public class Library {
                     }
                 }
             } else if (option == 2) {
+                printKeyWordsListing();
                 System.out.println("Id de la palabra clave: ");
                 int keyWordId = userInput.nextInt();
+                printIDDocument();
                 System.out.println("Id del documento: ");
                 int documentId = userInput.nextInt();
                 boolean keyWordExists = false;
@@ -214,6 +218,17 @@ public class Library {
         }
     }
 
+    private void printIDDocument() {
+        if (documentList.isEmpty()) {
+            System.out.println("No hay documentos en el sistema");
+        } else {
+            for (Document document : documentList) {
+                System.out.println("Id: " + document.getId()+ ". Titulo: "+ document.getTittle());
+
+            }
+        }
+    }
+
     private void printDocumentEspecific(int id) {
         if (documentList.isEmpty()) {
             System.out.println("No hay documentos en el sistema");
@@ -229,16 +244,14 @@ public class Library {
         }
 
     }
+    
 
     private void printAuthorListing() {
         if (authorList.isEmpty()) {
             System.out.println("No hay autores en el sistema");
         } else {
             for (Author author : authorList) {
-                System.out.println("Id: " + author.getId());
-                System.out.println("Nombre: " + author.getName());
-                System.out.println("Apellido: " + author.getSurname());
-
+                System.out.println("Id: " + author.getId()+ ". Nombre: " + author.getName() +author.getSurname());
             }
         }
     }
