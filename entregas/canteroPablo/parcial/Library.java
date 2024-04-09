@@ -601,6 +601,7 @@ public class Library {
     public void menu() {
         boolean continueMenu = true;
         do {
+            try {
             System.out.println("Menu");
             System.out.println("1- Añadir documento");
             System.out.println("2- Añadir/asociar autor");
@@ -669,6 +670,10 @@ public class Library {
                     System.out.println("Opcion no valida");
                     break;
             }
+        }catch (Exception e) {
+            System.out.println("Entrada inválida. Por favor, introduzca un número.");
+            userInput.nextLine();
+        }
         } while (continueMenu);
     }
 
