@@ -1,12 +1,17 @@
 import javax.print.Doc;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class LibraryController {
     private Library model;
     private LibraryView view;
     private boolean isRunning = true;
+
+
+    private Scanner scanner;
+
 
     public LibraryController(Library model, LibraryView view) {
         this.model = model;
@@ -59,21 +64,23 @@ public class LibraryController {
     }
 
     private void handleSearch() {
-        switch (view.promptDocumentSearch()){
+        view.displayDocumentSearch();
+        int choice = view.getChoice();
+        switch (choice) {
             case 1:
-                findDocumentByTitle();
+                view.displayAllDocuments(findDocumentByTitle());
                 break;
             case 2:
-                findDocumentsByPublicationYear();
+                view.displayAllDocuments(findDocumentsByPublicationYear());
                 break;
             case 3:
-                findDocumentsByAuthor();
+                view.displayAllDocuments(findDocumentsByAuthor());
                 break;
             case 4:
-                findDocumentsByType();
+                view.displayAllDocuments(findDocumentsByType());
                 break;
             case 5:
-                findDocumentsByKeyword();
+                view.displayAllDocuments(findDocumentsByKeyword());
                 break;
             default:
                 System.out.println("No es una opcion valida");
@@ -83,7 +90,9 @@ public class LibraryController {
     private List<Document> findDocumentByTitle(){
         String title = view.promptTitle();
         List<Document> documentsByTitle = model.searchByTitle(title);
-        if (documentsByTitle.isEmpty()) {
+        allDocuments.stream()
+                .filter(document -> document.getDocumentType().toLowerCase().contains(documentType))
+                .collect(Collectors.toList());        if (documentsByTitle.isEmpty()) {
             view.displayMessage("No documents found with that title.");
         } else {
             view.displayDocuments(documentsByTitle);
@@ -126,13 +135,11 @@ public class LibraryController {
     }
 
     public List<Document> findDocumentsByType() {
-        System.out.println("Por aqui pasamos 1");
-        String type = view.promptDocumentType().toLowerCase();
-        System.out.println("Por aqui pasamos 2-- " + type);
-        List<Document> allDocuments = model.getAllDocuments();
+        String documentType = view.promptDocumentType();
+         List<Document> allDocuments = model.getAllDocuments();
 
         return allDocuments.stream()
-                .filter(document -> document.getDocumentType().toLowerCase().contains(type))
+                .filter(document -> document.getDocumentType().toLowerCase().contains(documentType))
                 .collect(Collectors.toList());
     }
 

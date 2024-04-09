@@ -20,7 +20,9 @@ public class LibraryView {
     }
 
     public int getChoice() {
-        return scanner.nextInt();
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+        return choice;
     }
 
     public Document promptDocumentDetails() {
@@ -33,22 +35,18 @@ public class LibraryView {
         return new Document(title, authors, publicationYear, documentType, keywords);
     }
 
-    public int promptDocumentSearch() {
+    public void displayDocumentSearch() {
         System.out.println("Ingrese la opcion por la que desea buscar: ");
         System.out.println("1. Titulo");
         System.out.println("2. Año de publicacion");
         System.out.println("3. Autor");
         System.out.println("4. Tipo de documento");
         System.out.println("5. Palabras clave");
-
-        return scanner.nextInt();
     }
 
     protected String promptTitle() {
         System.out.print("Ingrese el título del documento: ");
-        String title = scanner.nextLine();
-        scanner.nextLine();
-        return title;
+        return scanner.nextLine();
     }
 
     protected int promptPublicationYear() {
@@ -71,8 +69,12 @@ public class LibraryView {
 
     protected String promptDocumentType() {
         System.out.print("Ingrese el tipo de documento: ");
-        String type = scanner.nextLine();
-        scanner.nextLine();
+        String type = null;
+        try {
+            type = scanner.nextLine();
+        } catch (Exception err) {
+            System.out.println("Error: " + err.getMessage());
+        }
         return type;
     }
 
