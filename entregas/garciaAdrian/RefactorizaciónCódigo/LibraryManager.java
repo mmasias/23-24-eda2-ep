@@ -1,7 +1,7 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Arrays;
 
 public class LibraryManager {
     private List<Book> books;
@@ -23,9 +23,8 @@ public class LibraryManager {
             System.out.println("3. Agregar Libro");
             System.out.println("4. Agregar Autor");
             System.out.println("5. Agregar Relación");
-            System.out.println("6. Agregar Palabras Clave a Libro");
-            System.out.println("7. Listar Libros por Palabras Clave");
-            System.out.println("8. Salir");
+            System.out.println("6. Buscar Libros por Palabras Clave");
+            System.out.println("7. Salir");
             System.out.print("Ingrese su elección: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -55,12 +54,9 @@ public class LibraryManager {
                     addRelation();
                     break;
                 case 6:
-                    addKeywordsToBook();
-                    break;
-                case 7:
                     searchBooksByKeywords();
                     break;
-                case 8:
+                case 7:
                     System.out.println("Saliendo del Administrador de Biblioteca.");
                     scanner.close();
                     return;
@@ -83,14 +79,6 @@ public class LibraryManager {
             } else {
                 System.out.println("No se encontraron autores para este libro.");
             }
-            if (book.getKeywords().length > 0) {
-                System.out.println("Palabras Clave:");
-                for (String keyword : book.getKeywords()) {
-                    System.out.println("- " + keyword);
-                }
-            } else {
-                System.out.println("No hay palabras clave para este libro.");
-            }
             System.out.println();
         }
     }
@@ -103,49 +91,66 @@ public class LibraryManager {
     }
 
     private void addBook() {
-        System.out.print("Ingrese el ID del libro: ");
-        int id = scanner.nextInt();
-        scanner.nextLine(); 
         System.out.print("Ingrese el título del libro: ");
         String title = scanner.nextLine();
-        System.out.print("Ingrese el año de publicación del libro: ");
+        System.out.print("Ingrese el año de publicación: ");
         int publicationYear = scanner.nextInt();
         scanner.nextLine(); 
-        System.out.print("Ingrese el tipo de libro: ");
-        String type = scanner.nextLine();
 
-        Book newBook = new Book(id, title, publicationYear, type);
+        boolean validTypeOfDocument = true;
+        String typeDocument = "";
+        do {
+            System.out.println("Tipo de documento: (1-Libro, 2-Revista, 3-Artículo, 4-Paper) ");
+            validTypeOfDocument = true;
+            int numberDocument = scanner.nextInt();
+            scanner.nextLine(); 
+
+            switch (numberDocument) {
+                case 1:
+                    typeDocument = "Libro";
+                    break;
+                case 2:
+                    typeDocument = "Revista";
+                    break;
+                case 3:
+                    typeDocument = "Artículo";
+                    break;
+                case 4:
+                    typeDocument = "Paper";
+                    break;
+                default:
+                    System.out.println("Tipo de documento no válido, ingrese otro.");
+                    validTypeOfDocument = false;
+            }
+        } while (!validTypeOfDocument);
+
+        System.out.print("Ingrese las palabras clave separadas por coma: ");
+        String inputKeywords = scanner.nextLine();
+        String[] keywords = inputKeywords.split(",");
+
+        Book newBook = new Book(books.size() + 1, title, publicationYear, typeDocument);
+        newBook.setKeywords(keywords);
         books.add(newBook);
         System.out.println("Libro agregado correctamente.");
     }
 
     private void addAuthor() {
-        System.out.print("Ingrese el ID del autor: ");
-        int id = scanner.nextInt();
-        scanner.nextLine(); 
         System.out.print("Ingrese el nombre del autor: ");
         String name = scanner.nextLine();
 
-        Author newAuthor = new Author(id, name);
+        Author newAuthor = new Author(authors.size() + 1, name);
         authors.add(newAuthor);
         System.out.println("Autor agregado correctamente.");
     }
 
     private void addRelation() {
-        System.out.print("Ingrese el ID del libro: ");
-        int bookId = scanner.nextInt();
-        scanner.nextLine();
-        System.out.print("Ingrese el ID del autor: ");
-        int authorId = scanner.nextInt();
-        scanner.nextLine();
-
-        BookAuthor relation = new BookAuthor(bookId, authorId);
-        relations.add(relation);
-        System.out.println("Relación libro-autor agregada correctamente.");
-    }
-
-    private void addKeywordsToBook() {
-        System.out.print("Ingrese el ID del libro al que desea agregar palabras clave: ");
+        System.out.println("Agregar relación entre Libro y Autor:");
+        
+        System.out.println("Libros disponibles:");
+        for (Book book : books) {
+            System.out.println(book.getId() + ". " + book.getTitle());
+        }
+        System.out.print("Seleccione el ID del libro: ");
         int bookId = scanner.nextInt();
         scanner.nextLine(); 
 
@@ -155,11 +160,30 @@ public class LibraryManager {
             return;
         }
 
-        System.out.print("Ingrese las palabras clave separadas por coma: ");
-        String inputKeywords = scanner.nextLine();
-        String[] keywords = inputKeywords.split(",");
-        book.setKeywords(keywords);
-        System.out.println("Palabras clave agregadas correctamente al libro.");
+        System.out.println("Autores disponibles:");
+        for (Author author : authors) {
+            System.out.println(author.getId() + ". " + author.getName());
+        }
+        System.out.print("Seleccione el ID del autor: ");
+        int authorId = scanner.nextInt();
+        scanner.nextLine();
+
+        Author author = findAuthorById(authorId);
+        if (author == null) {
+            System.out.println("Autor no encontrado.");
+            return;
+        }
+
+        for (BookAuthor relation : relations) {
+            if (relation.getBookId() == bookId && relation.getAuthorId() == authorId) {
+                System.out.println("La relación ya existe.");
+                return;
+            }
+        }
+
+        BookAuthor newRelation = new BookAuthor(bookId, authorId);
+        relations.add(newRelation);
+        System.out.println("Relación agregada correctamente: " + book.getTitle() + " - " + author.getName());
     }
 
     private void searchBooksByKeywords() {
@@ -196,6 +220,15 @@ public class LibraryManager {
         return null;
     }
 
+    private Author findAuthorById(int authorId) {
+        for (Author author : authors) {
+            if (author.getId() == authorId) {
+                return author;
+            }
+        }
+        return null;
+    }
+
     private List<Author> getAuthorsByBookId(int bookId) {
         List<Author> bookAuthors = new ArrayList<>();
         for (BookAuthor relation : relations) {
@@ -209,19 +242,8 @@ public class LibraryManager {
         return bookAuthors;
     }
 
-    private Author findAuthorById(int authorId) {
-        for (Author author : authors) {
-            if (author.getId() == authorId) {
-                return author;
-            }
-        }
-        return null;
-    }
-
     public static void main(String[] args) {
         LibraryManager libraryManager = new LibraryManager();
         libraryManager.startLibraryManager();
     }
 }
-
-
