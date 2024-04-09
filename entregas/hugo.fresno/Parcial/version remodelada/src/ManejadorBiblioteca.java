@@ -125,7 +125,7 @@ public class ManejadorBiblioteca {
                             System.out.println("Nuevo autor agregado: " + nombreAutor);
                         }
 
-                        biblioteca.addAuthorToBook(bookId, autor);
+                        biblioteca.añadirAutorLibro(bookId, autor);
                     }else {
                         System.out.println("No hay libros en la biblioteca.");
                     }

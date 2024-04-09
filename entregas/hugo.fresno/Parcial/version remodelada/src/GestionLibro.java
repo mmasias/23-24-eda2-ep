@@ -39,12 +39,12 @@ public class GestionLibro {
         return false;
     }
 
-    public void editarLibro(int idLibro, String nuevoTitulo, List<Autor> nuevosAutores, Integer nuevoAnio, TipoLibro nuevoTipo, List<String> nuevasPalabrasClave) {
+    public void editarLibro(int idLibro, String nuevoTitulo, List<Autor> nuevosAutores, Integer nuevoAño, TipoLibro nuevoTipo, List<String> nuevasPalabrasClave) {
         for (Libro libro : libros) {
             if (libro.getId() == idLibro) {
                 if (nuevoTitulo != null && !nuevoTitulo.isEmpty()) libro.setTitulo(nuevoTitulo);
                 if (nuevosAutores != null) libro.setAutores(nuevosAutores);
-                if (nuevoAnio != null) libro.setAñoPublicacion(nuevoAnio);
+                if (nuevoAño != null) libro.setAñoPublicacion(nuevoAño);
                 if (nuevoTipo != null) libro.setTipoLibro(nuevoTipo);
                 if (nuevasPalabrasClave != null) libro.setPalabrasClave(nuevasPalabrasClave);
                 System.out.println("Libro actualizado exitosamente.");
@@ -66,9 +66,6 @@ public class GestionLibro {
     }
 
 
-    public List<Libro> getLibros() {
-        return new ArrayList<>(libros);
-    }
 
     public void mostrarLibros() {
         if (libros.isEmpty()) {
@@ -114,7 +111,9 @@ public class GestionLibro {
     public void setLibros(List<Libro> libros) {
         this.libros = libros;
     }
-
+    public List<Libro> getLibros() {
+        return new ArrayList<>(libros);
+    }
     public static int getNextId() {
         return nextId;
     }
@@ -122,4 +121,6 @@ public class GestionLibro {
     public static void setNextId(int nextId) {
         GestionLibro.nextId = nextId;
     }
+
+
 }

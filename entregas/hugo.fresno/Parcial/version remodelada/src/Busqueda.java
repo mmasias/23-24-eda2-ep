@@ -69,7 +69,7 @@ class Busqueda {
             Libro libro = libros.get(i);
             if (libro.getTitulo().equalsIgnoreCase(titulo)) {
                 resultado.add(libro);
-                break; 
+                break;
             }
         }
         return resultado;
