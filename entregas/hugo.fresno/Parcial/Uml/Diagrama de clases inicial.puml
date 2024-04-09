@@ -1,0 +1,74 @@
+@startuml
+!define RECTANGLE class
+
+RECTANGLE Libro {
+    - String titulo
+    - List<String> autores
+    - int añoPublicacion
+    - TipoLibro tipoLibro
+    - List<String> palabrasClave
+    + Libro(String titulo, List<String> autores, int añoPublicacion, TipoLibro tipoLibro, List<String> palabrasClave)
+    + String getTitulo()
+    + void setTitulo(String titulo)
+    + List<String> getAutores()
+    + void setAutores(List<String> autores)
+    + int getAñoPublicacion()
+    + void setAñoPublicacion(int añoPublicacion)
+    + TipoLibro getTipoLibro()
+    + void setTipoLibro(TipoLibro tipoLibro)
+    + List<String> getPalabrasClave()
+    + void setPalabrasClave(List<String> palabrasClave)
+}
+
+RECTANGLE Busqueda {
+    - List<Libro> libros
+    + Busqueda(List<Libro> libros)
+    + List<Libro> buscarPorAutor(String autor)
+    + List<Libro> buscarPorAño(int anio)
+    + List<Libro> buscarPorPalabraClave(String palabraClave)
+    + List<Libro> buscarPorTipo(TipoLibro tipo)
+}
+
+RECTANGLE Biblioteca {
+    - GestionLibro gestionLibro
+    - Busqueda busqueda
+    + Biblioteca()
+    + void agregarLibro(Libro libro)
+    + void mostrarLibros()
+    + List<Libro> buscarPorAutor(String autor)
+    + List<Libro> buscarPorAnio(int anio)
+    + List<Libro> buscarPorPalabraClave(String palabraClave)
+    + List<Libro> buscarPorTipo(TipoLibro tipo)
+    + Libro buscarLibroPorTitulo(String titulo)
+    + void imprimirResultadosBusqueda(List<Libro> resultados)
+}
+
+RECTANGLE GestionLibro {
+    - List<Libro> libros
+    + GestionLibro()
+    + void agregarLibro(Libro libro)
+    + boolean eliminarLibro(String titulo)
+    + Libro buscarLibroPorTitulo(String titulo)
+    + void editarLibro(String tituloOriginal, Libro libroModificado)
+    + List<Libro> getLibros()
+    + void mostrarLibros()
+}
+
+RECTANGLE ManejadorBiblioteca {
+    + static void ejecutar()
+}
+
+enum TipoLibro {
+    LIBRO
+    REVISTA
+    ARTICULO
+    TESIS
+}
+
+Biblioteca "1" -- "1" GestionLibro : gestiona
+Biblioteca "1" -- "1" Busqueda : utiliza
+GestionLibro "1" -- "0..*" Libro : almacena >
+Busqueda ..> Libro : busca >
+ManejadorBiblioteca ..> Biblioteca : usa >
+
+@enduml

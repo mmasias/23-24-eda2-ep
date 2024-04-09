@@ -18,10 +18,10 @@ public class ManejadorBiblioteca {
             System.out.print("Seleccione una opción: ");
 
             int opcion = scanner.nextInt();
-            scanner.nextLine(); // Consumir el salto de línea
+            scanner.nextLine(); 
 
             switch (opcion) {
-                case 1: // Añadir libro
+                case 1: 
                     System.out.print("Ingrese el título del libro: ");
                     String titulo = scanner.nextLine();
 
@@ -31,7 +31,7 @@ public class ManejadorBiblioteca {
 
                     System.out.print("Ingrese el año de publicación: ");
                     int anio = scanner.nextInt();
-                    scanner.nextLine(); // Limpiar buffer
+                    scanner.nextLine(); 
 
                     System.out.print("Ingrese el tipo de documento (LIBRO, REVISTA, ARTICULO, PAPER): ");
                     String tipo = scanner.nextLine().toUpperCase();
@@ -40,16 +40,14 @@ public class ManejadorBiblioteca {
                     String palabrasClaveStr = scanner.nextLine();
                     List<String> palabrasClave = new ArrayList<>(Arrays.asList(palabrasClaveStr.split("\\s*,\\s*")));
 
-                    // Asume que Biblioteca tiene un método que acepta estos parámetros para añadir un libro
                     biblioteca.agregarLibro(new Libro(titulo, autores, anio, TipoLibro.valueOf(tipo.toUpperCase()), palabrasClave));
                     System.out.println("Libro añadido con éxito.");
                     break;
 
-                case 2: // Añadir autor a un libro
+                case 2: 
                     System.out.print("Ingrese el título del libro al cual desea añadir un autor: ");
                     titulo = scanner.nextLine();
 
-                    // Asume que Biblioteca tiene un método para buscar un libro por título
                     Libro libroEncontrado = biblioteca.buscarLibroPorTitulo(titulo);
 
                     if (libroEncontrado != null && libroEncontrado.getAutores().isEmpty()) {
@@ -64,15 +62,14 @@ public class ManejadorBiblioteca {
                     }
                     break;
 
-                case 3: // Listar todos los libros
+                case 3:
                     biblioteca.mostrarLibros();
                     break;
 
-                case 4: // Salir
+                case 4:
                     System.out.println("Saliendo del programa...");
                     scanner.close();
-                    return; // Salir del método ejecutar
-
+                    return; 
                 default:
                     System.out.println("Opción no válida. Intente de nuevo.");
                     break;
