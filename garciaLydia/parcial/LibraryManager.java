@@ -28,7 +28,7 @@ public class LibraryManager {
             System.out.print("Choose an option: ");
             try {
                 int choice = scanner.nextInt();
-                scanner.nextLine(); // Consume newline
+                scanner.nextLine(); 
 
                 switch (choice) {
                     case 1:
@@ -48,7 +48,7 @@ public class LibraryManager {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Invalid command. Please enter a numeric value.");
-                scanner.nextLine(); // Clear the input buffer
+                scanner.nextLine();
             }
         }
         scanner.close();
@@ -72,11 +72,11 @@ public class LibraryManager {
             try {
                 System.out.print("ID: ");
                 id = scanner.nextInt();
-                scanner.nextLine(); // Consume newline
+                scanner.nextLine();
                 break;
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a numeric value for ID.");
-                scanner.nextLine(); // Clear the input buffer
+                scanner.nextLine();
             }
         } while (true);
 
@@ -87,11 +87,11 @@ public class LibraryManager {
             try {
                 System.out.print("Publication Year: ");
                 publicationYear = scanner.nextInt();
-                scanner.nextLine(); // Consume newline
+                scanner.nextLine();
                 break;
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a numeric value for Publication Year.");
-                scanner.nextLine(); // Clear the input buffer
+                scanner.nextLine();
             }
         } while (true);
 
@@ -100,7 +100,7 @@ public class LibraryManager {
 
         Book book = new Book(id, title, publicationYear, type);
 
-        // Ask for the author and associate it with the book
+
         System.out.print("Enter author's name: ");
         String authorName = scanner.nextLine();
         Author author = findOrCreateAuthor(authorName);
