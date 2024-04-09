@@ -5,10 +5,17 @@ import java.util.Scanner;
 
 public class Menu {
 
-    private static Scanner scanner = new Scanner(System.in);
+    private GeneradorDocumentos generador;
+    private Scanner scanner = new Scanner(System.in);
 
-    public static void mostrarMenu(List<Documento> documentos) {
+    public Menu(GeneradorDocumentos generador) {
+        this.generador = generador;
+    }
+
+    public void mostrarMenu() {
         int opcion;
+        List<Documento> documentos = null;
+
         do {
             System.out.println("Seleccione una opción:");            
             System.out.println("1. Crear otro documento");
@@ -23,24 +30,44 @@ public class Menu {
 
             switch (opcion) {
                 case 1:
-                    documentos.addAll(GeneradorDocumentos.crearNuevoDocumento());
-                    System.out.println("Nuevos documentos creados.\n");
+                    if (documentos == null) {
+                        documentos = generador.crearNuevoDocumento();
+                    } else {
+                        documentos.addAll(generador.crearNuevoDocumento());
+                        System.out.println("Nuevos documentos creados.\n");
+                    }
                     break;
                 case 2:
-                    GeneradorDocumentos.editarDocumento(documentos);
+                    if (documentos != null) {
+                        generador.editarDocumento(documentos);
+                    } else {
+                        System.out.println("No hay documentos para editar. Crea uno primero.\n");
+                    }
                     break;
                 case 3:
-                    GeneradorDocumentos.eliminarDocumento(documentos);
+                    if (documentos != null) {
+                        generador.eliminarDocumento(documentos);
+                    } else {
+                        System.out.println("No hay documentos para eliminar. Crea uno primero.\n");
+                    }
                     break;
                 case 4:
-                    GeneradorDocumentos.buscarDocumento(documentos);
+                    if (documentos != null) {
+                        generador.buscarDocumento(documentos);
+                    } else {
+                        System.out.println("No hay documentos para buscar. Crea uno primero.\n");
+                    }
                     break;
                 case 5:
-                    System.out.println("\nLista de documentos:");
-                    for (Documento documento : documentos) {
-                        System.out.println(documento);
+                    if (documentos != null) {
+                        System.out.println("\nLista de documentos:");
+                        for (Documento documento : documentos) {
+                            System.out.println(documento);
+                        }
+                        System.out.println();
+                    } else {
+                        System.out.println("No hay documentos para mostrar. Crea uno primero.\n");
                     }
-                    System.out.println();
                     break;
                 case 6:
                     System.out.println("Saliendo del programa. ¡Hasta luego!");
@@ -48,6 +75,6 @@ public class Menu {
                 default:
                     System.out.println("Opción no válida. Inténtelo de nuevo.\n");
             }
-        } while (opcion != 5);
+        } while (opcion != 6);
     }
 }
