@@ -38,7 +38,7 @@ class DocumentAuthor {
 
 }
 
-enum DoumentType {
+enum DocumentType {
     BOOK 
     MAGAZINE 
     ARTICLE 
@@ -89,4 +89,15 @@ class LibraryManager {
 class App {
     
 }
+
+Document "1" -l- "0...*" DocumentAuthor : contains
+Document -- DocumentType
+Author "1" --r-- "0..." DocumentAuthor : contains
+Library -- "0.." Document : manages
+Library -- "0.." Author : manages
+Library -- "0..." DocumentAuthor : manages
+LibraryManager -- Library : manages
+App -- LibraryManager : runs
+
+
 @enduml
