@@ -1,0 +1,45 @@
+@startuml
+class Author {
+  - name: String
+  - surname: String
+  + getName(): String
+  + setName(name: String): void
+  + getSurname(): String
+  + setSurname(surname: String): void
+  + Author(name: String, surname: String)
+}
+
+class Document {
+  - title: String
+  - authors: ArrayList<Author>
+  - age: int
+  - typeDocument: String
+  - keyWords: ArrayList<String>
+  + Document(title: String, authors: ArrayList<Author>, age: int, typeDocument: String, keyWords: ArrayList<String>)
+  + getTitle(): String
+  + setTitle(title: String): void
+  + getAuthors(): ArrayList<Author>
+  + setAuthors(authors: ArrayList<Author>): void
+  + getAge(): int
+  + setAge(age: int): void
+  + getTypeDocument(): String
+  + setTypeDocument(typeDocument: String): void
+  + getKeyWords(): ArrayList<String>
+  + setKeyWords(keyWords: ArrayList<String>): void
+}
+
+class Library {
+  + addDocument(): void
+  + editDocument(): void
+  + deleteDocument(): void
+  + searchDocument(): void
+  + searchDocumentByAuthor(): void
+  + searchDocumentByAge(): void
+  + searchDocumentByTypeOfDocument(): void
+  + searchDocumentByKeyWords(): void
+  + printDocumentListing(): void
+  + menu(): void
+}
+
+Document "1" *-- "many" Author : has >
+@enduml

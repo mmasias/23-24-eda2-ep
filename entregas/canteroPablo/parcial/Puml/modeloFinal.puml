@@ -1,0 +1,102 @@
+@startuml
+
+class Author {
+    - name: String
+    - surname: String
+    - id: int
+    + Author(name: String, surname: String, id: int)
+    + getName(): String
+    + getId(): int
+    + getSurname(): String
+}
+
+class Document {
+    - id: int
+    - title: String
+    - publicationYear: int
+    - typeDocument: String
+    + Document(id: int, title: String, publicationYear: int, typeDocument: String)
+    + getId(): int
+    + getTitle(): String
+    + getPublicationYear(): int
+    + getTypeDocument(): String
+    + setTitle(title: String): void
+    + setPublicationYear(publicationYear: int): void
+    + setTypeDocument(typeDocument: String): void
+}
+
+class DocumentAuthor {
+    - documentId: int
+    - authorId: int
+    + DocumentAuthor(documentId: int, authorId: int)
+    + getDocumentId(): int
+    + getAuthorId(): int
+}
+
+class DocumentKeyWords {
+    - documentId: int
+    - keyWordId: int
+    + DocumentKeyWords(documentId: int, keyWordId: int)
+    + getDocumentId(): int
+    + getKeyWordId(): int
+}
+
+class KeyWords {
+    - keyWord: String
+    - id: int
+    + KeyWords(keyWord: String, id: int)
+    + getKeyWord(): String
+    + getId(): int
+}
+
+class Library {
+    - documentList: List<Document>
+    - authorList: List<Author>
+    - keyWordsList: List<KeyWords>
+    - relationDocumentAuthors: List<DocumentAuthor>
+    - relationDocumentKeyWords: List<DocumentKeyWords>
+    - userInput: Scanner
+    + Library()
+    - addDocument(): void
+    - addAuthor(): void
+    - addKeyword(): void
+    - addRelationDocumentAuthor(documentId: int, authorId: int): void
+    - addRelationDocumentKeyWords(documentId: int, keyWordId: int): void
+    - printDocumentListing(): void
+    - printDocumentEspecific(id: int): void
+    - printAuthorListing(): void
+    - printAuthorEspecific(id: int): void
+    - printKeyWordsListing(): void
+    - printKeyWordsEspecific(id: int): void
+    - editDocument(): void
+    - removeRelationsDocumentAuthors(documentId: int): void
+    - deleteDocument(): void
+    - deleteAuthor(): void
+    - searchDocument(): void
+    - searchByAuthor(): void
+    - searchDocumentByAge(): void
+    - searchDocumentByTypeOfDocument(): void
+    - searchDocumentByKeyWords(): void
+    - printRelationsDocumentAuthors(): void
+    - printCompleteDocumentList(): void
+    + menu(): void
+}
+
+class Main {
+    + main(args: String[]): void
+}
+
+Document "1" -- "0..*" DocumentAuthor
+Document "1" -- "0..*" DocumentKeyWords
+Author "1" -- "0..*" DocumentAuthor
+KeyWords "1" -- "0..*" DocumentKeyWords
+
+Library --> Document
+Library --> Author
+Library --> KeyWords
+Library --> DocumentAuthor
+Library --> DocumentKeyWords
+
+Main --> Library
+
+@enduml
