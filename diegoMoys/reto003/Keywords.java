@@ -1,11 +1,9 @@
 import java.util.Objects;
 
 public class Keywords {
-    private int id;
     private String keyword;
 
-    public Keywords(int id, String keyword) {
-        this.id = id;
+    public Keywords(String keyword) {
         this.keyword = keyword;
     }
 
@@ -13,21 +11,17 @@ public class Keywords {
         return keyword;
     }
 
-    public int getId() {
-        return id;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Keywords keywords = (Keywords) o;
-        return Objects.equals(keyword, keywords.keyword);
+        return keyword.equals(keywords.keyword);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(keyword);
+        return keyword.hashCode();
     }
 
     @Override
@@ -35,4 +29,3 @@ public class Keywords {
         return keyword;
     }
 }
-
