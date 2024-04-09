@@ -59,4 +59,23 @@ public class Book {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return id == book.id &&
+                publicationYear == book.publicationYear &&
+                Objects.equals(title, book.title) &&
+                Objects.equals(type, book.type) &&
+                Arrays.equals(keywords, book.keywords);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(id, title, publicationYear, type);
+        result = 31 * result + Arrays.hashCode(keywords);
+        return result;
+    }
+}
 
