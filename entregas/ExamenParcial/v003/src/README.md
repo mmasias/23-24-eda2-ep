@@ -2,11 +2,11 @@
 
 <div align=center>
 
-|![Modelo UML](/images/modelosUML/src/v003/modelo.svg)|
+|![Modelo UML](/modelo/modelo.svg)|
 |:-:|
-[App.java](src/App.java) 
-[LibraryManager.java](src/LibraryManager.java)  
-[Author.java](src/Author.java) / [BookAuthor.java](src/BookAuthor.java)  / [KeyWord.java](src/KeyWord.java) / [BookKeyWord.java](src/BookKeyWord.java) / [Book.java](src/Book.java)|
+[App.java](App.java) 
+[LibraryManager.java](LibraryManager.java)  
+[Author.java](Author.java) / [BookAuthor.java](BookAuthor.java)  / [KeyWord.java](KeyWord.java) / [BookKeyWord.java](BookKeyWord.java) / [Book.java](Book.java)|
 </div>
 
 ## Descripción
