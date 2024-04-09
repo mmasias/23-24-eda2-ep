@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="227c43fe-3050-4e81-851a-a50ba7c87f9f" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2dzgm978PiP7nIc2EMp58MGnox6" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "jdk.selected.JAVA_MODULE": "21",
+    "last_opened_file_path": "C:/Users/lydia/IdeaProjects/23-24-eda2-ep",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\lydia\IdeaProjects\23-24-eda2-ep\garciaLydia\parcial" />
+      <recent name="C:\Users\lydia\IdeaProjects" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.garciaLydia.reto003.Main">
+    <configuration name="LibraryManager" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="garciaLydia.parcial.LibraryManager" />
+      <module name="23-24-eda2-ep" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="garciaLydia.parcial.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="garciaLydia.Main" />
+      <module name="23-24-eda2-ep" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="garciaLydia.parcial.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="garciaLydia.reto003.Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="garciaLydia.reto003.Main" />
+      <module name="23-24-eda2-ep" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="garciaLydia.reto003.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.garciaLydia.reto003.Main" />
+        <item itemvalue="Application.LibraryManager" />
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="227c43fe-3050-4e81-851a-a50ba7c87f9f" name="Changes" comment="" />
+      <created>1711016476400</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1711016476400</updated>
+    </task>
+    <task id="LOCAL-00001" summary="codigo reto003 (el que tenía hecho) y codigo del parcial">
+      <created>1712695797546</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1712695797546</updated>
+    </task>
+    <task id="LOCAL-00002" summary="codigo reto003 (el que tenía hecho) y codigo del parcial">
+      <created>1712695856251</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1712695856251</updated>
+    </task>
+    <task id="LOCAL-00003" summary="README.md de ambos proyectos">
+      <created>1712698460252</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1712698460252</updated>
+    </task>
+    <task id="LOCAL-00004" summary="diagramas">
+      <created>1712699000667</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1712699000667</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="codigo reto003 (el que tenía hecho) y codigo del parcial" />
+    <MESSAGE value="README.md de ambos proyectos" />
+    <MESSAGE value="diagramas" />
+    <option name="LAST_COMMIT_MESSAGE" value="diagramas" />
+  </component>
+</project>
