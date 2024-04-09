@@ -1,3 +1,3 @@
 # Entrega parcial
 
-Repositorio de entrega del trabajo parcial
+El Parcial se encuentra en la rama parcial no me deja hacer pullrequest
