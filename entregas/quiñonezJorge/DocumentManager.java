@@ -5,7 +5,10 @@ import java.util.Scanner;
 
 public class DocumentManager {
   private ArrayList<Document> documents;
+  private ArrayList<Author> authors;
+  private ArrayList<Relation> relation;
   private boolean running;
+  private Scanner input = new Scanner(System.in);
 
   public DocumentManager() {
     documents = new ArrayList<Document>();
@@ -14,7 +17,6 @@ public class DocumentManager {
 
   public void start() {
     running = true;
-    Scanner input = new Scanner(System.in);
     while (running) {
       showMenu();
       System.out.print("Choose an option: ");
@@ -28,8 +30,12 @@ public class DocumentManager {
     System.out.println("1. Add document");
     System.out.println("2. Edit document");
     System.out.println("3. Remove document");
-    System.out.println("4. List documents");
-    System.out.println("5. Filter documents");
+    System.out.println("4. Add author");
+    System.out.println("5. Edit author");
+    System.out.println("6. Remove author");
+    System.out.println("7. List authors");
+    System.out.println("8. List documents");
+    System.out.println("9. Filter documents");
     System.out.println("0. Exit");
     System.out.println();
   }

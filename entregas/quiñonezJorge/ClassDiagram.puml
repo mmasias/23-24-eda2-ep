@@ -6,7 +6,7 @@ hide empty attributes
 class DocumentManager{
   - ArrayList<Author> authors
   - ArrayList<Document> documents
-  - ArrayList<AuthorDocument> relations
+  - ArrayList<Relation> relations
 
   + DocumentManager()
   + void start()
@@ -31,15 +31,11 @@ class DocumentManager{
 class Document{
   - int id
   - String title
-  - ArrayList<Author> authors
   - DocumentTypes type
   - String releaseDate
+  - ArrayList<String> keyWords
   + Document()
   + int getId()
-  + String getTitle()
-  + String getAuthors()
-  + DocumentTypes getDocumentType()
-  + String getReleaseDate()
   + String toString()
 }
 
@@ -55,10 +51,10 @@ class Author{
 
 }
 
-class AuthorDocument{
+class Relation{
   - int authorId
   - int documentId
-  + AuthorDocument()
+  + Relation()
   + int getAuthorId()
   + int getDocumentId()
 }
@@ -70,9 +66,9 @@ enum DocumentTypes{
   Scientific_Paper
 }
 
-DocumentManager -down- AuthorDocument
-Author "1" -right- "0..*" AuthorDocument
-Document "1" -left- "1..*" AuthorDocument
+DocumentManager -down- Relation
+Author "1" -right- "0..*" Relation
+Document "1" -left- "1..*" Relation
 DocumentManager .right. ArrayList : uses
 Document -- DocumentTypes
 @enduml
