@@ -61,14 +61,6 @@ public class Biblioteca {
         }
     }
 
-    public Autor buscarAutorPorId(int autorId) {
-        for (Autor autor : autores) {
-            if (autor.getId() == autorId) {
-                return autor;
-            }
-        }
-        return null;
-    }
 
     public void mostrarLibros() {
         gestionLibro.mostrarLibros();
@@ -81,7 +73,7 @@ public class Biblioteca {
         return busqueda.buscarPorAutor(nombreAutor);
     }
 
-    /*public List<Libro> buscarPorAño(int año) {
+    public List<Libro> buscarPorAño(int año) {
         return busqueda.buscarPorAño(año);
     }
 
@@ -92,22 +84,29 @@ public class Biblioteca {
     public List<Libro> buscarPorTipo(TipoLibro tipo) {
         return busqueda.buscarPorTipo(tipo);
     }
-
-    public Libro buscarLibroPorTitulo(String titulo) {
-        return gestionLibro.buscarLibroPorTitulo(titulo);
-    }*/
+    public List<Libro> buscarPorTitulo(String nombreLibro) {
+        return  busqueda.buscarPorTitulo(nombreLibro);
+    }
 
     public void imprimirResultadosBusqueda(List<Libro> resultados) {
         if (resultados.isEmpty()) {
             System.out.println("No se encontraron resultados.");
         } else {
-            for (Libro libro : resultados) {
+            for (int i = 0; i < resultados.size(); i++) {
+                Libro libro = resultados.get(i);
                 List<String> nombresAutores = new ArrayList<>();
-                for (Autor autor : libro.getAutores()) {
+                for (int j = 0; j < libro.getAutores().size(); j++) {
+                    Autor autor = libro.getAutores().get(j);
                     nombresAutores.add(autor.getName());
                 }
-                System.out.println(libro.getTitulo() + " - " + String.join(", ", nombresAutores));
+                System.out.println("\n**RESULTADO**");
+                System.out.println("Titulo: " + libro.getTitulo());
+                System.out.println("Id Libro: " + libro.getId());
             }
         }
     }
+
+
+
+
 }

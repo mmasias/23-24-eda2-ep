@@ -1,3 +1,3 @@
 public enum TipoLibro {
-    LIBRO, REVISTA, ARTICULO, TESIS
+    LIBRO, REVISTA, ARTICULO, TESIS, NOVELA
 }

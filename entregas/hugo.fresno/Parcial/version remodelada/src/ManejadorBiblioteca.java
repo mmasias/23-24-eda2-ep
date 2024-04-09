@@ -80,7 +80,7 @@ public class ManejadorBiblioteca {
                     int año = scanner.nextInt();
                     scanner.nextLine();
 
-                    System.out.print("Ingrese el tipo de documento (LIBRO, REVISTA, ARTICULO, TESIS): ");
+                    System.out.print("Ingrese el tipo de documento (LIBRO, REVISTA, ARTICULO, TESIS, NOVELA): ");
                     String tipo = scanner.nextLine().toUpperCase();
 
                     System.out.print("Ingrese palabras clave (para varias, sepárelas por coma): ");
@@ -169,10 +169,12 @@ public class ManejadorBiblioteca {
 
 
                         System.out.println("\nOpciones de búsqueda:");
-                        System.out.println("1. Por autor");
-                        System.out.println("2. Por año");
-                        System.out.println("3. Por palabra clave");
+                        System.out.println("1. Por titulo");
+                        System.out.println("2. Por autor");
+                        System.out.println("3. Por año de publicación");
                         System.out.println("4. Por tipo de documento");
+                        System.out.println("5. Por palabra clave");
+                        System.out.println("6. Return");
                         System.out.print("Seleccione una opción de búsqueda: ");
 
                         int opcionBusqueda = scanner.nextInt();
@@ -180,35 +182,47 @@ public class ManejadorBiblioteca {
 
                         switch (opcionBusqueda) {
                             case 1:
+                                System.out.print("Ingrese el titulo del libro: ");
+                                String nombreLibro = scanner.nextLine();
+                                List<Libro> resultadosLibro = biblioteca.buscarPorTitulo(nombreLibro);
+                                biblioteca.imprimirResultadosBusqueda(resultadosLibro);
+                                break;
+
+                            case 2:
                                 System.out.print("Ingrese el nombre del autor: ");
                                 String nombreAutor = scanner.nextLine();
                                 List<Libro> resultadosAutor = biblioteca.buscarPorAutor(nombreAutor);
                                 biblioteca.imprimirResultadosBusqueda(resultadosAutor);
                                 break;
-                            case 2:
+                            case 3:
                                 System.out.print("Ingrese el año de publicación: ");
                                 int year = scanner.nextInt();
                                 scanner.nextLine();
-                                //List<Libro> resultadosAño = biblioteca.buscarPorAño(year);
-                                //biblioteca.imprimirResultadosBusqueda(resultadosAño);
-                                break;
-                            case 3:
-                                System.out.print("Ingrese la palabra clave: ");
-                                String palabraClave = scanner.nextLine();
-                                //List<Libro> resultadosPalabraClave = biblioteca.buscarPorPalabraClave(palabraClave);
-                                //biblioteca.imprimirResultadosBusqueda(resultadosPalabraClave);
+                                List<Libro> resultadosAño = biblioteca.buscarPorAño(year);
+                                biblioteca.imprimirResultadosBusqueda(resultadosAño);
                                 break;
                             case 4:
-                                System.out.print("Ingrese el tipo de documento (LIBRO, REVISTA, ARTICULO, TESIS): ");
+                                System.out.print("Ingrese el tipo de documento (LIBRO, REVISTA, ARTICULO, TESIS, NOVELA): ");
                                 String type = scanner.nextLine().toUpperCase();
                                 try {
                                     TipoLibro bookType = TipoLibro.valueOf(type);
-                                    //List<Libro> resultadosTipo = biblioteca.buscarPorTipo(bookType);
-                                    //biblioteca.imprimirResultadosBusqueda(resultadosTipo);
+                                    List<Libro> resultadosTipo = biblioteca.buscarPorTipo(bookType);
+                                    biblioteca.imprimirResultadosBusqueda(resultadosTipo);
                                 } catch (IllegalArgumentException e) {
                                     System.out.println("Tipo de documento no válido.");
                                 }
                                 break;
+
+                            case 5:
+                                System.out.print("Ingrese la palabra clave: ");
+                                String palabraClave = scanner.nextLine();
+                                List<Libro> resultadosPalabraClave = biblioteca.buscarPorPalabraClave(palabraClave);
+                                biblioteca.imprimirResultadosBusqueda(resultadosPalabraClave);
+                                break;
+                            case 6:
+
+                                break;
+
                             default:
                                 System.out.println("Opción no válida.");
                                 break;
