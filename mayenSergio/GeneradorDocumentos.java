@@ -7,23 +7,20 @@ import java.util.Scanner;
 
 public class GeneradorDocumentos {
 
-    private static Scanner scanner = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in);
 
-    public static List<Documento> crearNuevoDocumento() {
+    public List<Documento> crearNuevoDocumento() {
         List<Documento> nuevosDocumentos = new ArrayList<>();
 
         do {
             System.out.print("Título del documento: ");
             String titulo = scanner.nextLine();
 
-            System.out.print("Autor del documento: ");
-            String autor = scanner.nextLine();
-
             System.out.print("Tipo de documento (LIBRO, REVISTA, ARTICULO, PAPER): ");
             String tipoStr = scanner.nextLine().toUpperCase();
             Documento.TipoDocumento tipo = Documento.TipoDocumento.valueOf(tipoStr);
 
-            Documento documento = new Documento(titulo, autor, tipo);
+            Documento documento = new Documento(titulo, tipo);
             nuevosDocumentos.add(documento);
 
             System.out.println("Documento agregado correctamente.\n");
@@ -35,7 +32,7 @@ public class GeneradorDocumentos {
         return nuevosDocumentos;
     }
 
-    public static void editarDocumento(List<Documento> documentos) {
+    public void editarDocumento(List<Documento> documentos) {
         System.out.print("Ingrese el título del documento que desea editar: ");
         String tituloBuscado = scanner.nextLine();
 
@@ -46,10 +43,6 @@ public class GeneradorDocumentos {
                 System.out.print("Nuevo título del documento: ");
                 String nuevoTitulo = scanner.nextLine();
                 documento.setTitulo(nuevoTitulo);
-
-                System.out.print("Nuevo autor del documento: ");
-                String nuevoAutor = scanner.nextLine();
-                documento.setAutor(nuevoAutor);
 
                 System.out.print("Nuevo tipo de documento (LIBRO, REVISTA, ARTICULO, PAPER): ");
                 String nuevoTipoStr = scanner.nextLine().toUpperCase();
@@ -62,7 +55,7 @@ public class GeneradorDocumentos {
         System.out.println("Documento no encontrado.\n");
     }
 
-    public static void eliminarDocumento(List<Documento> documentos) {
+    public void eliminarDocumento(List<Documento> documentos) {
         System.out.print("Ingrese el título del documento que desea eliminar: ");
         String tituloBuscado = scanner.nextLine();
 
@@ -78,7 +71,7 @@ public class GeneradorDocumentos {
         System.out.println("Documento no encontrado.\n");
     }
 
-    public static void buscarDocumento(List<Documento> documentos) {
+    public void buscarDocumento(List<Documento> documentos) {
         System.out.print("Ingrese el título del documento que desea buscar: ");
         String tituloBuscado = scanner.nextLine();
 
