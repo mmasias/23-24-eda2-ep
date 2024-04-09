@@ -3,16 +3,76 @@
 hide empty methods
 hide empty attributes
 
-class DocumentManager{}
+class DocumentManager{
+  - ArrayList<Author> authors
+  - ArrayList<Document> documents
+  - ArrayList<AuthorDocument> relations
 
-class Document{}
+  + DocumentManager()
+  + void start()
+  - ArrayList<Author> getAllAuthors()
+  - ArrayList<Document> getAllDocuments()
+  - ArrayList<Author> getAuthorsByBookId(int id)
+  - ArrayList<Document> getDocumentsByAuthorId(int id)
+  - Author getAuthorById(int id)
+  - Document getDocumentById(int id)
+  - void createDocument()
+  - void editDocument()
+  - void deleteDocument()
+  - void createAuthor()
+  - void editAuthor()
+  - void deleteAuthor()
+  - void createRelation()
+  - void updateRelation()
+  - void deleteRelation()
+  - void filterDocuments()
+}
+
+class Document{
+  - int id
+  - String title
+  - ArrayList<Author> authors
+  - DocumentTypes type
+  - String releaseDate
+  + Document()
+  + int getId()
+  + String getTitle()
+  + String getAuthors()
+  + DocumentTypes getDocumentType()
+  + String getReleaseDate()
+  + String toString()
+}
 
 class ArrayList{}
 
-class Author{}
-DocumentManager .. ArrayList : uses
-DocumentManager -- Document : manage 
-Document -- Author : has
-Document .. ArrayList : uses
+class Author{
+  - int id
+  - String name
+  + Author()
+  + int getId()
+  + String getName()
+  + String toString()
 
+}
+
+class AuthorDocument{
+  - int authorId
+  - int documentId
+  + AuthorDocument()
+  + int getAuthorId()
+  + int getDocumentId()
+}
+
+enum DocumentTypes{
+  Book
+  Magazine
+  Article
+  Scientific_Paper
+}
+
+DocumentManager -down- AuthorDocument
+Author "1" -right- "0..*" AuthorDocument
+Document "1" -left- "1..*" AuthorDocument
+DocumentManager .right. ArrayList : uses
+Document -- DocumentTypes
 @enduml
