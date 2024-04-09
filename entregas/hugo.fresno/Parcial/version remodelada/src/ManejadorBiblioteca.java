@@ -39,7 +39,7 @@ public class ManejadorBiblioteca {
 
 
         System.out.print("Ingrese el nuevo año de publicación (0 para no cambiar): ");
-        int nuevoAnio = scanner.nextInt();
+        int nuevoAño = scanner.nextInt();
         scanner.nextLine();
 
         System.out.print("Ingrese el nuevo tipo de documento (LIBRO, REVISTA, ARTICULO, TESIS)-(deje en blanco si no desea cambiarlo): ");
@@ -47,7 +47,7 @@ public class ManejadorBiblioteca {
         TipoLibro nuevoTipo = tipo.isEmpty() ? null : TipoLibro.valueOf(tipo);
 
 
-        biblioteca.getGestionLibro().editarLibro(idLibro, nuevoTitulo.isEmpty() ? null : nuevoTitulo, null, nuevoAnio == 0 ? null : nuevoAnio, nuevoTipo, null);
+        biblioteca.getGestionLibro().editarLibro(idLibro, nuevoTitulo.isEmpty() ? null : nuevoTitulo, null, nuevoAño == 0 ? null : nuevoAño, nuevoTipo, null);
     }
 
 
@@ -165,7 +165,9 @@ public class ManejadorBiblioteca {
                     break;
 
                 case 6:
-                    if (!(biblioteca.getGestionLibro().getLibros().isEmpty())) {
+                    boolean continuarBusqueda = true;
+
+                    while (continuarBusqueda && !(biblioteca.getGestionLibro().getLibros().isEmpty())) {
 
 
                         System.out.println("\nOpciones de búsqueda:");
@@ -220,19 +222,19 @@ public class ManejadorBiblioteca {
                                 biblioteca.imprimirResultadosBusqueda(resultadosPalabraClave);
                                 break;
                             case 6:
-
+                                continuarBusqueda = false;
                                 break;
-
                             default:
                                 System.out.println("Opción no válida.");
-                                break;
+
                         }
-                    }else {
-                        System.out.println("No hay libros en la biblioteca.");
                     }
+
+                    if(biblioteca.getGestionLibro().getLibros().isEmpty()) {
+                    System.out.println("No hay libros en la biblioteca.");
+                    }
+
                     break;
-
-
 
                 case 7:
                     System.out.println("Saliendo del programa...");

@@ -35,13 +35,15 @@ public class Biblioteca {
 
 
     public Autor buscarAutorPorNombre(String nombre) {
-        for (Autor autor : autores) {
+        for (int i = 0; i < autores.size(); i++) {
+            Autor autor = autores.get(i);
             if (autor.getName().equalsIgnoreCase(nombre)) {
                 return autor;
             }
         }
         return null;
     }
+
 
     public int getNextAutorId() {
         return nextAutorId++;
