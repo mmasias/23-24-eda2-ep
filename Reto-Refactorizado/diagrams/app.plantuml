@@ -1,0 +1,103 @@
+@startuml
+class Author {
+    - int id 
+    - String name 
+    - String surnames
+    + Author(int id, String name, String surnames)
+    + int getId()
+    + String getName()
+    + String getSurnames()
+    + String toStringAuthor()
+}
+
+class Document {
+    - int id
+    - String title
+    - int publishingYear
+    - DocumentType documentType
+    - ArrayList<String> keywords
+    + Document(int id, String title, int publishingYear, DocumentType documentType, ArrayList<String> keyWords )
+    + int getId()
+    + String getTitle()
+    + void setTitle(String name)
+    + int getPublishingYear()
+    + void setPublishingYear(int year)
+    + DocumentType getDocumentType()
+    + ArrayList<String> getKeyWords()
+    + int searchKeyWordIndex(String word)
+    + String toStringKeyWords()
+    + String toStringDocument()
+}
+
+class DocumentAuthor {
+    - int documentId
+    - int authorId
+    + DocumentAuthor(int documentId, int authorId)
+    + int getDocumentId()
+    + int getAuthorId()
+
+}
+
+enum DocumentType {
+    BOOK 
+    MAGAZINE 
+    ARTICLE 
+    SCIENTIFIC_PAPER
+    - String documentTypeName
+    + DocumentType(String documentTypeName)
+    + String getDocumentTypeName()
+}
+
+class Library {
+    - ArrayList<Document> documents
+    - ArrayList<Author> authors
+    - ArrayList<DocumentAuthor> relations
+    - Scanner userInput
+    + Library()
+    + void addDocument(Document document)
+    + void createDocument()
+    + void addAuthor(Author author)
+    + void addAuthor(Document document)
+    + void addRelation(int documentId, int authorId)
+    + Document searchDocumentById(int id)
+    + Document searchDocumentByName(String documentName)
+    + Author searchAuthorById(int id)
+    + Author searchAuthorByName(String name)
+    + ArrayList<Document> getDocumentsByAuthorId(int authorId)
+    + ArrayList<Author> getAuthorsByDocumentId(int documentId)
+    + void editDocumentName(String oldName, String newName)
+    + void editDocumentName(Document document)
+    + void editPublishingYear(String title, int newYear)
+    + void editPublishingYear(Document document)
+    + void editKeyWord(String title, String oldKeyWord, String newKeyWord)
+    + void editKeyWord(Document document)
+    + void editDocument()
+    + void deleteAllDocuments()
+    + void deleteAllAuthors()
+    + void deleteAllRelations()
+    + void showDocuments()
+    + void showAuthors()
+}
+
+class LibraryManager {
+    - Library digitalLibrary
+    - Scanner userInput
+    + LibraryManager()
+    + void manageLibrary()
+}
+
+class App {
+    
+}
+
+Document "1" -l- "0...*" DocumentAuthor : contains
+Document -- DocumentType
+Author "1" --r-- "0..." DocumentAuthor : contains
+Library -- "0.." Document : manages
+Library -- "0.." Author : manages
+Library -- "0..." DocumentAuthor : manages
+LibraryManager -- Library : manages
+App -- LibraryManager : runs
+
+
+@enduml
