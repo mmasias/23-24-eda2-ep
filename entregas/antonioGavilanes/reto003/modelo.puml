@@ -1,0 +1,65 @@
+@startuml
+class Libreria{
+    -List<Documento> documentos
+    -List<Autor> autores
+    -List<AutorLibro> relaciones
+    -Scanner scanner
+    +Libreria()
+    +void startLibraryManager()
+    -void listBooks()
+    -void addBook()
+    -void addBook(Documento book)
+    -void addAuthor(Documento book)
+    -void addAuthor(Autor author)
+    -void addRelation(int bookId, int authorId)
+    -List<Autor> getAuthorsByBookId(int bookId)
+    -List<Documento> getBooksByAuthorId(int authorId)
+    -Documento findBookById(int bookId)
+    -Autor findAuthorById(int authorId)
+    -void listAuthors()
+    -void listarRelaciones()
+}
+
+class Autor{
+    -int id
+    -String name
+    +Autor(int id, String name)
+    +int getId()
+    +String getName()
+    +String toString()
+}
+
+class Documento{
+    -int id
+    -String title
+    -int publicationYear
+    -String type
+    -List<String> keywords
+    +Documento(int id, String title, int publicationYear, String type, List<String> keywords)
+    +int getId()
+    +String getTitle()
+    +List<String> getKeywords()
+    +String toString()
+}
+
+class AutorLibro{
+    -int bookId
+    -int authorId
+    +AutorLibro(int bookId, int authorId)
+    +int getBookId()
+    +int getAuthorId()
+}
+
+class PalabrasClave{
+    -List<String> palabrasClave
+    +PalabrasClave()
+    +void agregarPalabra()
+    +List<String> getPalabrasClave()
+}
+
+Libreria -d-"0..*" Autor : manages
+Libreria -d-"0..*" Documento : manages
+Libreria -d-"0..*" AutorLibro : manages
+Autor "1"-r-"0..*" AutorLibro : contains
+AutorLibro "0..*"-r-"1" Documento : contains
+@enduml
