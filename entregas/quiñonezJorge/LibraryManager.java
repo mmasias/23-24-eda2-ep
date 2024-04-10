@@ -25,7 +25,7 @@ public class LibraryManager {
     while (running) {
       showMenu();
       System.out.print("Choose an option: ");
-      manageInput(input.nextLine());
+      manageInput(input.nextInt());
     }
   }
 
@@ -44,38 +44,30 @@ public class LibraryManager {
     System.out.println();
   }
 
-  private void manageInput(String option) {
+  private void manageInput(int option) {
     switch (option) {
-      case "1":
+      case 1:
         addDocument();
         break;
-      case "4":
+      case 4:
         addAuthors();
         break;
-      // case "3":
-      // removeDocument();
-      // break;
-      // case "4":
-      // listDocuments();
-      // break;
-      // case "5":
-      // filterDocuments();
-      // break;
-      case "0":
+      case 7:
+        listAllAuthors();
+        break;
+      case 8:
+        listAllDocuments();
+        break;
+      case 9:
+        filterDocuments();
+        break;
+      case 0:
         running = !running;
         break;
       default:
-        System.out.print("Invalid option");
-        new Scanner(System.in).nextLine();
         break;
     }
   }
-
-  // private void listAuthors() {
-  // for (int i = 0; i <= authors.size(); i++) {
-  // System.out.println(i + ". " + authors.get(i).getName());
-  // }
-  // }
 
   private void addDocument() {
     boolean creating = true;
@@ -87,9 +79,7 @@ public class LibraryManager {
       } else if (option.equals("y")) {
         Document createdDoc = generator.createDocument(documents.size() + 1);
         ArrayList<Author> createdAuthors = addAuthors();
-
         documents.add(createdDoc);
-
         for (Author author : createdAuthors) {
           relations.add(new Relation(author.getId(), createdDoc.getId()));
         }
@@ -99,7 +89,7 @@ public class LibraryManager {
 
   private ArrayList<Author> addAuthors() {
     ArrayList<Author> list = new ArrayList<Author>();
-    System.out.print("How many authors will you add?:");
+    System.out.print("How many authors will you add?: ");
     int amount = input.nextInt();
     for (int i = 0; i < amount; i++) {
       Author created = generator.createAuthor(authors.size() + 1);
@@ -107,6 +97,77 @@ public class LibraryManager {
       authors.add(created);
     }
     return list;
+  }
+
+  private void listAllAuthors() {
+    System.out.println();
+    for (Author author : authors) {
+      System.out.println(author.toString());
+    }
+    new Scanner(System.in).nextLine();
+  }
+
+  private void listAllDocuments() {
+    for (Document doc : documents) {
+      System.out.println(doc.toString());
+    }
+    new Scanner(System.in).nextLine();
+  }
+
+  private void filterDocuments() {
+
+    for (Relation rel : relations) {
+      System.out.println(rel.getAuthorId() + "," + rel.getDocumentId());
+    }
+    new Scanner(System.in).nextLine();
+    System.out.println();
+    System.out.println("1. Filter documents by author id");
+    System.out.println("2. Filter authors by document id");
+    System.out.println("0. Exit");
+    System.out.print("Choose an option: ");
+    int op = input.nextInt();
+
+    switch (op) {
+      case 1:
+        filterByAuthorId();
+        break;
+      case 2:
+        filterByDocumentId();
+        break;
+      case 0:
+        return;
+      default:
+        break;
+    }
+  }
+
+  private void filterByAuthorId() {
+    listAllAuthors();
+    System.out.println("Select the author id: ");
+    int index = input.nextInt();
+
+    System.out.println(authors.get(index - 1).toString());
+    System.out.println("Documents:");
+    for (Relation rel : relations) {
+      if (rel.getAuthorId() == index) {
+        System.out.println(documents.get(rel.getDocumentId() - 1).toString());
+      }
+    }
+    new Scanner(System.in).nextLine();
+  }
+
+  private void filterByDocumentId() {
+    listAllDocuments();
+    System.out.print("Select the document id: ");
+    int index = input.nextInt();
+    System.out.println(documents.get(index - 1).toString());
+    System.out.println("Authors:");
+    for (Relation rel : relations) {
+      if (rel.getDocumentId() == index) {
+        System.out.println(authors.get(rel.getAuthorId() - 1).toString());
+      }
+    }
+    new Scanner(System.in).nextLine();
   }
 
   // private void editDocument() {

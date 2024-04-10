@@ -121,11 +121,15 @@ public class Document {
   @Override
   public String toString() {
     String content = "";
-    content += "Title: " + title + "\n" + "Type: " + documentType + "\n" + "Release date: " + releaseDate + "\n";
+    content += "id: " + id + "\n" + "Title: " + title + "\n" + "Type: " + documentType + "\n" + "Release date: "
+        + releaseDate
+        + "\n";
 
-    content += "\n" + "Keywords: ";
-    for (String keyword : keywords) {
-      content += keyword + ", ";
+    if (keywords.size() > 0) {
+      content += "\n" + "Keywords: " + "\n";
+      for (String keyword : keywords) {
+        content += keyword + ", ";
+      }
     }
 
     return content;

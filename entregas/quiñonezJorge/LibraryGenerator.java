@@ -1,5 +1,6 @@
 package entregas.quiñonezJorge;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class LibraryGenerator {
@@ -15,7 +16,7 @@ public class LibraryGenerator {
     String type = input.nextLine();
     System.out.print("Insert document releaseDate with the format xx/xx/xxx: ");
     String releaseDate = input.nextLine();
-    return new Document(index, title, releaseDate, type, null);
+    return new Document(index, title, releaseDate, type, new ArrayList<String>());
   }
 
   public Author createAuthor(int index) {
