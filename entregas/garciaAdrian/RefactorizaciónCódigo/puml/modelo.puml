@@ -1,0 +1,64 @@
+@startuml
+
+class Book {
+    -id: int
+    -title: String
+    -publicationYear: int
+    -type: String
+    -keywords: String[]
+    +Book(id: int, title: String, publicationYear: int, type: String)
+    +getId(): int
+    +getTitle(): String
+    +setTitle(title: String): void
+    +getPublicationYear(): int
+    +setPublicationYear(publicationYear: int): void
+    +getType(): String
+    +getKeywords(): String[]
+    +setKeywords(keywords: String[]): void
+    +toString(): String
+}
+
+class Author {
+    -id: int
+    -name: String
+    +Author(id: int, name: String)
+    +getId(): int
+    +getName(): String
+    +setName(name: String): void
+    +toString(): String
+}
+
+class BookAuthor {
+    -bookId: int
+    -authorId: int
+    +BookAuthor(bookId: int, authorId: int)
+    +getBookId(): int
+    +getAuthorId(): int
+}
+
+class LibraryManager {
+    -books: List<Book>
+    -authors: List<Author>
+    -relations: List<BookAuthor>
+    -scanner: Scanner
+    +LibraryManager()
+    +startLibraryManager(): void
+    +listBooks(): void
+    +listAuthors(): void
+    +addBook(): void
+    +addAuthor(): void
+    +addRelation(): void
+    +listRelations(): void
+    +searchBooksByKeywords(): void
+    +findBookById(bookId: int): Book
+    +findAuthorById(authorId: int): Author
+    +getAuthorsByBookId(bookId: int): List<Author>
+}
+
+    LibraryManager -- "0..*" Book : manages
+    LibraryManager -- "0..*" Author : manages
+    LibraryManager -- "0..*" BookAuthor : manages
+    Book "1" -l- "0..*" BookAuthor : contains
+    Author "1" --r- "0..*" BookAuthor : contains
+
+@enduml
