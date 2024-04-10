@@ -82,7 +82,7 @@ public class LibraryManager {
                     break;
                 case 5:
                     addOrRemoveAuthorsFromDocument();
-                    return;
+                    break;
 
                 case 6:
                     System.out.println("Indica el ID o título del documento:");
@@ -142,11 +142,11 @@ public class LibraryManager {
                     break;
                 case 10:
                     modifyDocument();
-                    return;
+                    break;
 
                 case 11:
                     System.out.println("Cerrando gestor Biblioteca");
-                    return;
+                    break;
 
                 default:
                     System.out.println("Opción no valida.");
@@ -298,27 +298,27 @@ public class LibraryManager {
         for (Author author : authors) {
             System.out.println("ID: " + author.getId() + ", Nombre: " + author.getName());
         }
+        
+        System.out.println("Introduce el ID del autor para añadir o eliminar del documento:");
+        int authorId = scanner.nextInt();
+        scanner.nextLine();
     
-        System.out.println("Introduce los IDs de los autores para añadir o eliminar del documento, separados por comas:");
-        String[] authorIds = scanner.nextLine().split(",");
+        Author author = findAuthorById(authorId);
+        if (author == null) {
+            System.out.println("Autor con ID " + authorId + " no encontrado.");
+            return;
+        }
     
-        for (String authorIdStr : authorIds) {
-            int authorId = Integer.parseInt(authorIdStr.trim());
-            Author author = findAuthorById(authorId);
-            if (author == null) {
-                System.out.println("Autor con ID " + authorId + " no encontrado.");
-                continue;
-            }
-
-            DocumentAuthor existingRelation = findRelation(docId, authorId);
-            if (existingRelation != null) {
-                relations.remove(existingRelation);
-                System.out.println("Autor con ID " + authorId + " eliminado del documento.");
-            } else {
-                DocumentAuthor newRelation = new DocumentAuthor(docId, authorId);
-                relations.add(newRelation);
-                System.out.println("Autor con ID " + authorId + " añadido al documento.");
-            }
+        DocumentAuthor existingRelation = findRelation(docId, authorId);
+        if (existingRelation != null) {
+            relations.remove(existingRelation);
+            System.out.println("Autor con ID " + authorId + " eliminado del documento.");
+            return;
+        } else {
+            DocumentAuthor newRelation = new DocumentAuthor(docId, authorId);
+            relations.add(newRelation);
+            System.out.println("Autor con ID " + authorId + " añadido al documento.");
+            return;
         }
     }
     
