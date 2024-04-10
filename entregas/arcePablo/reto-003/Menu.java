@@ -14,15 +14,16 @@ public class Menu {
         System.out.println("a - Añadir documento");
         System.out.println("f - Modificar buscador");
         System.out.println("d - Eliminar documento");
+        System.out.println("u - Actualizar documento");
         System.out.println("l - Listar documentos");
         System.out.println("s - Salir\n");
     }
 
     public void listDocuments(ArrayList<Document> documents) {
         System.out.println("=== Lista de Documentos ===");
-        System.out.println("=".repeat(150));
-        System.out.println("| Document ID " + "|   Title" + " ".repeat(30) + "|   Author" + " ".repeat(3) + "| Date Published | Keywords");
-        System.out.println("=".repeat(150));
+        System.out.println("=".repeat(134));
+        System.out.println("| Document ID " + "|   Title" + " ".repeat(24) + "|   Author" + " ".repeat(3) + "| Date Published | Keywords");
+        System.out.println("=".repeat(134));
 
         for (Document document : documents) {
             String documentId = String.valueOf(document.getDocumentId());
@@ -39,7 +40,7 @@ public class Menu {
 
             System.out.format("| %-11s | %-30s | %-10s | %-14s | %-53s |\n", formattedDocumentId, formattedTitle, formattedAuthor, formattedDate, formattedKeywords);
         }
-        System.out.println("=".repeat(150));
+        System.out.println("=".repeat(134));
     }
 
     private String formatCell(String value, int maxLength) {

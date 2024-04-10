@@ -46,10 +46,7 @@ public class Library {
             System.out.println("Seleccione el número del campo que desea actualizar (o ingrese 0 para salir):");
             
             int choice = scanner.nextInt();
-            scanner.nextLine();  
-
-            scanner.close();
-            
+            scanner.nextLine();             
             switch (choice) {
                 case 1:
                     System.out.println("Ingrese el nuevo título:");
