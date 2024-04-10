@@ -1,0 +1,59 @@
+@startuml
+
+class Documento {
+    - titulo
+    - autor
+    - tipo
+    + Documento()
+    + getTitulo()
+    + getAutor()
+    + getTipo()
+    + setTitulo()
+    + setAutor()
+    + setTipo()
+    + toString()
+}
+
+class Autor {
+    - nombre
+    - apellido
+    + Autor()
+    + getNombre()
+    + getApellido()
+    + setNombre()
+    + setApellido()
+    + toString()
+    + getNombreCompleto()
+}
+
+class GeneradorDocumentos {
+    + crearNuevoDocumento()
+    + editarDocumento()
+    + eliminarDocumento()
+    + buscarDocumento()
+}
+
+class GeneradorAutores {
+    + crearNuevoAutor()
+    + editarAutor()
+    + eliminarAutor()
+    + buscarAutor()
+}
+
+class Menu {
+    - generadorDocumentos: GeneradorDocumentos
+    - generadorAutores: GeneradorAutores
+    - documentos
+    - autores
+    + mostrarMenu()
+    + gestionarDocumentos()
+    + gestionarAutores()
+}
+
+GeneradorDocumentos o--> Documento
+GeneradorAutores o--> Autor
+Autor *--> Documento
+Menu --> GeneradorDocumentos
+Menu --> GeneradorAutores
+
+@enduml
