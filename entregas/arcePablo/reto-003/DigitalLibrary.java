@@ -36,13 +36,22 @@ public class DigitalLibrary {
                     menu.displayInputs(searchbar);
                     menu.listDocuments(filteredDocuments);
                     break;
-                case "s":
-                    running = false;
-                    break;
+                case "u":
+                    System.out.println("Ingrese el id del documento a actualizar:");
+                    int idUpdate = scanner.nextInt();
+                    int indexToUpdate = library.searchDocumentByID(idUpdate);
+                    if (indexToUpdate == -1){
+                        System.out.println("No se encontró el documento con el id ingresado.");
+                    } else {
+                        Document newDocument = library.updateToNewDocument(indexToUpdate);
+                        library.updateDocument(indexToUpdate, newDocument);
+                        System.out.println("Documento actualizado exitosamente.");
+                    }
+                    break;                  
                 case "d":
                     System.out.println("Ingrese el id del documento a eliminar:");
-                    int id = scanner.nextInt();
-                    int indexToDelete = library.searchDocumentByID(id);
+                    int idDelete = scanner.nextInt();
+                    int indexToDelete = library.searchDocumentByID(idDelete);
                     if (indexToDelete == -1){
                         System.out.println("No se encontró el documento con el id ingresado.");
                     } else {
@@ -50,6 +59,9 @@ public class DigitalLibrary {
                         System.out.println("Documento eliminado exitosamente.");
                     }
                     break;
+                case "s":
+                    running = false;
+                break;
                 default:
                     System.out.println("Opción no válida");
             }
