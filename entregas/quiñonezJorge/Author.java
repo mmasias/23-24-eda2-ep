@@ -20,6 +20,6 @@ public class Author {
 
   @Override
   public String toString() {
-    return getName();
+    return id + ". " + name;
   }
 }

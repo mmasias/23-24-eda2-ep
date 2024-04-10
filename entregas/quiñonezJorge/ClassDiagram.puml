@@ -3,10 +3,13 @@
 hide empty methods
 hide empty attributes
 
-class DocumentManager{
+class ArrayList{}
+
+class LibraryManager{
   - ArrayList<Author> authors
   - ArrayList<Document> documents
   - ArrayList<Relation> relations
+  - Scanner scanner
 
   + DocumentManager()
   + void start()
@@ -16,16 +19,24 @@ class DocumentManager{
   - ArrayList<Document> getDocumentsByAuthorId(int id)
   - Author getAuthorById(int id)
   - Document getDocumentById(int id)
-  - void createDocument()
-  - void editDocument()
   - void deleteDocument()
-  - void createAuthor()
-  - void editAuthor()
   - void deleteAuthor()
-  - void createRelation()
-  - void updateRelation()
   - void deleteRelation()
   - void filterDocuments()
+}
+
+class LibraryGenerator{
+  - Scanner scanner
+  + void createDocument()
+  + void createAuthor()
+  + void createRelation()
+}
+
+class LibraryEditor{
+  - Scanner scanner
+  + void editAuthor()
+  + void editDocument()
+  + void updateRelation()
 }
 
 class Document{
@@ -38,8 +49,6 @@ class Document{
   + int getId()
   + String toString()
 }
-
-class ArrayList{}
 
 class Author{
   - int id
@@ -64,11 +73,16 @@ enum DocumentTypes{
   Magazine
   Article
   Scientific_Paper
+
+  + getType()
+  + getAllTypes()
 }
 
-DocumentManager -down- Relation
-Author "1" -right- "0..*" Relation
-Document "1" -left- "1..*" Relation
-DocumentManager .right. ArrayList : uses
-Document -- DocumentTypes
+LibraryManager -- LibraryGenerator : uses
+LibraryManager -- LibraryEditor : uses
+LibraryManager -- Relation : manage
+LibraryManager -- ArrayList : uses
+Relation -- "1..*" Author : contains
+Relation -- "1..*" Document : contains
+Document -- DocumentTypes : has
 @enduml

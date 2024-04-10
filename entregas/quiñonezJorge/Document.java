@@ -1,16 +1,15 @@
 package entregas.quiñonezJorge;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Document {
   private int id;
   private String title;
   private String releaseDate;
-  private DocumentTypes documentType;
+  private String documentType;
   private ArrayList<String> keywords;
 
-  public Document(int id, String title, String releaseDate, DocumentTypes type, ArrayList<String> keywords) {
+  public Document(int id, String title, String releaseDate, String type, ArrayList<String> keywords) {
     this.id = id;
     this.title = title;
     this.releaseDate = releaseDate;
