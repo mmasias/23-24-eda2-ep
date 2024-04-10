@@ -1,25 +1,33 @@
 public class Autor {
-    private String nombre;
-    private String apellido;
+    private int id;
+    private String name;
 
-    public Autor(String nombre, String apellido) {
-        this.nombre = nombre;
-        this.apellido = apellido;
+    public Autor(int id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getApellido() {
-        return apellido;
+    public int getId() {
+        return id;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Autor{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
