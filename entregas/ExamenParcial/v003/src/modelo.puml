@@ -1,0 +1,115 @@
+@startuml
+package v003.src {
+
+    class LibraryManager {
+        -List<Book> books
+        -List<Author> authors
+        -List<BookAuthor> authorrelations
+        -List<KeyWord> keywords
+        -List<BookKeyWord> keywordrelations
+        -Scanner scanner
+        +LibraryManager()
+        +void startLibraryManager()
+        -void listBooks()
+        -void addBook()
+        -void addBook(Book book)
+        -void addAuthor(Book book)
+        -void addAuthor(Author author)
+        -void addRelation(int bookId, int authorId)
+        -List<Author> getAuthorsByBookId(int bookId)
+        -List<Book> getBooksByAuthorId(int authorId)
+        -Book findBookById(int bookId)
+        -Author findAuthorById(int authorId)
+        -void listAuthors()
+        -void listKeyWords()
+        -void addKeyWord(Book book)
+        -void addKeyWord(KeyWord keyword)
+        -void addKeyWordRelation(int bookId, int keywordId)
+        -List<KeyWord> getKeyWordsByBookId(int bookId)
+        -KeyWord findKeyWordById(int keyword)
+        -void searchBooks()
+        -void searchByTitle()
+        -void searchByPublicationYear()
+        -void searchByAuthor()
+        -void searchByType()
+        -void searchByKeyWords()
+        -void displaySearchResults(LinkedList<Book> foundBooks)
+        -void editBook()
+        -void editTitle(Book book)
+        -void editYear(Book book)
+        -void editType(Book book)
+        -void editAuthorsForBook(Book book)
+        -void deleteAuthorFromBook(Book book)
+        -void addExistingAuthorToBook(Book book)
+        -void addNewAuthorToBook(Book book)
+        -void editKeywordsForBook(Book book)
+        -void deleteKeywordFromBook(Book book)
+        -void addExistingKeywordToBook(Book book)
+        -void addNewKeywordToBook(Book book)
+        -void deleteBook()
+    }
+
+    class Author {
+        -int id
+        -String name
+        +Author(int id, String name)
+        +int getId()
+        +String getName()
+        +void setName(String name)
+        +String toString()
+    }
+
+    class Book {
+        -int id
+        -String title
+        -int publicationYear
+        -final String type
+        +Book(int id, String title, int publicationYear, String type)
+        +int getId()
+        +String getTitle()
+        +int getPublicationYear()
+        +String getType()
+        +void setTitle(String title)
+        +void setPublicationYear(int publicationYear)
+        +void setType(String type)
+        +String toString()
+    }
+
+    class BookAuthor {
+        -int bookId
+        -int authorId
+        +BookAuthor(int bookId, int authorId)
+        +int getBookId()
+        +int getAuthorId()
+    }
+
+    class KeyWord {
+        -int id
+        -String name
+        +KeyWord(int id, String name)
+        +int getId()
+        +String getName()
+        +void setName(String name)
+        +String toString()
+    }
+
+    class BookKeyWord {
+        -int bookId
+        -int keywordId
+        +BookKeyWord(int bookId, int keywordId)
+        +int getBookId()
+        +int getKeywordId()
+    }
+
+    LibraryManager -- "0..*" Book : manages
+    LibraryManager -- "0..*" Author : manages
+    LibraryManager -- "0..*" BookAuthor : manages
+    LibraryManager -- "0..*" KeyWord : manages
+    LibraryManager -- "0..*" BookKeyWord : manages
+    Book "1" -l- "0..*" BookAuthor : contains
+    Author "1" --r- "0..*" BookAuthor : contains
+    Book "1" -l- "0..*" BookKeyWord : contains
+    KeyWord "1" --r- "0..*" BookKeyWord : contains
+
+}
+@enduml
