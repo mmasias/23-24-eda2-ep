@@ -1,0 +1,56 @@
+@startuml
+
+class Author {
+    -id: int
+    -name: String
+    +getId(): int
+    +getName(): String
+    +toString(): String
+}
+
+class Book {
+    -id: int
+    -title: String
+    -publicationYear: int
+    +getId(): int
+    +getTitle(): String
+    +setTitle(title: String): void
+    +getPublicationYear(): int
+    +setPublicationYear(publicationYear: int): void
+    +getType(): String
+    +setKeywords(keywords: List<String>): void
+    +toString(): String
+    +equals(obj: Object): boolean
+    +hashCode(): int
+}
+
+class BookAuthor {
+    -bookId: int
+    -authorId: int
+    +getBookId(): int
+    +getAuthorId(): int
+}
+
+class LibraryManager {
+    -books: List<Book>
+    -authors: List<Author>
+    -relations: List<BookAuthor>
+    -scanner: Scanner
+    +startLibraryManager(): void
+    +listBooks(): void
+    +listAuthors(): void
+    +addBook(): void
+    +addAuthor(): void
+    +addRelation(): void
+    +listRelations(): void
+    +searchBooksByKeywords(): void
+    +findBookById(bookId: int): Book
+    +findAuthorById(authorId: int): Author
+    +getAuthorsByBookId(bookId: int): List<Author>
+}
+
+Book "1" -- "*" LibraryManager : contains >
+Author "1" -- "*" LibraryManager : contains >
+BookAuthor "1" -- "*" LibraryManager : contains >
+
+@enduml
