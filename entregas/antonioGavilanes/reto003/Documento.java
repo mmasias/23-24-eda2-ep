@@ -1,76 +1,33 @@
 package antonioGavilanes.reto003;
 
-import java.util.List;
-
 public class Documento {
     private int id;
-    private String titulo;
-    private List<String> autores;
-    private int añoPublicacion;
-    private String tipoDocumento;
-    private List<String> palabrasClave;
+    private String title;
+    private int publicationYear;
+    private final String type;
 
-    public Documento(int id, String titulo, List<String> autores, int añoPublicacion, String tipoDocumento, List<String> palabrasClave) {
+    public Documento(int id, String title, int publicationYear, String type) {
         this.id = id;
-        this.titulo = titulo;
-        this.autores = autores;
-        this.añoPublicacion = añoPublicacion;
-        this.tipoDocumento = tipoDocumento;
-        this.palabrasClave = palabrasClave;
+        this.title = title;
+        this.publicationYear = publicationYear;
+        this.type = type;
     }
 
     public int getId() {
         return id;
     }
-    
-    public String getTitulo() {
-        return titulo;
+
+    public String getTitle() {
+        return title;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    public List<String> getAutores() {
-        return autores;
-    }
-
-    public void setAutores(List<String> autores) {
-        this.autores = autores;
-    }
-
-    public int getAñoPublicacion() {
-        return añoPublicacion;
-    }
-
-    public void setAñoPublicacion(int añoPublicacion) {
-        this.añoPublicacion = añoPublicacion;
-    }
-
-    public String getTipoDocumento() {
-        return tipoDocumento;
-    }
-
-    public void setTipoDocumento(String tipoDocumento) {
-        this.tipoDocumento = tipoDocumento;
-    }
-
-    public List<String> getPalabrasClave() {
-        return palabrasClave;
-    }
-
-    public void setPalabrasClave(List<String> palabrasClave) {
-        this.palabrasClave = palabrasClave;
-    }
-
+    @Override
     public String toString() {
-        return "Documento{" +
+        return "Book{" +
                 "id=" + id +
-                ", titulo='" + titulo + '\'' +
-                ", autores=" + autores +
-                ", añoPublicacion=" + añoPublicacion +
-                ", tipoDocumento='" + tipoDocumento + '\'' +
-                ", palabrasClave=" + palabrasClave +
+                ", title='" + title + '\'' +
+                ", publicationYear=" + publicationYear +
+                ", type='" + type + '\'' +
                 '}';
     }
 

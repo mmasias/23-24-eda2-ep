@@ -3,25 +3,26 @@ package antonioGavilanes.reto003;
 public class Autor {
 
     private int id;
-    private String nombre;
+    private String name;
 
-    public Autor(int id, String nombre) {
+    public Autor(int id, String name) {
         this.id = id;
-        this.nombre = nombre;
+        this.name = name;
     }
 
     public int getId() {
         return id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
+    @Override
     public String toString() {
-        return "Autor{" +
+        return "Author{" +
                 "id=" + id +
-                ", nombre='" + nombre + '\'' +
+                ", name='" + name + '\'' +
                 '}';
     }
 }

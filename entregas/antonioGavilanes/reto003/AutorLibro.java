@@ -2,20 +2,20 @@ package antonioGavilanes.reto003;
 
 public class AutorLibro {
 
-    private int libroId;
-    private int autorId;
+    private int bookId;
+    private int authorId;
 
-    public AutorLibro(int libroId, int autorId) {
-        this.libroId = libroId;
-        this.autorId = autorId;
+    public AutorLibro(int bookId, int authorId) {
+        this.bookId = bookId;
+        this.authorId = authorId;
     }
 
-    public int getLibroId() {
-        return libroId;
+    public int getBookId() {
+        return bookId;
     }
 
-    public int getAutorId() {
-        return autorId;
+    public int getAuthorId() {
+        return authorId;
     }
     
 }
