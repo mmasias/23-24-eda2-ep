@@ -16,7 +16,7 @@ public class LibraryGenerator {
     String type = input.nextLine();
     System.out.print("Insert document releaseDate with the format xx/xx/xxx: ");
     String releaseDate = input.nextLine();
-    return new Document(index, title, releaseDate, type, new ArrayList<String>());
+    return new Document(index, title, releaseDate, type);
   }
 
   public Author createAuthor(int index) {

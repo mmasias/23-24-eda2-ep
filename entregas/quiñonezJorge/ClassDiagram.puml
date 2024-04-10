@@ -9,43 +9,35 @@ class LibraryManager{
   - ArrayList<Author> authors
   - ArrayList<Document> documents
   - ArrayList<Relation> relations
+  - LibraryGenerator generator
+  - boolean running
   - Scanner scanner
 
-  + DocumentManager()
+  + LibraryManager()
   + void start()
-  - ArrayList<Author> getAllAuthors()
-  - ArrayList<Document> getAllDocuments()
-  - ArrayList<Author> getAuthorsByBookId(int id)
-  - ArrayList<Document> getDocumentsByAuthorId(int id)
-  - Author getAuthorById(int id)
-  - Document getDocumentById(int id)
-  - void deleteDocument()
-  - void deleteAuthor()
-  - void deleteRelation()
+  - void showMenu()
+  - void manageInput(int option)
+  - void addDocument()
+  - ArrayList<Author> addAuthors()
+  - void listAllAuthors()
+  - void listAllDocuments()
   - void filterDocuments()
+  - void filterByAuthorId()
+  - void filterByDocumentId()
 }
 
 class LibraryGenerator{
-  - Scanner scanner
-  + void createDocument()
-  + void createAuthor()
-  + void createRelation()
-}
-
-class LibraryEditor{
-  - Scanner scanner
-  + void editAuthor()
-  + void editDocument()
-  + void updateRelation()
+  - Scanner input
+  + Document createDocument(int index)
+  + Author createAuthor(int index)
 }
 
 class Document{
   - int id
   - String title
-  - DocumentTypes type
+  - String documentType
   - String releaseDate
-  - ArrayList<String> keyWords
-  + Document()
+  + Document(int id, String title, String releaseDate, String type)
   + int getId()
   + String toString()
 }
@@ -68,21 +60,9 @@ class Relation{
   + int getDocumentId()
 }
 
-enum DocumentTypes{
-  Book
-  Magazine
-  Article
-  Scientific_Paper
-
-  + getType()
-  + getAllTypes()
-}
-
 LibraryManager -- LibraryGenerator : uses
-LibraryManager -- LibraryEditor : uses
 LibraryManager -- Relation : manage
 LibraryManager -- ArrayList : uses
 Relation -- "1..*" Author : contains
 Relation -- "1..*" Document : contains
-Document -- DocumentTypes : has
 @enduml

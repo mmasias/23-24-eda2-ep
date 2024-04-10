@@ -8,7 +8,6 @@ public class LibraryManager {
   private ArrayList<Document> documents;
   private ArrayList<Relation> relations;
   private LibraryGenerator generator;
-  private LibraryEditor editor;
   private boolean running;
   private Scanner input = new Scanner(System.in);
 
@@ -17,7 +16,6 @@ public class LibraryManager {
     documents = new ArrayList<Document>();
     relations = new ArrayList<Relation>();
     generator = new LibraryGenerator();
-    editor = new LibraryEditor();
   }
 
   public void start() {
@@ -31,15 +29,11 @@ public class LibraryManager {
 
   private void showMenu() {
     System.out.println();
-    System.out.println("1. Add document");
-    System.out.println("2. Edit document");
-    System.out.println("3. Remove document");
-    System.out.println("4. Add author");
-    System.out.println("5. Edit author");
-    System.out.println("6. Remove author");
-    System.out.println("7. List authors");
-    System.out.println("8. List documents");
-    System.out.println("9. Filter documents");
+    System.out.println("1. Add author");
+    System.out.println("2. Add document");
+    System.out.println("3. List authors");
+    System.out.println("4. List documents");
+    System.out.println("5. Filter documents");
     System.out.println("0. Exit");
     System.out.println();
   }
@@ -47,18 +41,20 @@ public class LibraryManager {
   private void manageInput(int option) {
     switch (option) {
       case 1:
-        addDocument();
-        break;
-      case 4:
         addAuthors();
         break;
-      case 7:
+      case 2:
+        addDocument();
+        break;
+      case 3:
         listAllAuthors();
+        new Scanner(System.in).nextLine();
         break;
-      case 8:
+      case 4:
         listAllDocuments();
+        new Scanner(System.in).nextLine();
         break;
-      case 9:
+      case 5:
         filterDocuments();
         break;
       case 0:
@@ -76,10 +72,32 @@ public class LibraryManager {
       String option = input.nextLine();
       if (option.equals("n")) {
         creating = !creating;
-      } else if (option.equals("y")) {
+      }
+      if (option.equals("y")) {
+        ArrayList<Author> createdAuthors = new ArrayList<Author>();
+
         Document createdDoc = generator.createDocument(documents.size() + 1);
-        ArrayList<Author> createdAuthors = addAuthors();
         documents.add(createdDoc);
+
+        System.out.println("Select the authors if they're on the list (-1 if not, 0 to finish): ");
+        for (Author author : authors) {
+          System.out.println(author.toString());
+        }
+
+        boolean adding = true;
+        while (adding) {
+          System.out.print("Select: ");
+          int selection = input.nextInt();
+
+          if (selection == 0) {
+            adding = !adding;
+          } else if (selection == -1) {
+            createdAuthors = addAuthors();
+          } else {
+            createdAuthors.add(authors.get(selection - 1));
+          }
+        }
+
         for (Author author : createdAuthors) {
           relations.add(new Relation(author.getId(), createdDoc.getId()));
         }
@@ -89,6 +107,7 @@ public class LibraryManager {
 
   private ArrayList<Author> addAuthors() {
     ArrayList<Author> list = new ArrayList<Author>();
+
     System.out.print("How many authors will you add?: ");
     int amount = input.nextInt();
     for (int i = 0; i < amount; i++) {
@@ -104,22 +123,15 @@ public class LibraryManager {
     for (Author author : authors) {
       System.out.println(author.toString());
     }
-    new Scanner(System.in).nextLine();
   }
 
   private void listAllDocuments() {
     for (Document doc : documents) {
       System.out.println(doc.toString());
     }
-    new Scanner(System.in).nextLine();
   }
 
   private void filterDocuments() {
-
-    for (Relation rel : relations) {
-      System.out.println(rel.getAuthorId() + "," + rel.getDocumentId());
-    }
-    new Scanner(System.in).nextLine();
     System.out.println();
     System.out.println("1. Filter documents by author id");
     System.out.println("2. Filter authors by document id");
@@ -169,52 +181,4 @@ public class LibraryManager {
     }
     new Scanner(System.in).nextLine();
   }
-
-  // private void editDocument() {
-  // for (Document document : documents) {
-  // System.out.println("Do you want to edit the document: " + document.getTitle()
-  // + "? (y/n)");
-  // Scanner input = new Scanner(System.in);
-  // if (input.nextLine().equals("y")) {
-  // document.edit();
-  // }
-  // }
-  // }
-
-  // private void removeDocument() {
-  // for (Document document : documents) {
-  // System.out.println("Do you want to remove the document: " +
-  // document.getTitle() + "? (y/n)");
-  // Scanner input = new Scanner(System.in);
-  // if (input.nextLine().equals("y")) {
-  // documents.remove(document);
-  // }
-  // }
-  // }
-
-  // private void listDocuments() {
-  // System.out.println();
-  // for (Document document : documents) {
-  // System.out.println(document.toString() + "\n");
-  // }
-  // new Scanner(System.in).nextLine();
-  // }
-
-  // private void filterDocuments() {
-  // Scanner input = new Scanner(System.in);
-  // System.out
-  // .println("You can search documents by title, author, release date, document
-  // type, keywords (0 to cancel)");
-  // System.out.print("Search: ");
-  // String search = input.nextLine();
-  // if (!search.equals("0")) {
-  // System.out.println();
-  // for (Document document : documents) {
-  // if (document.toString().contains(search)) {
-  // System.out.println(document.toString() + "\n");
-  // }
-  // }
-  // new Scanner(System.in).nextLine();
-  // }
-  // }
 }
