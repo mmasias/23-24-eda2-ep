@@ -1,0 +1,68 @@
+@startuml class diagram
+
+hide empty methods
+hide empty attributes
+
+class ArrayList{}
+
+class LibraryManager{
+  - ArrayList<Author> authors
+  - ArrayList<Document> documents
+  - ArrayList<Relation> relations
+  - LibraryGenerator generator
+  - boolean running
+  - Scanner scanner
+
+  + LibraryManager()
+  + void start()
+  - void showMenu()
+  - void manageInput(int option)
+  - void addDocument()
+  - ArrayList<Author> addAuthors()
+  - void listAllAuthors()
+  - void listAllDocuments()
+  - void filterDocuments()
+  - void filterByAuthorId()
+  - void filterByDocumentId()
+}
+
+class LibraryGenerator{
+  - Scanner input
+  + Document createDocument(int index)
+  + Author createAuthor(int index)
+}
+
+class Document{
+  - int id
+  - String title
+  - String documentType
+  - String releaseDate
+  + Document(int id, String title, String releaseDate, String type)
+  + int getId()
+  + String toString()
+}
+
+class Author{
+  - int id
+  - String name
+  + Author()
+  + int getId()
+  + String getName()
+  + String toString()
+
+}
+
+class Relation{
+  - int authorId
+  - int documentId
+  + Relation()
+  + int getAuthorId()
+  + int getDocumentId()
+}
+
+LibraryManager -- LibraryGenerator : uses
+LibraryManager -- Relation : manage
+LibraryManager -- ArrayList : uses
+Relation -- "1..*" Author : contains
+Relation -- "1..*" Document : contains
+@enduml
