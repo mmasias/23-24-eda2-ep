@@ -2,7 +2,7 @@
 
 <div align=center>
 
-|![](/entregas/musituDiego/Parcial/modelo.svg)|
+|![](/entregas/musituDiego/Parcial/Diagrama.svg)|
 |:-:|
 [App](App.java)
 [LibraryManager.java](LibraryManager.java)
