@@ -68,14 +68,14 @@ public class Libreria {
         } while (continuar);
     }
 
-    public void listBooks() {
+    private void listBooks() {
         System.out.println("Listado de libros");
         for (Documento book : documentos) {
             System.out.println(book);
         }
     }
 
-    public void addBook() {
+    private void addBook() {
         System.out.print("Introduce el título del libro: ");
         String title = scanner.next();
         System.out.print("Introduce el año de publicación: ");
@@ -89,17 +89,20 @@ public class Libreria {
         int tipoIndex = scanner.nextInt();
         String tipo = tipos.get(tipoIndex - 1);
 
-        Documento book = new Documento(documentos.size() + 1, title, publicationYear, tipo);
+        PalabrasClave palabrasClave = new PalabrasClave();
+        palabrasClave.agregarPalabra();
+
+        Documento book = new Documento(documentos.size() + 1, title, publicationYear, tipo, palabrasClave.getPalabrasClave());
         documentos.add(book);
         System.out.println("Libro añadido correctamente");
     }
 
-    public void addBook(Documento book) {
+    private void addBook(Documento book) {
         documentos.add(book);
         System.out.println("Libro añadido correctamente");
     }
 
-    public void addAuthor(Documento book) {
+    private void addAuthor(Documento book) {
         System.out.print("Introduce el nombre del autor: ");
         String name = scanner.next();
         Autor author = new Autor(autores.size() + 1, name);
@@ -109,17 +112,17 @@ public class Libreria {
         System.out.println("Autor añadido correctamente");
     }
 
-    public void addAuthor(Autor author) {
+    private void addAuthor(Autor author) {
         autores.add(author);
         System.out.println("Autor añadido correctamente");
     }
 
-    public void addRelation(int bookId, int authorId) {
+    private void addRelation(int bookId, int authorId) {
         AutorLibro relation = new AutorLibro(bookId, authorId);
         relaciones.add(relation);
     }
 
-    public List<Autor> getAuthorsByBookId(int bookId) {
+    private List<Autor> getAuthorsByBookId(int bookId) {
         List<Autor> authorsOfBook = new ArrayList<>();
         for (AutorLibro relation : relaciones) {
             if (relation.getBookId() == bookId) {
@@ -132,7 +135,7 @@ public class Libreria {
         return authorsOfBook;
     }
 
-    public List<Documento> getBooksByAuthorId(int authorId) {
+    private List<Documento> getBooksByAuthorId(int authorId) {
         List<Documento> booksOfAuthor = new ArrayList<>();
         for (AutorLibro relation : relaciones) {
             if (relation.getAuthorId() == authorId) {
@@ -145,7 +148,7 @@ public class Libreria {
         return booksOfAuthor;
     }
 
-    public Documento findBookById(int bookId) {
+    private Documento findBookById(int bookId) {
         for (Documento book : documentos) {
             if (book.getId() == bookId) {
                 return book;
@@ -154,7 +157,7 @@ public class Libreria {
         return null;
     }
 
-    public Autor findAuthorById(int authorId) {
+    private Autor findAuthorById(int authorId) {
         for (Autor author : autores) {
             if (author.getId() == authorId) {
                 return author;
@@ -163,14 +166,14 @@ public class Libreria {
         return null;
     }
 
-    public void listAuthors() {
+    private void listAuthors() {
         System.out.println("Listado de autores");
         for (Autor author : autores) {
             System.out.println(author);
         }
     }
     
-    public void listarRelaciones() {
+    private void listarRelaciones() {
         System.out.println("Registro de relaciones entre autores y libros:");
         for (AutorLibro relacion : relaciones) {
             Documento libro = findBookById(relacion.getBookId());
