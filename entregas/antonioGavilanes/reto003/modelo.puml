@@ -1,0 +1,59 @@
+@startuml
+class LibraryManager{
+
+-List<Book> books
+-List<Author>authors
+-List<BookAuthor>relations
+-Scanner scanner
+
++LibraryManager()
++void startLibraryManager()
+-void listBooks()
+-void addBook()
+-void addBook(Book book)
+-void addAuthor(Book book)
+-void addAuthor(Author author)
+-void addRelation(int bookId, int authorId)
+-List<Author> getAuthorsByBookId(int bookId)
+-List<Book> getBooksByAuthorId(int authorId)
+-Book findBookById(int bookId)
+-Author findAuthorById(int authorId)
+-void listAuthors()
+}
+
+class Author{
+-int id
+-String name
+
++Author(int id, String name)
++int getId()
++String getName()
++String toString()
+}
+
+class BookAuthor{
+-int bookId
+-int authorId
+
++BookAuthor(int bookId, int authorId)
++int getBookId()
++int getBookId()
+}
+
+class Book{
+-int id
+-String title
+-int publicationYear
+-final String type
+
++Book(int id, String title, int publicationYear, String type)
++int getId()
++String toString()
+}
+
+LibraryManager -d-"0..*" Author : manages
+LibraryManager -d-"0..*" Book : manages
+LibraryManager -d-"0..*" BookAuthor : manages
+Author "1"-r-"0..*" BookAuthor : contains
+BookAuthor "0..*"-r-"1" Book : contains
+@enduml
