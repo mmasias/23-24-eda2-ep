@@ -4,8 +4,8 @@
 
 |![](/entregas/musituDiego/Parcial/Diagrama.svg)|
 |:-:|
-[App](App.java)
-[LibraryManager.java](LibraryManager.java)
-[Author.java](Author.java) / [DocumentAuthor.java](DocumentAuthor.java) / [Document.java ](Document.java)
+[src/App.java](src/App.java)
+[src/LibraryManager.java](src/LibraryManager.java)
+[src/Author.java](src/Author.java) / [src/DocumentAuthor.java](src/DocumentAuthor.java) / [src/Document.java ](src/Document.java)
 
 </div>
