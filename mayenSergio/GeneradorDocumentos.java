@@ -16,7 +16,6 @@ public class GeneradorDocumentos {
             System.out.print("Título del documento: ");
             String titulo = scanner.nextLine();
 
-            // Seleccionar un autor de la lista
             if (autores.isEmpty()) {
                 System.out.println("No hay autores disponibles.");
                 return nuevosDocumentos;
@@ -28,9 +27,8 @@ public class GeneradorDocumentos {
             }
 
             int opcionAutor = scanner.nextInt();
-            scanner.nextLine(); // Limpiar el buffer del scanner
+            scanner.nextLine();
 
-            // Verificar si la opción es válida
             if (opcionAutor < 1 || opcionAutor > autores.size()) {
                 System.out.println("Opción no válida.");
                 continue;
