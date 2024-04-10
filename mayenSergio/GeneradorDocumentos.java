@@ -7,20 +7,42 @@ import java.util.Scanner;
 
 public class GeneradorDocumentos {
 
-    private Scanner scanner = new Scanner(System.in);
+    private static Scanner scanner = new Scanner(System.in);
 
-    public List<Documento> crearNuevoDocumento() {
+    public List<Documento> crearNuevoDocumento(List<Autor> autores) {
         List<Documento> nuevosDocumentos = new ArrayList<>();
 
         do {
             System.out.print("Título del documento: ");
             String titulo = scanner.nextLine();
 
+            // Seleccionar un autor de la lista
+            if (autores.isEmpty()) {
+                System.out.println("No hay autores disponibles.");
+                return nuevosDocumentos;
+            }
+
+            System.out.println("Seleccione un autor:");
+            for (int i = 0; i < autores.size(); i++) {
+                System.out.println((i + 1) + ". " + autores.get(i).getNombre());
+            }
+
+            int opcionAutor = scanner.nextInt();
+            scanner.nextLine(); // Limpiar el buffer del scanner
+
+            // Verificar si la opción es válida
+            if (opcionAutor < 1 || opcionAutor > autores.size()) {
+                System.out.println("Opción no válida.");
+                continue;
+            }
+
+            Autor autorSeleccionado = autores.get(opcionAutor - 1);
+
             System.out.print("Tipo de documento (LIBRO, REVISTA, ARTICULO, PAPER): ");
             String tipoStr = scanner.nextLine().toUpperCase();
             Documento.TipoDocumento tipo = Documento.TipoDocumento.valueOf(tipoStr);
 
-            Documento documento = new Documento(titulo, tipo);
+            Documento documento = new Documento(titulo, tipo, autorSeleccionado);
             nuevosDocumentos.add(documento);
 
             System.out.println("Documento agregado correctamente.\n");

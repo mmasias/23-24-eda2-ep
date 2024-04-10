@@ -8,6 +8,8 @@ public class Menu {
     private Scanner scanner = new Scanner(System.in);
     private GeneradorDocumentos generadorDocumentos = new GeneradorDocumentos();
     private GeneradorAutores generadorAutores = new GeneradorAutores();
+    private List<Documento> documentos = null;
+    private List<Autor> autores = null;
 
     public void mostrarMenu() {
         int opcion;
@@ -39,7 +41,6 @@ public class Menu {
 
     private void gestionarDocumentos() {
         int opcion;
-        List<Documento> documentos = null;
 
         do {
             System.out.println("=== Gestionar Documentos ===");
@@ -55,23 +56,27 @@ public class Menu {
 
             switch (opcion) {
                 case 1:
-                    if (documentos == null) {
-                        documentos = generadorDocumentos.crearNuevoDocumento();
+                    if (autores != null) {
+                        if (documentos == null) {
+                            documentos = generadorDocumentos.crearNuevoDocumento(autores);
+                        } else {
+                            documentos.add((Documento) generadorDocumentos.crearNuevoDocumento(autores));
+                            System.out.println("Nuevo documento creado.\n");
+                        }
                     } else {
-                        documentos.addAll(generadorDocumentos.crearNuevoDocumento());
-                        System.out.println("Nuevos documentos creados.\n");
+                        System.out.println("No hay autores disponibles. Cree al menos uno primero.\n");
                     }
                     break;
                 case 2:
-                if (documentos != null) {
-                    System.out.println("\nLista de documentos:");
-                    for (Documento documento : documentos) {
-                        System.out.println(documento);
+                    if (documentos != null) {
+                        System.out.println("\nLista de documentos:");
+                        for (Documento documento : documentos) {
+                            System.out.println(documento);
+                        }
+                        System.out.println();
+                    } else {
+                        System.out.println("No hay documentos para mostrar. Crea uno primero.\n");
                     }
-                    System.out.println();
-                } else {
-                    System.out.println("No hay documentos para mostrar. Crea uno primero.\n");
-                }
                     break;
                 case 3:
                     if (documentos != null) {
@@ -104,7 +109,6 @@ public class Menu {
 
     private void gestionarAutores() {
         int opcion;
-        List<Autor> autor = null;
 
         do {
             System.out.println("=== Gestionar Autores ===");
@@ -120,18 +124,18 @@ public class Menu {
 
             switch (opcion) {
                 case 1:
-                    if (autor == null) {
-                        autor = generadorAutores.crearNuevoAutor();
+                    if (autores == null) {
+                        autores = generadorAutores.crearNuevoAutor();
                     } else {
-                        autor.addAll(generadorAutores.crearNuevoAutor());
+                        autores.addAll(generadorAutores.crearNuevoAutor());
                         System.out.println("Nuevos autores creados.\n");
                     }
                     break;
                 case 2:
-                    if (autor != null) {
+                    if (autores != null) {
                         System.out.println("\nLista de autores:");
-                        for (Autor autores : autor) {
-                            System.out.println(autores);
+                        for (Autor autor : autores) {
+                            System.out.println(autor);
                         }
                         System.out.println();
                     } else {
@@ -139,22 +143,22 @@ public class Menu {
                     }
                     break;
                 case 3:
-                    if (autor != null) {
-                        generadorAutores.editarAutor(autor);
+                    if (autores != null) {
+                        generadorAutores.editarAutor(autores);
                     } else {
                         System.out.println("No hay autores para editar. Crea uno primero.\n");
                     }
                     break;
                 case 4:
-                    if (autor != null) {
-                        generadorAutores.eliminarAutor(autor);
+                    if (autores != null) {
+                        generadorAutores.eliminarAutor(autores);
                     } else {
                         System.out.println("No hay autores para eliminar. Crea uno primero.\n");
                     }
                     break;
                 case 5:
-                    if (autor != null) {
-                        generadorAutores.buscarAutor(autor);
+                    if (autores != null) {
+                        generadorAutores.buscarAutor(autores);
                     } else {
                         System.out.println("No hay autores para buscar. Crea uno primero.\n");
                     }
