@@ -1,0 +1,69 @@
+@startuml
+class LibraryManager {
+    - documents : List<Document>
+    - authors : List<Author>
+    - relations : List<DocumentAuthor>
+    - scanner : Scanner
+    
+    + startLibraryManager() : void
+    + listDocuments() : void
+    + addDocument() : Document
+    + addAuthor() : Author
+    + addRelation(documentId : int, authorId : int) : void
+    + findRelation(docId : int, authorId : int) : DocumentAuthor
+    + getAuthorsByDocumentId(documentId : int) : List<Author>
+    + getDocumentsByAuthorId(authorId : int) : List<Document>
+    + addOrRemoveAuthorsFromDocument() : void
+    + modifyDocument() : void
+    + findDocumentByTitle(input : String) : Document
+    + findDocumentById(documentId : int) : Document
+    + findDocumentsByKeywords() : void
+    + findAuthorById(authorId : int) : Author
+    + listAuthors() : void
+}
+
+class Document {
+    - id : int
+    - title : String
+    - publicationDate : LocalDate
+    - type : DocumentType
+    - keywords : List<String>
+    + Document(id : int, title : String, publicationDate : LocalDate, type : DocumentType, keywords : List<String>)
+    + getId() : int
+    + getTitle() : String
+    + getKeywords() : List<String>
+    + setTitle(title : String) : void
+    + setPublicationDate(newPublicationDate : LocalDate) : void
+    + setKeywords(keywordsList : List<String>) : void
+    + toString() : String
+}
+
+class Author {
+    - id : int
+    - name : String
+    + Author(id : int, name : String)
+    + getId() : int
+    + getName() : String
+    + toString() : String
+}
+
+class DocumentAuthor {
+    - documentId : int
+    - authorId : int
+    + DocumentAuthor(documentId : int, authorId : int)
+    + getDocumentId() : int
+    + getAuthorId() : int
+}
+
+class App {
+    + main(args : String[]) : void
+}
+
+LibraryManager "1" -- "*" Document : contains
+LibraryManager "1" -- "*" Author : contains
+LibraryManager "1" -- "*" DocumentAuthor : manages
+
+Document "1" -- "0..*" DocumentAuthor : participation
+Author "1" -- "0..*" DocumentAuthor : participation
+
+@enduml
