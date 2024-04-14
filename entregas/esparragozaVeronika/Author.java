@@ -3,17 +3,17 @@ public class Author {
     private int authorId;
     private String authorName;
 
-    public Author(String authorName) {
+    protected Author(String authorName) {
         this.authorName = authorName;
         this.authorId = nextId++;
     }
 
-    public Author(int authorId, String authorName) {
+    protected Author(int authorId, String authorName) {
         this.authorId = authorId;
         this.authorName = authorName;
     }
 
-    public int getAuthorId() {
+    protected int getAuthorId() {
         return authorId;
     }
 
@@ -21,7 +21,7 @@ public class Author {
         this.authorId = authorId;
     }
 
-    public String getAuthorName() {
+    protected String getAuthorName() {
         return authorName;
     }
 

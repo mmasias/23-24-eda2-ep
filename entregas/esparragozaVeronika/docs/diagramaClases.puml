@@ -1,0 +1,98 @@
+@startuml
+
+class App {
+  + main(String[] args)
+}
+
+class Library {
+  - documents: List<Document>
+  # Library()
+  # addDocument(Document document)
+  # removeDocument(Document document)
+  # searchByTitle(String title): List<Document>
+  # searchByType(String type): List<Document>
+  # searchByYearofPublication(int year): List<Document>
+  # getAllDocuments(): List<Document>
+}
+
+class LibraryView {
+  - scanner: Scanner
+  # LibraryView()
+  # displayMenu()
+  # getChoice(): int
+  # promptDocumentDetails(): Document
+  # displayDocumentSearch()
+  # promptTitle(): String
+  # promptPublicationYear(): int
+  # promptAuthors(): List<Author>
+  # promptDocumentType(): String
+  # promptKeywords(): List<Keyword>
+  # displayDocuments(List<Document> documents)
+  # promptDocumentSelection(List<Document> documents): Document
+  # displayMessage(String message)
+  # displayAllDocuments(List<Document> documents)
+}
+
+class LibraryController {
+  - model: Library
+  - view: LibraryView
+  - isRunning: boolean
+  # LibraryController(Library model, LibraryView view)
+  # startApplication()
+  - handleAddDocument()
+  - handleRemoveDocument()
+  - handleSearch()
+  - findDocumentByTitle()
+  - findDocumentsByAuthor()
+  - findDocumentsByKeyword()
+  - findDocumentsByType()
+  - findDocumentsByPublicationYear()
+  - displayAllDocuments()
+  - handleApplicationOutput()
+}
+
+class Keyword {
+  - nextId: int
+  - keywordId: int
+  - keyword: String
+  # Keyword(String keyword)
+  # Keyword(int keywordId, String keyword)
+  # getKeywordId(): int
+  # getKeyword(): String
+}
+
+class Document {
+  - title: String
+  - authors: List<Author>
+  - publicationYear: int
+  - documentType: String
+  - keywords: List<Keyword>
+  # Document(String title, List<Author> authors, int publicationYear, String documentType, List<Keyword> keywords)
+  # getTitle(): String
+  # getAuthors(): List<Author>
+  # getPublicationYear(): int
+  # getDocumentType(): String
+  # getKeywords(): List<Keyword>
+}
+
+class Author {
+  - nextId: int
+  - authorId: int
+  - authorName: String
+  # Author(String authorName)
+  # Author(int authorId, String authorName)
+  # getAuthorId(): int
+  # getAuthorName(): String
+}
+
+App --> LibraryController
+App --> LibraryView
+
+LibraryController --> Library
+LibraryController --> LibraryView
+
+Library "1" --> "0..*" Document
+Document "1" --> "0..*" Author
+Document "1" --> "0..*" Keyword
+
+@enduml

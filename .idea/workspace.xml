@@ -5,17 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb02f40e-ebe1-4294-8752-e6958aa07ae3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/entregas/esparragozaVeronika/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/entregas/esparragozaVeronika/docs/diagramaClases.puml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entregas/esparragozaVeronika/Document.java" beforeDir="false" afterPath="$PROJECT_DIR$/entregas/esparragozaVeronika/Document.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entregas/esparragozaVeronika/Library.java" beforeDir="false" afterPath="$PROJECT_DIR$/entregas/esparragozaVeronika/Library.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entregas/esparragozaVeronika/LibraryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/entregas/esparragozaVeronika/LibraryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entregas/esparragozaVeronika/LibraryView.java" beforeDir="false" afterPath="$PROJECT_DIR$/entregas/esparragozaVeronika/LibraryView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entregas/esparragozaVeronika/Author.java" beforeDir="false" afterPath="$PROJECT_DIR$/entregas/esparragozaVeronika/Author.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entregas/esparragozaVeronika/Keyword.java" beforeDir="false" afterPath="$PROJECT_DIR$/entregas/esparragozaVeronika/Keyword.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="UML Use Case" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -39,6 +46,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "DefaultPlantUmlFileTemplate": "UML Use Case",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",

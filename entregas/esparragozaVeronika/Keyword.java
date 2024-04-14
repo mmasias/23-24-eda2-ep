@@ -3,17 +3,17 @@ public class Keyword {
     private int keywordId;
     private String keyword;
 
-    public Keyword( String keyword) {
+    protected Keyword( String keyword) {
         this.keywordId = nextId++;
         this.keyword = keyword;
     }
 
-    public Keyword(int keywordId, String keyword) {
+    private Keyword(int keywordId, String keyword) {
         this.keywordId = keywordId;
         this.keyword = keyword;
     }
 
-    public int getKeywordId() {
+    protected int getKeywordId() {
         return keywordId;
     }
 
@@ -21,7 +21,7 @@ public class Keyword {
         this.keywordId = keywordId;
     }
 
-    public String getKeyword() {
+    protected String getKeyword() {
         return keyword;
     }
 
