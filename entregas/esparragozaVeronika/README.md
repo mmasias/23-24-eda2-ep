@@ -7,4 +7,4 @@ Los cambios mas importantes fueron:
 - La clase "ManagementSystem" se dividió en Library, LibraryController y LibraryView
 
 ## Diagrama de clases
-![Diagrama de Clases](./docs/diagrama_clases.png)
+![Diagrama de Clases](./docs/diagramaClases.png)
